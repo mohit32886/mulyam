@@ -1,0 +1,12 @@
+{
+  "logo": "https://mulyamjewels.com/logo.svg",
+  "collections": {
+    "diva": "/images/collections/diva.webp",
+    "mini": "/images/collections/mini.webp",
+    "paws": "/images/collections/paws.webp",
+    "bond": "/images/collections/bond.webp"
+  },
+  "hero": {
+    "background": "/images/hero-bg.webp"
+  }
+}

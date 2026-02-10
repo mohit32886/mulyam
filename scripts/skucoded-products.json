@@ -1,0 +1,808 @@
+{
+  "MLM-DB-0001": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "0",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145625/mulyam/diva/bracelets/MLM-DB-0001_0.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145628/mulyam/diva/bracelets/MLM-DB-0001_1.webp"
+      },
+      {
+        "variant": "2",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145630/mulyam/diva/bracelets/MLM-DB-0001_2.jpg"
+      }
+    ]
+  },
+  "MLM-DB-0002": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145632/mulyam/diva/bracelets/MLM-DB-0002_00.webp"
+      }
+    ]
+  },
+  "MLM-DB-0003": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145635/mulyam/diva/bracelets/MLM-DB-0003_00.webp"
+      }
+    ]
+  },
+  "MLM-DB-0004": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145637/mulyam/diva/bracelets/MLM-DB-0004_00.webp"
+      }
+    ]
+  },
+  "MLM-DB-0005": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145642/mulyam/diva/bracelets/MLM-DB-0005_00.webp"
+      }
+    ]
+  },
+  "MLM-DB-0006": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145647/mulyam/diva/bracelets/MLM-DB-0006_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145650/mulyam/diva/bracelets/MLM-DB-0006_1.webp"
+      }
+    ]
+  },
+  "MLM-DB-0007": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145652/mulyam/diva/bracelets/MLM-DB-0007_00.webp"
+      }
+    ]
+  },
+  "MLM-DB-0008": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145657/mulyam/diva/bracelets/MLM-DB-0008_00.webp"
+      }
+    ]
+  },
+  "MLM-DB-0009": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145659/mulyam/diva/bracelets/MLM-DB-0009_00.webp"
+      }
+    ]
+  },
+  "MLM-DB-0010": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145662/mulyam/diva/bracelets/MLM-DB-0010_00.webp"
+      }
+    ]
+  },
+  "MLM-DB-0011": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145667/mulyam/diva/bracelets/MLM-DB-0011_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145672/mulyam/diva/bracelets/MLM-DB-0011_1.webp"
+      }
+    ]
+  },
+  "MLM-DB-0012": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145678/mulyam/diva/bracelets/MLM-DB-0012_00.webp"
+      }
+    ]
+  },
+  "MLM-DB-0013": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145682/mulyam/diva/bracelets/MLM-DB-0013_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145684/mulyam/diva/bracelets/MLM-DB-0013_1.webp"
+      },
+      {
+        "variant": "2",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145686/mulyam/diva/bracelets/MLM-DB-0013_2.jpg"
+      }
+    ]
+  },
+  "MLM-DB-0014": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145688/mulyam/diva/bracelets/MLM-DB-0014_00.webp"
+      }
+    ]
+  },
+  "MLM-DB-0015": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145691/mulyam/diva/bracelets/MLM-DB-0015_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145693/mulyam/diva/bracelets/MLM-DB-0015_1.webp"
+      }
+    ]
+  },
+  "MLM-DB-0016": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145697/mulyam/diva/bracelets/MLM-DB-0016_00.webp"
+      }
+    ]
+  },
+  "MLM-DB-0017": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145699/mulyam/diva/bracelets/MLM-DB-0017_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145702/mulyam/diva/bracelets/MLM-DB-0017_1.webp"
+      },
+      {
+        "variant": "2",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145703/mulyam/diva/bracelets/MLM-DB-0017_2.webp"
+      },
+      {
+        "variant": "3",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145705/mulyam/diva/bracelets/MLM-DB-0017_3.webp"
+      },
+      {
+        "variant": "5",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145707/mulyam/diva/bracelets/MLM-DB-0017_5.webp"
+      }
+    ]
+  },
+  "MLM-DB-0018": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145710/mulyam/diva/bracelets/MLM-DB-0018_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145712/mulyam/diva/bracelets/MLM-DB-0018_1.webp"
+      },
+      {
+        "variant": "2",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145714/mulyam/diva/bracelets/MLM-DB-0018_2.webp"
+      },
+      {
+        "variant": "3",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145716/mulyam/diva/bracelets/MLM-DB-0018_3.webp"
+      }
+    ]
+  },
+  "MLM-DB-0019": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145718/mulyam/diva/bracelets/MLM-DB-0019_1.webp"
+      },
+      {
+        "variant": "2",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145719/mulyam/diva/bracelets/MLM-DB-0019_2.webp"
+      },
+      {
+        "variant": "3",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145722/mulyam/diva/bracelets/MLM-DB-0019_3.webp"
+      },
+      {
+        "variant": "4",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145725/mulyam/diva/bracelets/MLM-DB-0019_4.webp"
+      }
+    ]
+  },
+  "MLM-DB-0020": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145726/mulyam/diva/bracelets/MLM-DB-0020_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145728/mulyam/diva/bracelets/MLM-DB-0020_1.webp"
+      }
+    ]
+  },
+  "MLM-DB-0021": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145731/mulyam/diva/bracelets/MLM-DB-0021_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145732/mulyam/diva/bracelets/MLM-DB-0021_1.webp"
+      },
+      {
+        "variant": "2",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145734/mulyam/diva/bracelets/MLM-DB-0021_2.webp"
+      },
+      {
+        "variant": "3",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145735/mulyam/diva/bracelets/MLM-DB-0021_3.webp"
+      }
+    ]
+  },
+  "MLM-DB-0022": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145737/mulyam/diva/bracelets/MLM-DB-0022_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145738/mulyam/diva/bracelets/MLM-DB-0022_1.webp"
+      },
+      {
+        "variant": "2",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145741/mulyam/diva/bracelets/MLM-DB-0022_2.webp"
+      },
+      {
+        "variant": "4",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145744/mulyam/diva/bracelets/MLM-DB-0022_4.webp"
+      }
+    ]
+  },
+  "MLM-DB-0023": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145746/mulyam/diva/bracelets/MLM-DB-0023_00.webp"
+      }
+    ]
+  },
+  "MLM-DB-0024": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145749/mulyam/diva/bracelets/MLM-DB-0024_00.webp"
+      }
+    ]
+  },
+  "MLM-DB-0025": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145751/mulyam/diva/bracelets/MLM-DB-0025_00.webp"
+      }
+    ]
+  },
+  "MLM-DB-0026": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145753/mulyam/diva/bracelets/MLM-DB-0026_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145757/mulyam/diva/bracelets/MLM-DB-0026_1.webp"
+      },
+      {
+        "variant": "2",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145761/mulyam/diva/bracelets/MLM-DB-0026_2.webp"
+      },
+      {
+        "variant": "3",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145764/mulyam/diva/bracelets/MLM-DB-0026_3.webp"
+      }
+    ]
+  },
+  "MLM-DB-0028": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145766/mulyam/diva/bracelets/MLM-DB-0028_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145769/mulyam/diva/bracelets/MLM-DB-0028_1.webp"
+      },
+      {
+        "variant": "2",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145770/mulyam/diva/bracelets/MLM-DB-0028_2.webp"
+      },
+      {
+        "variant": "3",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145772/mulyam/diva/bracelets/MLM-DB-0028_3.webp"
+      }
+    ]
+  },
+  "MLM-DB-0029": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145774/mulyam/diva/bracelets/MLM-DB-0029_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145776/mulyam/diva/bracelets/MLM-DB-0029_1.webp"
+      },
+      {
+        "variant": "2",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145781/mulyam/diva/bracelets/MLM-DB-0029_2.webp"
+      }
+    ]
+  },
+  "MLM-DB-0030": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145783/mulyam/diva/bracelets/MLM-DB-0030_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145786/mulyam/diva/bracelets/MLM-DB-0030_1.webp"
+      },
+      {
+        "variant": "2",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145788/mulyam/diva/bracelets/MLM-DB-0030_2.webp"
+      }
+    ]
+  },
+  "MLM-DB-0031": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145790/mulyam/diva/bracelets/MLM-DB-0031_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145792/mulyam/diva/bracelets/MLM-DB-0031_1.webp"
+      }
+    ]
+  },
+  "MLM-DB-0032": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145794/mulyam/diva/bracelets/MLM-DB-0032_00.webp"
+      }
+    ]
+  },
+  "MLM-DB-0033": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145797/mulyam/diva/bracelets/MLM-DB-0033_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145799/mulyam/diva/bracelets/MLM-DB-0033_1.webp"
+      },
+      {
+        "variant": "2",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145801/mulyam/diva/bracelets/MLM-DB-0033_2.webp"
+      },
+      {
+        "variant": "3",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145803/mulyam/diva/bracelets/MLM-DB-0033_3.webp"
+      }
+    ]
+  },
+  "MLM-DB-0034": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145805/mulyam/diva/bracelets/MLM-DB-0034_00.webp"
+      },
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145806/mulyam/diva/bracelets/MLM-DB-0034_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145809/mulyam/diva/bracelets/MLM-DB-0034_1.jpg"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145810/mulyam/diva/bracelets/MLM-DB-0034_1.webp"
+      },
+      {
+        "variant": "2",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145812/mulyam/diva/bracelets/MLM-DB-0034_2.jpg"
+      },
+      {
+        "variant": "2",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145814/mulyam/diva/bracelets/MLM-DB-0034_2.webp"
+      },
+      {
+        "variant": "4",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145816/mulyam/diva/bracelets/MLM-DB-0034_4.jpg"
+      }
+    ]
+  },
+  "MLM-DB-0035": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145818/mulyam/diva/bracelets/MLM-DB-0035_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145819/mulyam/diva/bracelets/MLM-DB-0035_1.webp"
+      },
+      {
+        "variant": "2",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145821/mulyam/diva/bracelets/MLM-DB-0035_2.jpg"
+      },
+      {
+        "variant": "4",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145823/mulyam/diva/bracelets/MLM-DB-0035_4.jpg"
+      },
+      {
+        "variant": "5",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145825/mulyam/diva/bracelets/MLM-DB-0035_5.jpg"
+      }
+    ]
+  },
+  "MLM-DB-0036": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145827/mulyam/diva/bracelets/MLM-DB-0036_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145829/mulyam/diva/bracelets/MLM-DB-0036_1.webp"
+      },
+      {
+        "variant": "2",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145831/mulyam/diva/bracelets/MLM-DB-0036_2.webp"
+      },
+      {
+        "variant": "3",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145833/mulyam/diva/bracelets/MLM-DB-0036_3.webp"
+      },
+      {
+        "variant": "4",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145835/mulyam/diva/bracelets/MLM-DB-0036_4.webp"
+      }
+    ]
+  },
+  "MLM-DB-0037": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145838/mulyam/diva/bracelets/MLM-DB-0037_00.jpg"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145841/mulyam/diva/bracelets/MLM-DB-0037_1.webp"
+      }
+    ]
+  },
+  "MLM-DB-0038": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "2",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145844/mulyam/diva/bracelets/MLM-DB-0038_2.webp"
+      }
+    ]
+  },
+  "MLM-DB-0039": {
+    "type": "bracelets",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145847/mulyam/diva/bracelets/MLM-DB-0039_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145848/mulyam/diva/bracelets/MLM-DB-0039_1.webp"
+      },
+      {
+        "variant": "3",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145850/mulyam/diva/bracelets/MLM-DB-0039_3.jpg"
+      },
+      {
+        "variant": "4",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145852/mulyam/diva/bracelets/MLM-DB-0039_4.webp"
+      }
+    ]
+  },
+  "MLM-DE-0001": {
+    "type": "earrings",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145855/mulyam/diva/earrings/MLM-DE-0001_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145859/mulyam/diva/earrings/MLM-DE-0001_1.webp"
+      }
+    ]
+  },
+  "MLM-DE-0002": {
+    "type": "earrings",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145861/mulyam/diva/earrings/MLM-DE-0002_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145866/mulyam/diva/earrings/MLM-DE-0002_1.webp"
+      }
+    ]
+  },
+  "MLM-DE-0003": {
+    "type": "earrings",
+    "images": [
+      {
+        "variant": "0",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145869/mulyam/diva/earrings/MLM-DE-0003_0.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145873/mulyam/diva/earrings/MLM-DE-0003_1.webp"
+      },
+      {
+        "variant": "2",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145875/mulyam/diva/earrings/MLM-DE-0003_2.webp"
+      }
+    ]
+  },
+  "MLM-DE-0004": {
+    "type": "earrings",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145879/mulyam/diva/earrings/MLM-DE-0004_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145882/mulyam/diva/earrings/MLM-DE-0004_1.webp"
+      }
+    ]
+  },
+  "MLM-DE-0005": {
+    "type": "earrings",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145887/mulyam/diva/earrings/MLM-DE-0005_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145891/mulyam/diva/earrings/MLM-DE-0005_1.webp"
+      },
+      {
+        "variant": "3",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145894/mulyam/diva/earrings/MLM-DE-0005_3.webp"
+      },
+      {
+        "variant": "4",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145896/mulyam/diva/earrings/MLM-DE-0005_4.webp"
+      }
+    ]
+  },
+  "MLM-DE-0006": {
+    "type": "earrings",
+    "images": [
+      {
+        "variant": "0",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145899/mulyam/diva/earrings/MLM-DE-0006_0.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145902/mulyam/diva/earrings/MLM-DE-0006_1.webp"
+      },
+      {
+        "variant": "2",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145903/mulyam/diva/earrings/MLM-DE-0006_2.webp"
+      },
+      {
+        "variant": "3",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145905/mulyam/diva/earrings/MLM-DE-0006_3.webp"
+      },
+      {
+        "variant": "4",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145908/mulyam/diva/earrings/MLM-DE-0006_4.webp"
+      },
+      {
+        "variant": "5",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145909/mulyam/diva/earrings/MLM-DE-0006_5.webp"
+      },
+      {
+        "variant": "6",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145912/mulyam/diva/earrings/MLM-DE-0006_6.webp"
+      }
+    ]
+  },
+  "MLM-DE-0008": {
+    "type": "earrings",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145916/mulyam/diva/earrings/MLM-DE-0008_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145919/mulyam/diva/earrings/MLM-DE-0008_1.webp"
+      }
+    ]
+  },
+  "MLM-DE-0009": {
+    "type": "earrings",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145924/mulyam/diva/earrings/MLM-DE-0009_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145927/mulyam/diva/earrings/MLM-DE-0009_1.webp"
+      },
+      {
+        "variant": "2",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145932/mulyam/diva/earrings/MLM-DE-0009_2.webp"
+      },
+      {
+        "variant": "3",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145935/mulyam/diva/earrings/MLM-DE-0009_3.webp"
+      },
+      {
+        "variant": "4",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145938/mulyam/diva/earrings/MLM-DE-0009_4.webp"
+      }
+    ]
+  },
+  "MLM-DE-0010": {
+    "type": "earrings",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145941/mulyam/diva/earrings/MLM-DE-0010_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145944/mulyam/diva/earrings/MLM-DE-0010_1.webp"
+      }
+    ]
+  },
+  "MLM-DE-0011": {
+    "type": "earrings",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145946/mulyam/diva/earrings/MLM-DE-0011_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145949/mulyam/diva/earrings/MLM-DE-0011_1.webp"
+      },
+      {
+        "variant": "2",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145952/mulyam/diva/earrings/MLM-DE-0011_2.webp"
+      }
+    ]
+  },
+  "MLM-DE-0012": {
+    "type": "earrings",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145954/mulyam/diva/earrings/MLM-DE-0012_00.webp"
+      }
+    ]
+  },
+  "MLM-DE-0013": {
+    "type": "earrings",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145958/mulyam/diva/earrings/MLM-DE-0013_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145960/mulyam/diva/earrings/MLM-DE-0013_1.webp"
+      }
+    ]
+  },
+  "MLM-DE-0014": {
+    "type": "earrings",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145961/mulyam/diva/earrings/MLM-DE-0014_00.webp"
+      },
+      {
+        "variant": "1",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145963/mulyam/diva/earrings/MLM-DE-0014_1.webp"
+      }
+    ]
+  },
+  "MLM-DE-0015": {
+    "type": "earrings",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145967/mulyam/diva/earrings/MLM-DE-0015_00.webp"
+      }
+    ]
+  },
+  "MLM-DE-0016": {
+    "type": "earrings",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145971/mulyam/diva/earrings/MLM-DE-0016_00.jpg"
+      }
+    ]
+  },
+  "MLM-DE-0017": {
+    "type": "earrings",
+    "images": [
+      {
+        "variant": "00",
+        "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145974/mulyam/diva/earrings/MLM-DE-0017_00.webp"
+      }
+    ]
+  }
+}
