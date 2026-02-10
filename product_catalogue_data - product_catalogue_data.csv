@@ -1,0 +1,55 @@
+SKU,Slug,Name,Selling Price,Compare Price,Cost Price,Collection,Category,Sub Category,Size,Dimensions,Color,Material,Plating,Weight,Stock,Tag,Description,Short Description,Images,Image Count,Status
+MLM-DB-0001,mlm-db-0001,,799,999,,diva,bracelets,,Baby,,Gold,Stainless Steel,18K Gold Plated,,1,,,,MLM-DB-0001_00|MLM-DB-0001_02,2,active
+MLM-DB-0002,mlm-db-0002,,799,999,,diva,bracelets,,Baby,,Gold,Stainless Steel,18K Gold Plated,,1,,,,MLM-DB-0002,1,active
+MLM-DB-0003,mlm-db-0003,,799,999,,diva,bracelets,,Baby,,Gold,Stainless Steel,18K Gold Plated,,5,,,,MLM-DB-0003,1,active
+MLM-DB-0004,mlm-db-0004,,999,1199,,diva,bracelets,,Baby,,Gold,Stainless Steel,18K Gold Plated,,4,,,,MLM-DB-0004,1,active
+MLM-DB-0005,mlm-db-0005,,799,999,,diva,bracelets,,Baby,,Gold,Stainless Steel,18K Gold Plated,,1,,,,MLM-DB-0005,1,active
+MLM-DB-0006,mlm-db-0006,,799,999,,diva,bracelets,,Baby,,Gold,Stainless Steel,18K Gold Plated,,1,,,,MLM-DB-0006|MLM-DB-0006_01,2,active
+MLM-DB-0007,mlm-db-0007,,799,999,,diva,bracelets,,Baby,,Gold,Stainless Steel,18K Gold Plated,,4,,,,MLM-DB-0007,1,active
+MLM-DB-0008,mlm-db-0008,,799,999,,diva,bracelets,,Baby,,Gold,Stainless Steel,18K Gold Plated,,4,,,,MLM-DB-0008,1,active
+MLM-DB-0009,mlm-db-0009,,999,1199,,diva,bracelets,,Baby,,Gold,Stainless Steel,18K Gold Plated,,4,,,,MLM-DB-0009,1,active
+MLM-DB-0010,mlm-db-0010,,799,999,,diva,bracelets,,Baby,,Gold,Stainless Steel,18K Gold Plated,,1,,,,MLM-DB-0010,1,active
+MLM-DB-0011,mlm-db-0011,,799,999,,diva,bracelets,,Baby,,Gold,Stainless Steel,18K Gold Plated,,2,,,,MLM-DB-0011|MLM-DB-0011_01,2,active
+MLM-DB-0012,mlm-db-0012,,999,1199,,diva,bracelets,,Adjustable,,Gold,Stainless Steel,18K Gold Plated,,1,,,,MLM-DB-0012,1,active
+MLM-DB-0013,mlm-db-0013,,799,1199,,diva,bracelets,,Standard,,Gold,Stainless Steel,18K Gold Plated,,5,,,,MLM-DB-0013,1,active
+MLM-DB-0014,mlm-db-0014,,1099,1399,,diva,bracelets,,Standard,,Gold,Stainless Steel,18K Gold Plated,,5,,,,MLM-DB-0014,1,active
+MLM-DB-0015,mlm-db-0015,,1099,1399,,diva,bracelets,,Standard,,Gold,Stainless Steel,18K Gold Plated,,12,,,,MLM-DB-0015|MLM-DB-0015_01,2,active
+MLM-DB-0016,mlm-db-0016,,799,999,,diva,bracelets,,Standard,,Gold,Stainless Steel,18K Gold Plated,,11,,,,MLM-DB-0016,1,active
+MLM-DB-0017,mlm-db-0017,,1099,1399,,diva,bracelets,,Standard,,Gold,Stainless Steel,18K Gold Plated,,4,,,,MLM-DB-0017|MLM-DB-0017_01|MLM-DB-0017_02|MLM-DB-0017_03|MLM-DB-0017_05,5,active
+MLM-DB-0018,mlm-db-0018,,999,1199,,diva,bracelets,,Baby,,Gold,Stainless Steel,18K Gold Plated,,1,,,,MLM-DB-0018|MLM-DB-0018_01|MLM-DB-0018_02|MLM-DB-0018_03,4,active
+MLM-DB-0019,mlm-db-0019,,799,999,,diva,bracelets,,Standard,,Gold,Stainless Steel,18K Gold Plated,,1,,,,MLM-DB-0019|MLM-DB-0019_01|MLM-DB-0019_02|MLM-DB-0019_03|MLM-DB-0019_04,5,active
+MLM-DB-0020,mlm-db-0020,,1099,1399,,diva,bracelets,,Standard,,Gold,Stainless Steel,18K Gold Plated,,4,,,,MLM-DB-0020|MLM-DB-0020_01,2,new
+MLM-DB-0021,mlm-db-0021,,799,999,,diva,bracelets,,Adjustable/Free size,,Gold,Stainless Steel,18K Gold Plated,,8,,,,MLM-DB-0021|MLM-DB-0021_01|MLM-DB-0021_02|MLM-DB-0021_03,4,new
+MLM-DB-0022,mlm-db-0022,,999,1199,,diva,bracelets,,Baby,,Gold,Stainless Steel,18K Gold Plated,,1,,,,MLM-DB-0022|MLM-DB-0022_01|MLM-DB-0022_02|MLM-DB-0022_04,4,new
+MLM-DB-0023,mlm-db-0023,,799,999,,diva,bracelets,,Baby,,Gold,Stainless Steel,18K Gold Plated,,6,,,,MLM-DB-0023,1,new
+MLM-DB-0024,mlm-db-0024,,999,1199,,diva,bracelets,,Adjustable/Free size,,Gold,Stainless Steel,18K Gold Plated,,2,,,,MLM-DB-0024,1,new
+MLM-DB-0025,mlm-db-0025,,999,1199,,diva,bracelets,,Baby,,Gold,Stainless Steel,18K Gold Plated,,1,,,,MLM-DB-0025,1,new
+MLM-DB-0026,mlm-db-0026,,799,999,,diva,bracelets,,Adjustable/Free size,,Gold,Stainless Steel,18K Gold Plated,,15,,,,MLM-DB-0026,1,new
+,,,,,,,,,,,Gold,,,,,,,,,,
+MLM-DB-0028,mlm-db-0028,,799,999,,diva,bracelets,,Standard,,Gold,Stainless Steel,18K Gold Plated,,2,,,,MLM-DB-0028,1,new
+MLM-DB-0029,mlm-db-0029,,799,999,,diva,bracelets,,Standard,,Gold,Stainless Steel,18K Gold Plated,,1,,,,MLM-DB-0029|MLM-DB-0029_01|MLM-DB-0029_02,3,new
+MLM-DB-0030,mlm-db-0030,,799,999,,diva,bracelets,,Standard,,Gold,Stainless Steel,18K Gold Plated,,4,,,,MLM-DB-0030|MLM-DB-0030_01|MLM-DB-0030_02,3,new
+MLM-DB-0031,mlm-db-0031,,1099,1399,,diva,bracelets,,Standard,,Gold,Stainless Steel,18K Gold Plated,,3,,,,MLM-DB-0031|MLM-DB-0031_01,2,new
+MLM-DB-0032,mlm-db-0032,,799,999,,diva,bracelets,,Standard,,Gold,Stainless Steel,18K Gold Plated,,17,,,,MLM-DB-0032,1,new
+MLM-DE-0001,mlm-de-0001,Rani Hearts,699,999,,diva,earrings,,,,Gold,Stainless Steel,18K Gold Plated,,3,,,,MLM-DE-0001|MLM-DE-0001_01,2,active
+MLM-DE-0002,mlm-de-0002,Noor Drop,699,999,,diva,earrings,,,,Gold,Stainless Steel,18K Gold Plated,,5,,,,MLM-DE-0002|MLM-DE-0002_01,2,active
+MLM-DE-0003,mlm-de-0003,The Juliet,899,1099,,diva,earrings,,,,Gold,Stainless Steel,18K Gold Plated,,6,,,,MLM-DE-0003_00|MLM-DE-0003_01|MLM-DE-0003_02,3,active
+MLM-DE-0004,mlm-de-0004,Aaram,799,999,,diva,earrings,,,,Gold,Stainless Steel,18K Gold Plated,,9,,,,MLM-DE-0004|MLM-DE-0004_01,2,active
+MLM-DE-0005,mlm-de-0005,Tara,799,999,,diva,earrings,,,,Gold,Stainless Steel,18K Gold Plated,,5,,,,MLM-DE-0005|MLM-DE-0005_01,2,active
+MLM-DE-0006,mlm-de-0006,Phool,799,999,,diva,earrings,,,,Gold,Stainless Steel,18K Gold Plated,,11,,,,MLM-DE-0006_00|MLM-DE-0006_01|MLM-DE-0006_02|MLM-DE-0006_03|MLM-DE-0006_04|MLM-DE-0006_05|MLM-DE-0006_06,7,active
+MLM-DE-0008,mlm-de-0008,Regular Drop,699,999,,diva,earrings,,,,Gold,Stainless Steel,18K Gold Plated,,2,,,,MLM-DE-0008|MLM-DE-0008_01,2,active
+MLM-DE-0009,mlm-de-0009,The Emily,899,1099,,diva,earrings,,,,Gold,Stainless Steel,18K Gold Plated,,3,,,,MLM-DE-0009|MLM-DE-0009_01|MLM-DE-0009_02|MLM-DE-0009_03|MLM-DE-0009_04,5,active
+MLM-DE-0010,mlm-de-0010,The Rose,899,1099,,diva,earrings,,,,Gold,Stainless Steel,18K Gold Plated,,0,,,,MLM-DE-0010|MLM-DE-0010_01,2,active
+MLM-DE-0011,mlm-de-0011,The Jade,799,999,,diva,earrings,,,,Gold,Stainless Steel,18K Gold Plated,,9,,,,MLM-DE-0011|MLM-DE-0011_01|MLM-DE-0011_02,3,active
+MLM-DE-0012,mlm-de-0012,Celestial Moon,799,999,,diva,earrings,,,,Gold,Stainless Steel,18K Gold Plated,,3,,,,MLM-DE-0012,1,active
+MLM-DE-0013,mlm-de-0013,Main Character Heart Hoops,699,999,,diva,earrings,,,,Gold,Stainless Steel,18K Gold Plated,,2,,,,MLM-DE-0013|MLM-DE-0013_01,2,active
+MLM-DE-0014,mlm-de-0014,Main Character Classic Round Hoops,699,999,,diva,earrings,,,,Gold,Stainless Steel,18K Gold Plated,,2,,,,MLM-DE-0014|MLM-DE-0014_01,2,active
+MLM-DE-0015,mlm-de-0015,Main Character Hoops 3,699,999,,diva,earrings,,,,Gold,Stainless Steel,18K Gold Plated,,2,,,,MLM-DE-0015,1,active
+MLM-DE-0016,mlm-de-0016,Main Character Hoops 4,699,999,,diva,earrings,,,,Gold,Stainless Steel,18K Gold Plated,,2,,,,MLM-DE-0016,1,new
+MLM-DE-0017,mlm-de-0017,Main Character Hoop Bubble,699,999,,diva,earrings,,,,Gold,Stainless Steel,18K Gold Plated,,2,,,,MLM-DE-0017,1,active
+MLM-DB-0033,mlm-db-0033,,,,,diva,bracelets,,,,Gold,Stainless Steel,18K Gold Plated,,,,,,MLM-DB-0033,,new
+MLM-DB-0034,mlm-db-0034,,,,,diva,bracelets,,,,Gold,Stainless Steel,18K Gold Plated,,,,,,MLM-DB-0034,,new
+MLM-DB-0035,mlm-db-0035,,,,,diva,bracelets,,,,Gold,Stainless Steel,18K Gold Plated,,,,,,MLM-DB-0035,,new
+MLM-DB-0036,mlm-db-0036,,,,,diva,bracelets,,,,Gold,Stainless Steel,18K Gold Plated,,,,,,MLM-DB-0036,,new
+MLM-DB-0037,mlm-db-0037,,,,,diva,bracelets,,,,Gold,Stainless Steel,18K Gold Plated,,,,,,MLM-DB-0037,,new
+MLM-DB-0039,mlm-db-0039,,,,,diva,bracelets,,,,Gold,Stainless Steel,18K Gold Plated,,,,,,MLM-DB-0038,,new

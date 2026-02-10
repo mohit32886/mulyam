@@ -1,0 +1,73 @@
+{
+  "diva": {
+    "earrings": [
+      {"name": "Main Character Bubble Hoops", "sku": "MLM-DE-0017", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145974/mulyam/diva/earrings/MLM-DE-0017_00.webp"},
+      {"name": "Aura Hoops", "sku": "MLM-DE-0016", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145971/mulyam/diva/earrings/MLM-DE-0016_00.jpg"},
+      {"name": "Boss Mode Hoops", "sku": "MLM-DE-0015", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145967/mulyam/diva/earrings/MLM-DE-0015_00.webp"},
+      {"name": "Main Character Classic Round Hoops", "sku": "MLM-DE-0014", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145961/mulyam/diva/earrings/MLM-DE-0014_00.webp"},
+      {"name": "Main Character Heart Hoops", "sku": "MLM-DE-0013", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145958/mulyam/diva/earrings/MLM-DE-0013_00.webp"},
+      {"name": "Celestial Moon", "sku": "MLM-DE-0012", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145954/mulyam/diva/earrings/MLM-DE-0012_00.webp"},
+      {"name": "The Jade", "sku": "MLM-DE-0011", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145946/mulyam/diva/earrings/MLM-DE-0011_00.webp"},
+      {"name": "The Rose", "sku": "MLM-DE-0010", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145941/mulyam/diva/earrings/MLM-DE-0010_00.webp"},
+      {"name": "The Emily", "sku": "MLM-DE-0009", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145924/mulyam/diva/earrings/MLM-DE-0009_00.webp"},
+      {"name": "Regular Drop", "sku": "MLM-DE-0008", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145916/mulyam/diva/earrings/MLM-DE-0008_00.webp"},
+      {"name": "Phool", "sku": "MLM-DE-0006", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145899/mulyam/diva/earrings/MLM-DE-0006_0.webp"},
+      {"name": "Tara", "sku": "MLM-DE-0005", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145887/mulyam/diva/earrings/MLM-DE-0005_00.webp"},
+      {"name": "Aaram", "sku": "MLM-DE-0004", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145879/mulyam/diva/earrings/MLM-DE-0004_00.webp"},
+      {"name": "The Juliet", "sku": "MLM-DE-0003", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145869/mulyam/diva/earrings/MLM-DE-0003_0.webp"},
+      {"name": "Noor Drop", "sku": "MLM-DE-0002", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145861/mulyam/diva/earrings/MLM-DE-0002_00.webp"},
+      {"name": "Rani Hearts", "sku": "MLM-DE-0001", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145855/mulyam/diva/earrings/MLM-DE-0001_00.webp"}
+    ],
+    "bracelets": [
+      {"name": "Golden Rope Bangle", "sku": "MLM-DB-0039", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145847/mulyam/diva/bracelets/MLM-DB-0039_00.webp"},
+      {"name": "Crystal Weave Bracelet", "sku": "MLM-DB-0038", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145844/mulyam/diva/bracelets/MLM-DB-0038_2.webp"},
+      {"name": "Sunset Glow Bangle", "sku": "MLM-DB-0037", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145838/mulyam/diva/bracelets/MLM-DB-0037_00.jpg"},
+      {"name": "Starlight Cuff Bracelet", "sku": "MLM-DB-0036", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145827/mulyam/diva/bracelets/MLM-DB-0036_00.webp"},
+      {"name": "Luxe Diamond Band", "sku": "MLM-DB-0035", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145818/mulyam/diva/bracelets/MLM-DB-0035_00.webp"},
+      {"name": "Classic Wave Bangle", "sku": "MLM-DB-0034", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145806/mulyam/diva/bracelets/MLM-DB-0034_00.webp"},
+      {"name": "Emerald Twist Bracelet", "sku": "MLM-DB-0033", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145797/mulyam/diva/bracelets/MLM-DB-0033_00.webp"},
+      {"name": "Gold Bangle Bracelet", "sku": "MLM-DB-0032", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145794/mulyam/diva/bracelets/MLM-DB-0032_00.webp"},
+      {"name": "Luxe Nail Studded Bangle Bracelet", "sku": "MLM-DB-0031", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145790/mulyam/diva/bracelets/MLM-DB-0031_00.webp"},
+      {"name": "Classic Bamboo Bracelet in Gold", "sku": "MLM-DB-0030", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145783/mulyam/diva/bracelets/MLM-DB-0030_00.webp"},
+      {"name": "Luxe Studded Bangle Bracelet", "sku": "MLM-DB-0029", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145774/mulyam/diva/bracelets/MLM-DB-0029_00.webp"},
+      {"name": "Eternal Spark Bangle", "sku": "MLM-DB-0028", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145766/mulyam/diva/bracelets/MLM-DB-0028_00.webp"},
+      {"name": "Crystal Line Bracelet", "sku": "MLM-DB-0026", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145753/mulyam/diva/bracelets/MLM-DB-0026_00.webp"},
+      {"name": "Radiant Stone Band", "sku": "MLM-DB-0025", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145751/mulyam/diva/bracelets/MLM-DB-0025_00.webp"},
+      {"name": "Gleam Link Bracelet", "sku": "MLM-DB-0024", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145749/mulyam/diva/bracelets/MLM-DB-0024_00.webp"},
+      {"name": "Pearl Cascade Bangle", "sku": "MLM-DB-0023", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145746/mulyam/diva/bracelets/MLM-DB-0023_00.webp"},
+      {"name": "Diamond Cluster Bracelet", "sku": "MLM-DB-0022", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145737/mulyam/diva/bracelets/MLM-DB-0022_00.webp"},
+      {"name": "Moonlight Chain Bracelet", "sku": "MLM-DB-0021", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145731/mulyam/diva/bracelets/MLM-DB-0021_00.webp"},
+      {"name": "Aurora Bead Bracelet", "sku": "MLM-DB-0020", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145726/mulyam/diva/bracelets/MLM-DB-0020_00.webp"},
+      {"name": "Infinity Bracelet", "sku": "MLM-DB-0019", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145718/mulyam/diva/bracelets/MLM-DB-0019_1.webp"},
+      {"name": "Baguette Glow Bracelet", "sku": "MLM-DB-0018", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145710/mulyam/diva/bracelets/MLM-DB-0018_00.webp"},
+      {"name": "Roman Engraved Infinity Bangle", "sku": "MLM-DB-0017", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145699/mulyam/diva/bracelets/MLM-DB-0017_00.webp"},
+      {"name": "Twisted Rope Bangle", "sku": "MLM-DB-0016", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145697/mulyam/diva/bracelets/MLM-DB-0016_00.webp"},
+      {"name": "Royal Emerald Bangle", "sku": "MLM-DB-0015", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145691/mulyam/diva/bracelets/MLM-DB-0015_00.webp"},
+      {"name": "Royal Ivory Spark", "sku": "MLM-DB-0014", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145688/mulyam/diva/bracelets/MLM-DB-0014_00.webp"},
+      {"name": "Hexa Glow Bangle", "sku": "MLM-DB-0013", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145682/mulyam/diva/bracelets/MLM-DB-0013_00.webp"},
+      {"name": "Quite Statement", "sku": "MLM-DB-0012", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145678/mulyam/diva/bracelets/MLM-DB-0012_00.webp"},
+      {"name": "Magic Moment", "sku": "MLM-DB-0011", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145667/mulyam/diva/bracelets/MLM-DB-0011_00.webp"},
+      {"name": "Quite Everyday Glow", "sku": "MLM-DB-0010", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145662/mulyam/diva/bracelets/MLM-DB-0010_00.webp"},
+      {"name": "Hexa Band Bracelet", "sku": "MLM-DB-0009", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145659/mulyam/diva/bracelets/MLM-DB-0009_00.webp"},
+      {"name": "Narazbattu Charm Bracelet", "sku": "MLM-DB-0008", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145657/mulyam/diva/bracelets/MLM-DB-0008_00.webp"},
+      {"name": "Starlight Band", "sku": "MLM-DB-0007", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145652/mulyam/diva/bracelets/MLM-DB-0007_00.webp"},
+      {"name": "Revenge Band", "sku": "MLM-DB-0006", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145647/mulyam/diva/bracelets/MLM-DB-0006_00.webp"},
+      {"name": "Soft Power Ring", "sku": "MLM-DB-0005", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145642/mulyam/diva/bracelets/MLM-DB-0005_00.webp"},
+      {"name": "Eclipse Flow Bracelet", "sku": "MLM-DB-0004", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145637/mulyam/diva/bracelets/MLM-DB-0004_00.webp"},
+      {"name": "Celeste Arc Bracelet", "sku": "MLM-DB-0003", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145635/mulyam/diva/bracelets/MLM-DB-0003_00.webp"},
+      {"name": "Plain Bangle", "sku": "MLM-DB-0002", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145632/mulyam/diva/bracelets/MLM-DB-0002_00.webp"},
+      {"name": "Starlit Line", "sku": "MLM-DB-0001", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770145625/mulyam/diva/bracelets/MLM-DB-0001_0.webp"}
+    ]
+  },
+  "mini": {
+    "necklaces": [
+      {"name": "Gold Paw Chain", "sku": "MLM-MN-0001", "url": "https://res.cloudinary.com/daieejy7c/image/upload/v1770144974/mulyam/mini/necklaces/MLM-MN-0001_img_00.webp"}
+    ]
+  },
+  "paws": {
+    "note": "Coming soon - no products on original site"
+  },
+  "bond": {
+    "note": "Custom/personalized collection - handled via WhatsApp"
+  }
+}
