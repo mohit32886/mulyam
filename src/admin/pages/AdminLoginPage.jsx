@@ -14,7 +14,7 @@ function AdminLoginPage() {
   // Redirect if already authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/admin')
+      navigate('/')
     }
   }, [isAuthenticated, navigate])
 
@@ -26,7 +26,7 @@ function AdminLoginPage() {
     const result = await login(email, password)
 
     if (result.success) {
-      navigate('/admin')
+      navigate('/')
     } else {
       setError(result.error)
     }

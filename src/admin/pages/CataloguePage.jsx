@@ -11,7 +11,7 @@ import {
 import { AdminLayout } from '../components/layout'
 import { AdminCard, AdminButton, AdminBadge, AdminToggle, useToast } from '../components/ui'
 import { EditProductPanel } from '../components/catalogue'
-import { useProducts, useProductMutations } from '../../hooks'
+import { useProducts, useProductMutations } from '../hooks'
 import { transformProductFromDb, transformProductToDb } from '../../utils/caseTransform'
 
 function CataloguePage() {

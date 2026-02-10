@@ -31,7 +31,7 @@ import {
 import { CSS } from '@dnd-kit/utilities'
 import { AdminLayout } from '../components/layout'
 import { AdminCard, AdminButton, AdminToggle, AdminInput, useToast } from '../components/ui'
-import { useProducts, useSettings, useSettingsMutations } from '../../hooks'
+import { useProducts, useSettings, useSettingsMutations } from '../hooks'
 
 // Sortable featured product item component
 function SortableFeaturedItem({ id, index, product, onRemove }) {

@@ -1,36 +1,22 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 
 // Pages
-import HomePage from './pages/HomePage'
-import CollectionPage from './pages/CollectionPage'
-import ProductPage from './pages/ProductPage'
-import CheckoutPage from './pages/CheckoutPage'
-import AboutPage from './pages/AboutPage'
-import FAQPage from './pages/FAQPage'
-import ContactPage from './pages/ContactPage'
-import ShippingPage from './pages/ShippingPage'
-import ReturnsPage from './pages/ReturnsPage'
-import SizeGuidePage from './pages/SizeGuidePage'
-import PrivacyPage from './pages/PrivacyPage'
-import TermsPage from './pages/TermsPage'
-import WarrantyPage from './pages/WarrantyPage'
-import CareGuidePage from './pages/CareGuidePage'
-import CancellationPage from './pages/CancellationPage'
-import CollaborationsPage from './pages/CollaborationsPage'
-
-// Admin Pages & Components
-import {
-  AdminLoginPage,
-  AdminDashboard,
-  CataloguePage,
-  AddProductPage,
-  ContentStudioPage,
-  OffersPage,
-  SettingsPage,
-  ImagesPage,
-  TimeMachinePage,
-} from './admin/pages'
-import ProtectedRoute from './admin/components/ProtectedRoute'
+import HomePage from '../pages/HomePage'
+import CollectionPage from '../pages/CollectionPage'
+import ProductPage from '../pages/ProductPage'
+import CheckoutPage from '../pages/CheckoutPage'
+import AboutPage from '../pages/AboutPage'
+import FAQPage from '../pages/FAQPage'
+import ContactPage from '../pages/ContactPage'
+import ShippingPage from '../pages/ShippingPage'
+import ReturnsPage from '../pages/ReturnsPage'
+import SizeGuidePage from '../pages/SizeGuidePage'
+import PrivacyPage from '../pages/PrivacyPage'
+import TermsPage from '../pages/TermsPage'
+import WarrantyPage from '../pages/WarrantyPage'
+import CareGuidePage from '../pages/CareGuidePage'
+import CancellationPage from '../pages/CancellationPage'
+import CollaborationsPage from '../pages/CollaborationsPage'
 
 function App() {
   return (
@@ -70,17 +56,6 @@ function App() {
 
       {/* Checkout */}
       <Route path="/checkout" element={<CheckoutPage />} />
-
-      {/* Admin Routes - Login is public, others are protected */}
-      <Route path="/admin/login" element={<AdminLoginPage />} />
-      <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-      <Route path="/admin/catalogue" element={<ProtectedRoute><CataloguePage /></ProtectedRoute>} />
-      <Route path="/admin/catalogue/new" element={<ProtectedRoute><AddProductPage /></ProtectedRoute>} />
-      <Route path="/admin/catalogue/content-studio" element={<ProtectedRoute><ContentStudioPage /></ProtectedRoute>} />
-      <Route path="/admin/offers" element={<ProtectedRoute><OffersPage /></ProtectedRoute>} />
-      <Route path="/admin/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
-      <Route path="/admin/images" element={<ProtectedRoute><ImagesPage /></ProtectedRoute>} />
-      <Route path="/admin/time-machine" element={<ProtectedRoute><TimeMachinePage /></ProtectedRoute>} />
 
       {/* 404 - Redirect to home */}
       <Route path="*" element={<Navigate to="/" replace />} />

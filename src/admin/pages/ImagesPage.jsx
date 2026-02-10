@@ -16,7 +16,7 @@ import {
 } from 'lucide-react'
 import { AdminLayout } from '../components/layout'
 import { AdminCard, AdminButton, AdminBadge, useToast } from '../components/ui'
-import { useProducts } from '../../hooks'
+import { useProducts } from '../hooks'
 
 const collections = ['all', 'diva', 'mini', 'paws', 'bond', 'uncategorized']
 

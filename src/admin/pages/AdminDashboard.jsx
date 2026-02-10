@@ -16,7 +16,7 @@ import {
 } from 'lucide-react'
 import { AdminLayout } from '../components/layout'
 import { AdminCard } from '../components/ui'
-import { useProducts } from '../../hooks'
+import { useProducts } from '../hooks'
 
 function AdminDashboard() {
   // Fetch products from Supabase

@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Loader2 } from 'lucide-react'
 import { AdminLayout } from '../components/layout'
 import { AdminCard, AdminButton, AdminInput, AdminSelect, useToast } from '../components/ui'
-import { useProductMutations } from '../../hooks'
+import { useProductMutations } from '../hooks'
 
 const collectionOptions = [
   { value: 'diva', label: 'Diva (Women)' },

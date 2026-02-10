@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { supabase, logActivity } from '../lib/supabase'
+import { supabase, logActivity } from '../../lib/supabase'
 
 /**
  * Hook to fetch all settings

@@ -17,14 +17,14 @@ import { products as initialProducts } from '../../../data/products'
 const STORAGE_KEY = 'mulyam_admin_products'
 
 const pages = [
-  { id: 'dashboard', name: 'Dashboard', path: '/admin', icon: LayoutDashboard },
-  { id: 'catalogue', name: 'Catalogue', path: '/admin/catalogue', icon: Package },
-  { id: 'add-product', name: 'Add Product', path: '/admin/catalogue/new', icon: Package },
-  { id: 'content-studio', name: 'Content Studio', path: '/admin/catalogue/content-studio', icon: FileText },
-  { id: 'offers', name: 'Offers & Coupons', path: '/admin/offers', icon: Tag },
-  { id: 'settings', name: 'Settings', path: '/admin/settings', icon: Settings },
-  { id: 'images', name: 'Images', path: '/admin/images', icon: Image },
-  { id: 'time-machine', name: 'Time Machine', path: '/admin/time-machine', icon: Clock },
+  { id: 'dashboard', name: 'Dashboard', path: '/', icon: LayoutDashboard },
+  { id: 'catalogue', name: 'Catalogue', path: '/catalogue', icon: Package },
+  { id: 'add-product', name: 'Add Product', path: '/catalogue/new', icon: Package },
+  { id: 'content-studio', name: 'Content Studio', path: '/catalogue/content-studio', icon: FileText },
+  { id: 'offers', name: 'Offers & Coupons', path: '/offers', icon: Tag },
+  { id: 'settings', name: 'Settings', path: '/settings', icon: Settings },
+  { id: 'images', name: 'Images', path: '/images', icon: Image },
+  { id: 'time-machine', name: 'Time Machine', path: '/time-machine', icon: Clock },
 ]
 
 function SearchModal({ isOpen, onClose }) {
@@ -127,7 +127,7 @@ function SearchModal({ isOpen, onClose }) {
       navigate(item.path)
     } else {
       // It's a product - navigate to catalogue with the product
-      navigate('/admin/catalogue')
+      navigate('/catalogue')
     }
     onClose()
   }

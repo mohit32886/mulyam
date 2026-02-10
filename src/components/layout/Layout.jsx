@@ -6,7 +6,7 @@ import { CartDrawer } from '../cart'
 import { SearchModal } from '../search'
 import { Toast } from '../ui'
 import { useCart } from '../../context/CartContext'
-import { useBanners } from '../../hooks'
+import { useStoreBanners } from '../../hooks'
 
 const ORDER_SENT_KEY = 'mulyam-order-sent'
 
@@ -16,7 +16,7 @@ function Layout({ children }) {
   const { totals, openCart } = useCart()
 
   // Fetch announcement banners from Supabase
-  const { data: banners } = useBanners({ position: 'announcement', isActive: true })
+  const { data: banners } = useStoreBanners({ position: 'announcement', isActive: true })
 
   // Check for order sent flag on mount
   useEffect(() => {
