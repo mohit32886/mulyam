@@ -98,7 +98,7 @@ function AddProductPage() {
       toast.error(`Failed to create product: ${error}`)
     } else {
       toast.success(`Product "${formData.name}" created successfully!`)
-      navigate('/admin/catalogue')
+      navigate('/catalogue')
     }
   }
 
@@ -107,7 +107,7 @@ function AddProductPage() {
       <div className="max-w-3xl mx-auto px-4 py-6">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm mb-6">
-          <Link to="/admin/catalogue" className="text-neutral-400 hover:text-white">
+          <Link to="/catalogue" className="text-neutral-400 hover:text-white">
             Catalogue
           </Link>
           <span className="text-neutral-600">/</span>
@@ -249,7 +249,7 @@ function AddProductPage() {
 
           {/* Actions */}
           <div className="flex justify-end gap-3">
-            <Link to="/admin/catalogue">
+            <Link to="/catalogue">
               <AdminButton type="button" variant="ghost" disabled={loading}>
                 Cancel
               </AdminButton>

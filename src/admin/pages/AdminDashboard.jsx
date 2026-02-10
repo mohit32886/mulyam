@@ -60,19 +60,19 @@ function AdminDashboard() {
   ]
 
   const catalogueLinks = [
-    { to: '/admin/catalogue', label: 'All Products', icon: ShoppingBag },
-    { to: '/admin/catalogue/new', label: 'Add Product', icon: Plus },
-    { to: '/admin/catalogue/content-studio', label: 'Content Studio', icon: Sparkles },
+    { to: '/catalogue', label: 'All Products', icon: ShoppingBag },
+    { to: '/catalogue/new', label: 'Add Product', icon: Plus },
+    { to: '/catalogue/content-studio', label: 'Content Studio', icon: Sparkles },
   ]
 
   const storeLinks = [
-    { to: '/admin/offers', label: 'Offers & Coupons', icon: Tag },
-    { to: '/admin/settings', label: 'Settings', icon: Settings },
+    { to: '/offers', label: 'Offers & Coupons', icon: Tag },
+    { to: '/settings', label: 'Settings', icon: Settings },
   ]
 
   const mediaLinks = [
-    { to: '/admin/images', label: 'Images', icon: Image },
-    { to: '/admin/time-machine', label: 'Time Machine', icon: Clock },
+    { to: '/images', label: 'Images', icon: Image },
+    { to: '/time-machine', label: 'Time Machine', icon: Clock },
   ]
 
   const comingSoon = ['Orders Management', 'Analytics Dashboard', 'Customer Insights']

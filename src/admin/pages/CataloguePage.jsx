@@ -266,7 +266,7 @@ function CataloguePage() {
                 <Download className="w-4 h-4" />
                 Data
               </AdminButton>
-              <Link to="/admin/catalogue/new">
+              <Link to="/catalogue/new">
                 <AdminButton size="sm">
                   <Plus className="w-4 h-4" />
                   Add Product

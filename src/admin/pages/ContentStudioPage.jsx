@@ -108,7 +108,7 @@ function ContentStudioPage() {
             </p>
           </div>
           <Link
-            to="/admin/catalogue"
+            to="/catalogue"
             className="inline-flex items-center gap-2 text-neutral-400 hover:text-white"
           >
             <ArrowLeft className="w-4 h-4" />
