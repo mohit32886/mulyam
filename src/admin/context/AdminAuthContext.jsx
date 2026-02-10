@@ -1,62 +1,71 @@
-import { createContext, useState, useEffect } from 'react'
+import { createContext, useState, useEffect, useCallback } from 'react'
+import { supabase } from '../../lib/supabase'
 
 export const AdminAuthContext = createContext(null)
-
-const ADMIN_CREDENTIALS = {
-  username: 'mulyam',
-  password: 'divaminipaws',
-}
-
-const AUTH_STORAGE_KEY = 'mulyam_admin_auth'
 
 export function AdminAuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [user, setUser] = useState(null)
+  const [session, setSession] = useState(null)
 
-  // Check for existing session on mount
+  // Check for existing Supabase session on mount
   useEffect(() => {
-    const stored = localStorage.getItem(AUTH_STORAGE_KEY)
-    if (stored) {
-      try {
-        const data = JSON.parse(stored)
-        if (data.isAuthenticated) {
-          setIsAuthenticated(true)
-          setUser(data.user)
-        }
-      } catch (e) {
-        localStorage.removeItem(AUTH_STORAGE_KEY)
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session)
+      setUser(session?.user ?? null)
+      setIsAuthenticated(!!session)
+      setIsLoading(false)
+    })
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setSession(session)
+        setUser(session?.user ?? null)
+        setIsAuthenticated(!!session)
       }
-    }
-    setIsLoading(false)
+    )
+
+    return () => subscription.unsubscribe()
   }, [])
 
-  const login = async (username, password) => {
-    // Simulate network delay
-    await new Promise((resolve) => setTimeout(resolve, 800))
+  const login = useCallback(async (email, password) => {
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
 
-    if (
-      username === ADMIN_CREDENTIALS.username &&
-      password === ADMIN_CREDENTIALS.password
-    ) {
-      const userData = { username, name: 'Admin' }
-      setIsAuthenticated(true)
-      setUser(userData)
-      localStorage.setItem(
-        AUTH_STORAGE_KEY,
-        JSON.stringify({ isAuthenticated: true, user: userData })
-      )
-      return { success: true }
+      if (error) {
+        return { success: false, error: error.message }
+      }
+
+      return { success: true, user: data.user }
+    } catch (err) {
+      return { success: false, error: 'An unexpected error occurred' }
     }
+  }, [])
 
-    return { success: false, error: 'Invalid credentials' }
-  }
-
-  const logout = () => {
+  const logout = useCallback(async () => {
+    await supabase.auth.signOut()
     setIsAuthenticated(false)
     setUser(null)
-    localStorage.removeItem(AUTH_STORAGE_KEY)
-  }
+    setSession(null)
+  }, [])
+
+  // Verify session is still valid (call this periodically or on sensitive operations)
+  const verifySession = useCallback(async () => {
+    const { data: { session }, error } = await supabase.auth.getSession()
+    if (error || !session) {
+      setIsAuthenticated(false)
+      setUser(null)
+      setSession(null)
+      return false
+    }
+    return true
+  }, [])
 
   return (
     <AdminAuthContext.Provider
@@ -64,8 +73,10 @@ export function AdminAuthProvider({ children }) {
         isAuthenticated,
         isLoading,
         user,
+        session,
         login,
         logout,
+        verifySession,
       }}
     >
       {children}

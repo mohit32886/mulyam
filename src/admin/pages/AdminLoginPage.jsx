@@ -1,22 +1,29 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAdminAuth } from '../hooks/useAdminAuth'
 import { AdminButton, AdminInput } from '../components/ui'
 
 function AdminLoginPage() {
-  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const { login } = useAdminAuth()
+  const { login, isAuthenticated } = useAdminAuth()
   const navigate = useNavigate()
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/admin')
+    }
+  }, [isAuthenticated, navigate])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
     setIsLoading(true)
 
-    const result = await login(username, password)
+    const result = await login(email, password)
 
     if (result.success) {
       navigate('/admin')
@@ -45,12 +52,13 @@ function AdminLoginPage() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <AdminInput
-              label="Username"
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter username"
+              label="Email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
               required
+              autoComplete="email"
             />
 
             <AdminInput
@@ -60,6 +68,7 @@ function AdminLoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter password"
               required
+              autoComplete="current-password"
             />
 
             {error && (

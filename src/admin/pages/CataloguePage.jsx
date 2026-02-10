@@ -12,6 +12,7 @@ import { AdminLayout } from '../components/layout'
 import { AdminCard, AdminButton, AdminBadge, AdminToggle, useToast } from '../components/ui'
 import { EditProductPanel } from '../components/catalogue'
 import { useProducts, useProductMutations } from '../../hooks'
+import { transformProductFromDb, transformProductToDb } from '../../utils/caseTransform'
 
 function CataloguePage() {
   const toast = useToast()
@@ -136,28 +137,8 @@ function CataloguePage() {
 
   // Handle save product
   const handleSaveProduct = async (updatedProduct) => {
-    // Transform from camelCase (form) to snake_case (DB)
-    const dbProduct = {
-      name: updatedProduct.name,
-      collection: updatedProduct.collection,
-      category: updatedProduct.category,
-      description: updatedProduct.description,
-      short_description: updatedProduct.shortDescription,
-      price: updatedProduct.price,
-      original_price: updatedProduct.originalPrice,
-      cost_price: updatedProduct.costPrice,
-      color: updatedProduct.color,
-      material: updatedProduct.material,
-      plating: updatedProduct.plating,
-      size: updatedProduct.size,
-      stock: updatedProduct.stock,
-      in_stock: updatedProduct.inStock,
-      is_live: updatedProduct.status === 'live',
-      is_bestseller: updatedProduct.isBestseller,
-      is_new_arrival: updatedProduct.isNewArrival,
-      is_trending: updatedProduct.isTrending,
-      is_selling_fast: updatedProduct.isSellingFast,
-    }
+    // Transform from camelCase (form) to snake_case (DB) using utility
+    const dbProduct = transformProductToDb(updatedProduct)
 
     const { error } = await updateProduct(updatedProduct.id, dbProduct)
 
@@ -223,22 +204,9 @@ function CataloguePage() {
     }
   }
 
-  // Transform product for edit panel (snake_case to camelCase)
+  // Transform product for edit panel (snake_case to camelCase) using utility
   const transformForEdit = (product) => {
-    if (!product) return null
-    return {
-      ...product,
-      originalPrice: product.original_price,
-      costPrice: product.cost_price,
-      shortDescription: product.short_description,
-      size: product.size,
-      inStock: product.in_stock,
-      isLive: product.is_live,
-      isBestseller: product.is_bestseller,
-      isNewArrival: product.is_new_arrival,
-      isTrending: product.is_trending,
-      isSellingFast: product.is_selling_fast,
-    }
+    return transformProductFromDb(product)
   }
 
   // Loading state

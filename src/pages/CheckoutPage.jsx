@@ -4,6 +4,8 @@ import { ChevronLeft, MessageCircle, ShoppingBag, Package, Truck, Tag } from 'lu
 import Layout from '../components/layout/Layout'
 import { Button } from '../components/ui'
 import { useCart } from '../context/CartContext'
+import { sanitizeFormData, sanitizeText } from '../utils/sanitize'
+import { checkoutFormSchema, validateField } from '../utils/validation'
 
 // Collection name mapping
 const collectionNames = {
@@ -49,66 +51,26 @@ function CheckoutPage() {
   // Handle field blur
   const handleBlur = (field) => {
     setTouched(prev => ({ ...prev, [field]: true }))
-    validateField(field, form[field])
+    validateFormField(field, form[field])
   }
 
-  // Validate single field
-  const validateField = (field, value) => {
-    let error = null
-
-    switch (field) {
-      case 'name':
-        if (!value.trim()) {
-          error = 'Please enter your name'
-        } else if (value.trim().length < 2) {
-          error = 'Name must be at least 2 characters'
-        }
-        break
-      case 'phone':
-        if (!value.trim()) {
-          error = 'Please enter your phone number'
-        } else if (!/^[6-9]\d{9}$/.test(value.trim())) {
-          error = 'Please enter a valid 10-digit phone number'
-        }
-        break
-      case 'address':
-        if (!value.trim()) {
-          error = 'Please enter your address'
-        } else if (value.trim().length < 5) {
-          error = 'Please enter your full address'
-        }
-        break
-      case 'city':
-        if (!value.trim()) {
-          error = 'Please enter your city'
-        } else if (value.trim().length < 2) {
-          error = 'Please enter a valid city name'
-        }
-        break
-      case 'pincode':
-        if (!value.trim()) {
-          error = 'Please enter your pincode'
-        } else if (!/^\d{6}$/.test(value.trim())) {
-          error = 'Please enter a valid 6-digit pincode'
-        }
-        break
-      default:
-        break
-    }
-
+  // Validate single field using zod schema
+  const validateFormField = (field, value) => {
+    const result = validateField(checkoutFormSchema, field, value?.trim?.() ?? value)
+    const error = result.success ? null : result.error
     setErrors(prev => ({ ...prev, [field]: error }))
-    return !error
+    return result.success
   }
 
-  // Validate all fields
+  // Validate all fields using zod schema
   const validateAll = () => {
-    const fields = ['name', 'phone', 'address', 'city', 'pincode']
-    let isValid = true
-
-    fields.forEach(field => {
-      if (!validateField(field, form[field])) {
-        isValid = false
-      }
+    const result = checkoutFormSchema.safeParse({
+      name: form.name.trim(),
+      phone: form.phone.trim(),
+      address: form.address.trim(),
+      city: form.city.trim(),
+      pincode: form.pincode.trim(),
+      notes: form.notes.trim() || undefined,
     })
 
     // Mark all fields as touched
@@ -120,16 +82,34 @@ function CheckoutPage() {
       pincode: true,
     })
 
-    return isValid
+    if (result.success) {
+      setErrors({})
+      return true
+    }
+
+    // Format errors from zod
+    const newErrors = {}
+    for (const error of result.error.errors) {
+      const field = error.path[0]
+      if (!newErrors[field]) {
+        newErrors[field] = error.message
+      }
+    }
+    setErrors(newErrors)
+    return false
   }
 
-  // Generate WhatsApp message
+  // Generate WhatsApp message with sanitized inputs
   const generateWhatsAppMessage = () => {
-    // Build order details
-    const orderItems = items.map((item, index) => {
+    // Sanitize all form data before using
+    const sanitizedForm = sanitizeFormData(form)
+
+    // Build order details with sanitized product names
+    const orderItems = items.map((item, idx) => {
       const itemTotal = item.price * item.quantity
+      const sanitizedName = sanitizeText(item.name)
       const collectionName = collectionNames[item.collection] || item.collection || 'Mulyam'
-      return `${index + 1}. ${item.name}\n   Qty: ${item.quantity} × ₹${item.price.toLocaleString('en-IN')} = ₹${itemTotal.toLocaleString('en-IN')}\n   Collection: ${collectionName}`
+      return `${idx + 1}. ${sanitizedName}\n   Qty: ${item.quantity} × ₹${item.price.toLocaleString('en-IN')} = ₹${itemTotal.toLocaleString('en-IN')}\n   Collection: ${collectionName}`
     }).join('\n')
 
     // Build summary
@@ -142,16 +122,17 @@ function CheckoutPage() {
     }
 
     if (appliedCoupon && totals.discount > 0) {
-      summary += `\nCoupon (${appliedCoupon.code}): -₹${totals.discount.toLocaleString('en-IN')}`
+      const sanitizedCode = sanitizeText(appliedCoupon.code)
+      summary += `\nCoupon (${sanitizedCode}): -₹${totals.discount.toLocaleString('en-IN')}`
     }
 
     summary += `\nTotal: ₹${finalTotal.toLocaleString('en-IN')}`
 
-    // Build delivery details
-    let deliveryDetails = `DELIVERY DETAILS:\nName: ${form.name.trim()}\nPhone: ${form.phone.trim()}\nAddress: ${form.address.trim()}\nCity: ${form.city.trim()}\nPincode: ${form.pincode.trim()}`
+    // Build delivery details with sanitized values
+    let deliveryDetails = `DELIVERY DETAILS:\nName: ${sanitizedForm.name}\nPhone: ${sanitizedForm.phone}\nAddress: ${sanitizedForm.address}\nCity: ${sanitizedForm.city}\nPincode: ${sanitizedForm.pincode}`
 
-    if (form.notes.trim()) {
-      deliveryDetails += `\n\nNotes: ${form.notes.trim()}`
+    if (sanitizedForm.notes) {
+      deliveryDetails += `\n\nNotes: ${sanitizedForm.notes}`
     }
 
     // Complete message
@@ -243,7 +224,7 @@ Please confirm availability and share payment details. Thank you!`
 
               {/* Cart Items */}
               <div className="space-y-4 mb-6">
-                {items.map((item, index) => (
+                {items.map((item) => (
                   <div key={item.id} className="flex gap-3">
                     {/* Image */}
                     <div className="w-16 h-16 bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">

@@ -18,7 +18,7 @@ import CareGuidePage from './pages/CareGuidePage'
 import CancellationPage from './pages/CancellationPage'
 import CollaborationsPage from './pages/CollaborationsPage'
 
-// Admin Pages
+// Admin Pages & Components
 import {
   AdminLoginPage,
   AdminDashboard,
@@ -30,6 +30,7 @@ import {
   ImagesPage,
   TimeMachinePage,
 } from './admin/pages'
+import ProtectedRoute from './admin/components/ProtectedRoute'
 
 function App() {
   return (
@@ -37,14 +38,18 @@ function App() {
       {/* Home */}
       <Route path="/" element={<HomePage />} />
 
-      {/* Collections */}
-      <Route path="/diva" element={<CollectionPage />} />
-      <Route path="/mini" element={<CollectionPage />} />
-      <Route path="/paws" element={<CollectionPage />} />
+      {/* Collections - explicit routes for SEO-friendly URLs */}
+      <Route path="/collections/diva" element={<CollectionPage />} />
+      <Route path="/collections/mini" element={<CollectionPage />} />
+      <Route path="/collections/paws" element={<CollectionPage />} />
       <Route path="/collections/custom" element={<CollectionPage />} />
+      <Route path="/collections/:collectionId" element={<CollectionPage />} />
 
-      {/* Generic collection route */}
-      <Route path="/:collectionId" element={<CollectionPage />} />
+      {/* Legacy collection URLs - redirect to new format */}
+      <Route path="/diva" element={<Navigate to="/collections/diva" replace />} />
+      <Route path="/mini" element={<Navigate to="/collections/mini" replace />} />
+      <Route path="/paws" element={<Navigate to="/collections/paws" replace />} />
+      <Route path="/bond" element={<Navigate to="/collections/custom" replace />} />
 
       {/* Product Detail */}
       <Route path="/products/:productId" element={<ProductPage />} />
@@ -66,19 +71,16 @@ function App() {
       {/* Checkout */}
       <Route path="/checkout" element={<CheckoutPage />} />
 
-      {/* Redirects for legacy URLs */}
-      <Route path="/bond" element={<Navigate to="/collections/custom" replace />} />
-
-      {/* Admin Routes */}
+      {/* Admin Routes - Login is public, others are protected */}
       <Route path="/admin/login" element={<AdminLoginPage />} />
-      <Route path="/admin" element={<AdminDashboard />} />
-      <Route path="/admin/catalogue" element={<CataloguePage />} />
-      <Route path="/admin/catalogue/new" element={<AddProductPage />} />
-      <Route path="/admin/catalogue/content-studio" element={<ContentStudioPage />} />
-      <Route path="/admin/offers" element={<OffersPage />} />
-      <Route path="/admin/settings" element={<SettingsPage />} />
-      <Route path="/admin/images" element={<ImagesPage />} />
-      <Route path="/admin/time-machine" element={<TimeMachinePage />} />
+      <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+      <Route path="/admin/catalogue" element={<ProtectedRoute><CataloguePage /></ProtectedRoute>} />
+      <Route path="/admin/catalogue/new" element={<ProtectedRoute><AddProductPage /></ProtectedRoute>} />
+      <Route path="/admin/catalogue/content-studio" element={<ProtectedRoute><ContentStudioPage /></ProtectedRoute>} />
+      <Route path="/admin/offers" element={<ProtectedRoute><OffersPage /></ProtectedRoute>} />
+      <Route path="/admin/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
+      <Route path="/admin/images" element={<ProtectedRoute><ImagesPage /></ProtectedRoute>} />
+      <Route path="/admin/time-machine" element={<ProtectedRoute><TimeMachinePage /></ProtectedRoute>} />
 
       {/* 404 - Redirect to home */}
       <Route path="*" element={<Navigate to="/" replace />} />

@@ -1,19 +1,44 @@
 import { useState, useCallback } from 'react'
 
-// Cloudinary configuration
-const CLOUD_NAME = 'daieejy7c'
-const UPLOAD_PRESET = 'mulyam_admin' // Unsigned upload preset
+// Cloudinary configuration from environment variables
+const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
+const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'mulyam_admin'
+
+if (!CLOUD_NAME) {
+  console.warn(
+    'Missing VITE_CLOUDINARY_CLOUD_NAME environment variable. Image uploads will fail.'
+  )
+}
 
 /**
  * Hook for uploading images to Cloudinary
  *
- * To set up the upload preset in Cloudinary:
+ * SECURITY NOTE: This uses unsigned uploads for simplicity.
+ * For production, consider implementing signed uploads:
+ *
+ * 1. Create a Supabase Edge Function or backend endpoint that generates signatures:
+ *    ```js
+ *    import { v2 as cloudinary } from 'cloudinary'
+ *    cloudinary.config({
+ *      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+ *      api_key: process.env.CLOUDINARY_API_KEY,
+ *      api_secret: process.env.CLOUDINARY_API_SECRET, // NEVER expose in frontend!
+ *    })
+ *    const signature = cloudinary.utils.api_sign_request(params, api_secret)
+ *    ```
+ *
+ * 2. Call your backend to get the signature before uploading
+ *
+ * For unsigned uploads, configure the preset securely in Cloudinary:
  * 1. Go to Settings > Upload > Upload presets
  * 2. Click "Add upload preset"
  * 3. Name: "mulyam_admin"
  * 4. Signing mode: "Unsigned"
- * 5. Folder: "mulyam/products"
- * 6. Save
+ * 5. Folder: "mulyam/products" (restrict to specific folder)
+ * 6. Allowed formats: jpg, png, webp (restrict file types)
+ * 7. Max file size: 5MB (prevent abuse)
+ * 8. Access mode: authenticated (optional, for private images)
+ * 9. Save
  */
 export function useCloudinaryUpload() {
   const [uploading, setUploading] = useState(false)

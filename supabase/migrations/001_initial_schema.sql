@@ -160,9 +160,7 @@ CREATE INDEX IF NOT EXISTS idx_featured_section ON featured_products(section);
 -- ============================================
 -- ROW LEVEL SECURITY (RLS)
 -- ============================================
--- For now, allow all operations (admin-only app)
--- In production, add proper authentication
-
+-- Enable RLS on all tables
 ALTER TABLE products ENABLE ROW LEVEL SECURITY;
 ALTER TABLE coupons ENABLE ROW LEVEL SECURITY;
 ALTER TABLE banners ENABLE ROW LEVEL SECURITY;
@@ -170,15 +168,53 @@ ALTER TABLE settings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE activity_log ENABLE ROW LEVEL SECURITY;
 ALTER TABLE featured_products ENABLE ROW LEVEL SECURITY;
 
--- Policies to allow all operations (for development)
--- Replace with proper auth policies in production
+-- ============================================
+-- PUBLIC READ POLICIES (for storefront)
+-- ============================================
+-- Anyone can read live products
+CREATE POLICY "Public can read live products" ON products
+  FOR SELECT USING (is_live = true);
 
-CREATE POLICY "Allow all for products" ON products FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "Allow all for coupons" ON coupons FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "Allow all for banners" ON banners FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "Allow all for settings" ON settings FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "Allow all for activity_log" ON activity_log FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "Allow all for featured_products" ON featured_products FOR ALL USING (true) WITH CHECK (true);
+-- Anyone can read active banners
+CREATE POLICY "Public can read active banners" ON banners
+  FOR SELECT USING (is_active = true);
+
+-- Anyone can read active coupons (for validation)
+CREATE POLICY "Public can read active coupons" ON coupons
+  FOR SELECT USING (is_active = true);
+
+-- ============================================
+-- AUTHENTICATED ADMIN POLICIES
+-- ============================================
+-- Authenticated users can do everything with products
+CREATE POLICY "Authenticated users can manage products" ON products
+  FOR ALL USING (auth.role() = 'authenticated')
+  WITH CHECK (auth.role() = 'authenticated');
+
+-- Authenticated users can do everything with coupons
+CREATE POLICY "Authenticated users can manage coupons" ON coupons
+  FOR ALL USING (auth.role() = 'authenticated')
+  WITH CHECK (auth.role() = 'authenticated');
+
+-- Authenticated users can do everything with banners
+CREATE POLICY "Authenticated users can manage banners" ON banners
+  FOR ALL USING (auth.role() = 'authenticated')
+  WITH CHECK (auth.role() = 'authenticated');
+
+-- Authenticated users can do everything with settings
+CREATE POLICY "Authenticated users can manage settings" ON settings
+  FOR ALL USING (auth.role() = 'authenticated')
+  WITH CHECK (auth.role() = 'authenticated');
+
+-- Authenticated users can do everything with activity_log
+CREATE POLICY "Authenticated users can manage activity_log" ON activity_log
+  FOR ALL USING (auth.role() = 'authenticated')
+  WITH CHECK (auth.role() = 'authenticated');
+
+-- Authenticated users can do everything with featured_products
+CREATE POLICY "Authenticated users can manage featured_products" ON featured_products
+  FOR ALL USING (auth.role() = 'authenticated')
+  WITH CHECK (auth.role() = 'authenticated');
 
 -- ============================================
 -- UPDATED_AT TRIGGER

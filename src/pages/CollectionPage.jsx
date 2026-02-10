@@ -30,10 +30,16 @@ function CollectionPage() {
   // Derive collection ID from URL path
   const collectionId = useMemo(() => {
     const path = location.pathname
+    // Handle new /collections/:id format
+    if (path.startsWith('/collections/')) {
+      const id = path.replace('/collections/', '')
+      // Map 'custom' to 'bond' for the BOND collection
+      return id === 'custom' ? 'bond' : id
+    }
+    // Legacy URLs (redirects should handle these, but just in case)
     if (path === '/diva') return 'diva'
     if (path === '/mini') return 'mini'
     if (path === '/paws') return 'paws'
-    if (path === '/collections/custom') return 'bond'
     return paramId
   }, [location.pathname, paramId])
 
