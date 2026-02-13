@@ -1,6 +1,7 @@
 // Admin hooks
 export { useAdminAuth } from './useAdminAuth'
 export { useCloudinaryUpload } from './useCloudinaryUpload'
+export { useImageEditor } from './useImageEditor'
 
 // Data hooks with mutations
 export { useProducts, useProduct, useProductMutations } from './useProducts'

@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { X, ShoppingBag, MessageCircle, Tag, Loader2, Check, ArrowRight } from 'lucide-react'
+import { X, ShoppingBag, MessageCircle, Tag, Loader2, Check, ArrowRight, Percent, ChevronDown, ChevronUp } from 'lucide-react'
 import { useCart } from '../../context/CartContext'
+import { useAvailableCoupons } from '../../hooks/useStore'
 import CartItem from './CartItem'
 import { Button } from '../ui'
 
@@ -22,6 +23,10 @@ function CartDrawer() {
 
   const [couponCode, setCouponCode] = useState('')
   const [couponMessage, setCouponMessage] = useState(null)
+  const [showAvailableCoupons, setShowAvailableCoupons] = useState(false)
+
+  // Fetch available coupons
+  const { coupons: availableCoupons, loading: couponsLoading } = useAvailableCoupons()
 
   // Close on Escape key
   useEffect(() => {
@@ -73,6 +78,26 @@ function CartDrawer() {
   const handleRemoveCoupon = () => {
     removeCoupon()
     setCouponMessage(null)
+  }
+
+  // Handle clicking on an available coupon to auto-apply
+  const handleSelectCoupon = async (code) => {
+    setCouponCode(code)
+    const result = await applyCoupon(code)
+
+    if (result.success) {
+      setCouponMessage({
+        type: 'success',
+        text: `Coupon applied! You saved Rs ${result.discount.toLocaleString('en-IN')}`,
+      })
+      setCouponCode('')
+      setShowAvailableCoupons(false)
+    } else {
+      setCouponMessage({
+        type: 'error',
+        text: result.error || 'Could not apply coupon',
+      })
+    }
   }
 
   if (!isOpen) return null
@@ -227,6 +252,62 @@ function CartDrawer() {
                 >
                   {couponMessage.type === 'success' && <Check className="w-4 h-4" />}
                   {couponMessage.text}
+                </div>
+              )}
+
+              {/* Available Coupons Section */}
+              {!appliedCoupon && availableCoupons.length > 0 && (
+                <div className="mt-3">
+                  <button
+                    onClick={() => setShowAvailableCoupons(!showAvailableCoupons)}
+                    className="flex items-center gap-1.5 text-sm text-coral hover:text-coral/80 transition-colors"
+                  >
+                    <Percent className="w-3.5 h-3.5" />
+                    <span>View available coupons ({availableCoupons.length})</span>
+                    {showAvailableCoupons ? (
+                      <ChevronUp className="w-3.5 h-3.5" />
+                    ) : (
+                      <ChevronDown className="w-3.5 h-3.5" />
+                    )}
+                  </button>
+
+                  {showAvailableCoupons && (
+                    <div className="mt-2 space-y-2 max-h-40 overflow-y-auto">
+                      {availableCoupons.map((coupon) => {
+                        const isEligible = !coupon.minOrder || totals.subtotal >= coupon.minOrder
+                        return (
+                          <button
+                            key={coupon.id}
+                            onClick={() => isEligible && handleSelectCoupon(coupon.code)}
+                            disabled={!isEligible || couponLoading}
+                            className={`w-full text-left p-2.5 rounded-lg border transition-all ${
+                              isEligible
+                                ? 'border-tan/30 bg-tan/5 hover:bg-tan/10 hover:border-tan cursor-pointer'
+                                : 'border-gray-200 bg-gray-50 cursor-not-allowed opacity-60'
+                            }`}
+                          >
+                            <div className="flex items-center justify-between">
+                              <span className="font-medium text-dark text-sm">
+                                {coupon.code}
+                              </span>
+                              {isEligible ? (
+                                <span className="text-xs text-coral font-medium">
+                                  Tap to apply
+                                </span>
+                              ) : (
+                                <span className="text-xs text-gray-500">
+                                  Min. ₹{coupon.minOrder}
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-xs text-gray-600 mt-0.5">
+                              {coupon.description}
+                            </p>
+                          </button>
+                        )
+                      })}
+                    </div>
+                  )}
                 </div>
               )}
             </div>

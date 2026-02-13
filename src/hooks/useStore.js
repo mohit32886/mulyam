@@ -304,6 +304,15 @@ export function useStoreSettings() {
     email: 'Founders@mulyamjewels.com',
     shippingCost: 49,
     freeShippingAbove: 1499,
+    bannerRotationSpeed: 3,
+    homepageSections: [
+      { id: 'hero', name: 'Hero', enabled: true },
+      { id: 'collections', name: 'Collections', enabled: true },
+      { id: 'featured', name: 'Featured Products', enabled: true },
+      { id: 'why-choose', name: 'Why Choose Us', enabled: true },
+      { id: 'cta', name: 'CTA Banner', enabled: true },
+    ],
+    featuredProductIds: [],
   })
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -324,6 +333,32 @@ export function useStoreSettings() {
           settingsObj[row.key] = row.value
         })
 
+        // Parse homepage sections
+        let homepageSections = prev.homepageSections
+        if (settingsObj.homepage_sections) {
+          try {
+            const parsed = typeof settingsObj.homepage_sections === 'string'
+              ? JSON.parse(settingsObj.homepage_sections)
+              : settingsObj.homepage_sections
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              homepageSections = parsed
+            }
+          } catch {}
+        }
+
+        // Parse featured product IDs
+        let featuredProductIds = prev.featuredProductIds
+        if (settingsObj.featured_products) {
+          try {
+            const parsed = typeof settingsObj.featured_products === 'string'
+              ? JSON.parse(settingsObj.featured_products)
+              : settingsObj.featured_products
+            if (Array.isArray(parsed)) {
+              featuredProductIds = parsed
+            }
+          } catch {}
+        }
+
         setSettings(prev => ({
           ...prev,
           storeName: settingsObj.store_name || prev.storeName,
@@ -332,6 +367,9 @@ export function useStoreSettings() {
           email: settingsObj.email || prev.email,
           shippingCost: parseInt(settingsObj.shipping_cost) || prev.shippingCost,
           freeShippingAbove: parseInt(settingsObj.free_shipping_above) || prev.freeShippingAbove,
+          bannerRotationSpeed: parseInt(settingsObj.banner_rotation_speed) || prev.bannerRotationSpeed,
+          homepageSections,
+          featuredProductIds,
         }))
       } catch (err) {
         console.error('Error fetching settings:', err)
@@ -424,6 +462,76 @@ export function useValidateCouponCode() {
   }
 
   return { validateCoupon, loading, error }
+}
+
+/**
+ * Fetch available coupons for display in cart
+ * Only returns active, non-expired coupons that are visible to users
+ */
+export function useAvailableCoupons() {
+  const [coupons, setCoupons] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    async function fetchCoupons() {
+      try {
+        setLoading(true)
+        const now = new Date().toISOString()
+
+        const { data, error: fetchError } = await supabase
+          .from('coupons')
+          .select('id, code, type, value, min_order, max_discount, end_date, description')
+          .eq('is_active', true)
+          .or(`end_date.is.null,end_date.gte.${now}`)
+          .order('value', { ascending: false })
+
+        if (fetchError) throw fetchError
+
+        // Format coupons for display
+        const formattedCoupons = (data || []).map(coupon => ({
+          id: coupon.id,
+          code: coupon.code,
+          type: coupon.type,
+          value: coupon.value,
+          minOrder: coupon.min_order,
+          maxDiscount: coupon.max_discount,
+          endDate: coupon.end_date,
+          description: coupon.description || formatCouponDescription(coupon),
+        }))
+
+        setCoupons(formattedCoupons)
+      } catch (err) {
+        console.error('Error fetching available coupons:', err)
+        setError(err.message)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchCoupons()
+  }, [])
+
+  return { coupons, loading, error }
+}
+
+// Helper to format coupon description
+function formatCouponDescription(coupon) {
+  let desc = ''
+  if (coupon.type === 'percentage') {
+    desc = `${coupon.value}% off`
+    if (coupon.max_discount) {
+      desc += ` (up to ₹${coupon.max_discount})`
+    }
+  } else if (coupon.type === 'fixed') {
+    desc = `₹${coupon.value} off`
+  } else if (coupon.type === 'freeShipping') {
+    desc = 'Free shipping'
+  }
+  if (coupon.min_order) {
+    desc += ` on orders above ₹${coupon.min_order}`
+  }
+  return desc
 }
 
 /**

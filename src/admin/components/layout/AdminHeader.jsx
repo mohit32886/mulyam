@@ -73,9 +73,9 @@ function AdminHeader() {
               </span>
             </button>
 
-            {/* Store Link */}
+            {/* Store Link - opens storefront in new tab */}
             <a
-              href="/"
+              href={import.meta.env.VITE_STOREFRONT_URL || 'http://localhost:5173'}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-neutral-400 hover:text-white transition-colors"

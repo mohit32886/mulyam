@@ -109,7 +109,10 @@ function ProductPage() {
   }
 
   const collection = collections[product.collection]
-  const discount = product.originalPrice > 0 && product.originalPrice > product.price
+
+  // Only calculate discount if: price > 0 AND originalPrice > 0 AND originalPrice > price
+  const hasValidDiscount = product.price > 0 && product.originalPrice > 0 && product.originalPrice > product.price
+  const discount = hasValidDiscount
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0
 
@@ -222,7 +225,7 @@ function ProductPage() {
 
               {/* Thumbnail Strip - Show only if multiple images */}
               {product.images?.length > 1 && (
-                <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-2 -mx-1 px-1">
+                <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-2">
                   {product.images.map((image, index) => (
                     <button
                       key={index}
@@ -255,7 +258,7 @@ function ProductPage() {
                 <span className="text-2xl font-bold text-dark">
                   Rs {product.price.toLocaleString('en-IN')}
                 </span>
-                {product.originalPrice > 0 && product.originalPrice > product.price && (
+                {hasValidDiscount && (
                   <>
                     <span className="text-lg text-gray-400 line-through">
                       Rs {product.originalPrice.toLocaleString('en-IN')}
@@ -290,15 +293,11 @@ function ProductPage() {
               <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-600">
                 <span className="flex items-center gap-1.5">
                   <RotateCcw className="w-4 h-4 text-tan" />
-                  4 Days Easy Return
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <Package className="w-4 h-4 text-tan" />
-                  10 Days Exchange
+                  4 Days Easy Returns and Exchange*
                 </span>
                 <span className="flex items-center gap-1.5">
                   <Shield className="w-4 h-4 text-tan" />
-                  1 Year Warranty*
+                  6 Months Warranty
                 </span>
               </div>
 
@@ -401,7 +400,7 @@ function ProductPage() {
                   </span>
                   <span className="flex items-center gap-2">
                     <RotateCcw className="w-4 h-4" />
-                    Easy returns within 4 days
+                    4 Days Easy Returns and Exchange*
                   </span>
                 </div>
               </div>
@@ -463,7 +462,7 @@ function ProductPage() {
             <p className="font-medium text-sm text-dark truncate">{product.name}</p>
             <p className="text-lg font-bold text-dark">
               Rs {product.price.toLocaleString('en-IN')}
-              {product.originalPrice > 0 && product.originalPrice > product.price && (
+              {hasValidDiscount && (
                 <span className="ml-2 text-sm font-normal text-gray-400 line-through">
                   Rs {product.originalPrice.toLocaleString('en-IN')}
                 </span>

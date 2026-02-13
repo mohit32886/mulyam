@@ -1,13 +1,15 @@
 import { useState, useRef, useCallback } from 'react'
-import { Upload, X, Image as ImageIcon, Loader2 } from 'lucide-react'
+import { Upload, X, Image as ImageIcon, Loader2, Pencil } from 'lucide-react'
 import { useCloudinaryUpload } from '../../hooks/useCloudinaryUpload'
+import ImageEditModal from './ImageEditModal'
 
 /**
  * Drag and drop image upload zone component
  */
-export default function ImageUploadZone({ onUpload, folder, disabled = false }) {
+export default function ImageUploadZone({ onUpload, folder, disabled = false, enableEditing = true }) {
   const [isDragging, setIsDragging] = useState(false)
   const [uploadingFiles, setUploadingFiles] = useState([])
+  const [editingFile, setEditingFile] = useState(null) // File being edited
   const fileInputRef = useRef(null)
   const inputId = useRef(`file-upload-${Math.random().toString(36).slice(2, 9)}`).current
   const { uploadFile } = useCloudinaryUpload()
@@ -35,48 +37,101 @@ export default function ImageUploadZone({ onUpload, folder, disabled = false }) 
 
     if (imageFiles.length === 0) return
 
-    // Add files to uploading state with preview
+    // Add files to state with pending status (if editing enabled) or upload directly
     const newUploadingFiles = imageFiles.map(file => ({
       id: `${file.name}-${Date.now()}`,
       name: file.name,
       preview: URL.createObjectURL(file),
       file,
+      editedBlob: null,
       progress: 0,
-      status: 'uploading',
+      status: enableEditing ? 'pending' : 'uploading',
     }))
 
     setUploadingFiles(prev => [...prev, ...newUploadingFiles])
 
-    // Upload each file
-    for (const uploadingFile of newUploadingFiles) {
-      try {
-        const result = await uploadFile(uploadingFile.file, {
-          folder,
-          onProgress: (progress) => {
-            setUploadingFiles(prev =>
-              prev.map(f =>
-                f.id === uploadingFile.id ? { ...f, progress } : f
-              )
-            )
-          },
-        })
-
-        // Remove from uploading and call onUpload
-        setUploadingFiles(prev => prev.filter(f => f.id !== uploadingFile.id))
-        URL.revokeObjectURL(uploadingFile.preview)
-        onUpload?.(result.url)
-      } catch (error) {
-        // Mark as error
-        setUploadingFiles(prev =>
-          prev.map(f =>
-            f.id === uploadingFile.id
-              ? { ...f, status: 'error', error: error.message }
-              : f
-          )
-        )
+    // If editing is disabled, upload immediately
+    if (!enableEditing) {
+      for (const uploadingFile of newUploadingFiles) {
+        await uploadSingleFile(uploadingFile)
       }
     }
-  }, [disabled, folder, uploadFile, onUpload])
+  }, [disabled, enableEditing])
+
+  // Upload a single file (original or edited)
+  const uploadSingleFile = useCallback(async (uploadingFile) => {
+    const fileToUpload = uploadingFile.editedBlob || uploadingFile.file
+
+    // Update status to uploading
+    setUploadingFiles(prev =>
+      prev.map(f =>
+        f.id === uploadingFile.id ? { ...f, status: 'uploading' } : f
+      )
+    )
+
+    try {
+      const result = await uploadFile(fileToUpload, {
+        folder,
+        onProgress: (progress) => {
+          setUploadingFiles(prev =>
+            prev.map(f =>
+              f.id === uploadingFile.id ? { ...f, progress } : f
+            )
+          )
+        },
+      })
+
+      // Remove from list and call onUpload
+      setUploadingFiles(prev => prev.filter(f => f.id !== uploadingFile.id))
+      URL.revokeObjectURL(uploadingFile.preview)
+      onUpload?.(result.url)
+    } catch (error) {
+      // Mark as error
+      setUploadingFiles(prev =>
+        prev.map(f =>
+          f.id === uploadingFile.id
+            ? { ...f, status: 'error', error: error.message }
+            : f
+        )
+      )
+    }
+  }, [folder, uploadFile, onUpload])
+
+  // Handle edit button click
+  const handleEditClick = useCallback((file) => {
+    setEditingFile(file)
+  }, [])
+
+  // Handle save from edit modal
+  const handleEditSave = useCallback((blob) => {
+    if (!editingFile) return
+
+    // Create a new preview URL for the edited blob
+    const editedPreview = URL.createObjectURL(blob)
+
+    // Update the file with edited blob
+    setUploadingFiles(prev =>
+      prev.map(f =>
+        f.id === editingFile.id
+          ? {
+              ...f,
+              editedBlob: blob,
+              preview: editedPreview,
+            }
+          : f
+      )
+    )
+
+    // Revoke old preview URL
+    URL.revokeObjectURL(editingFile.preview)
+
+    setEditingFile(null)
+  }, [editingFile])
+
+  // Handle upload button click (for pending files)
+  const handleUploadClick = useCallback(async (file) => {
+    await uploadSingleFile(file)
+  }, [uploadSingleFile])
 
   const handleDrop = useCallback((e) => {
     e.preventDefault()
@@ -186,7 +241,15 @@ export default function ImageUploadZone({ onUpload, folder, disabled = false }) 
 
               {/* Info & Progress */}
               <div className="flex-1 min-w-0">
-                <p className="text-sm text-neutral-300 truncate">{file.name}</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-sm text-neutral-300 truncate">{file.name}</p>
+                  {file.status === 'pending' && (
+                    <span className="text-xs text-yellow-500">Ready to upload</span>
+                  )}
+                  {file.editedBlob && (
+                    <span className="text-xs text-green-500">Edited</span>
+                  )}
+                </div>
                 {file.status === 'uploading' && (
                   <div className="mt-1">
                     <div className="h-1.5 bg-neutral-700 rounded-full overflow-hidden">
@@ -204,10 +267,29 @@ export default function ImageUploadZone({ onUpload, folder, disabled = false }) 
               </div>
 
               {/* Actions */}
-              <div className="flex-shrink-0">
-                {file.status === 'uploading' ? (
+              <div className="flex-shrink-0 flex items-center gap-1">
+                {file.status === 'pending' && (
+                  <>
+                    <button
+                      onClick={() => handleEditClick(file)}
+                      className="p-1.5 text-neutral-400 hover:text-orange-400 hover:bg-orange-500/10 rounded"
+                      title="Edit image"
+                    >
+                      <Pencil className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => handleUploadClick(file)}
+                      className="p-1.5 text-neutral-400 hover:text-green-400 hover:bg-green-500/10 rounded"
+                      title="Upload"
+                    >
+                      <Upload className="w-4 h-4" />
+                    </button>
+                  </>
+                )}
+                {file.status === 'uploading' && (
                   <Loader2 className="w-4 h-4 text-orange-500 animate-spin" />
-                ) : (
+                )}
+                {(file.status === 'pending' || file.status === 'error') && (
                   <button
                     onClick={() => removeUploadingFile(file.id)}
                     className="p-1 text-neutral-500 hover:text-red-400 hover:bg-red-500/10 rounded"
@@ -220,6 +302,14 @@ export default function ImageUploadZone({ onUpload, folder, disabled = false }) 
           ))}
         </div>
       )}
+
+      {/* Image Edit Modal */}
+      <ImageEditModal
+        isOpen={!!editingFile}
+        imageUrl={editingFile?.preview}
+        onClose={() => setEditingFile(null)}
+        onSave={handleEditSave}
+      />
     </div>
   )
 }

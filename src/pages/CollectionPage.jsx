@@ -64,32 +64,22 @@ function CollectionPage() {
       result = result.filter((p) => p.category === activeCategory)
     }
 
-    // Helper to check if product has a badge
-    const hasBadge = (p) => p.isSellingFast || p.isTrending || p.isNewArrival || p.isBestseller
-
-    // Sort
-    switch (sortBy) {
-      case 'price-low':
-        result.sort((a, b) => a.price - b.price)
-        break
-      case 'price-high':
-        result.sort((a, b) => b.price - a.price)
-        break
-      case 'name':
-        result.sort((a, b) => a.name.localeCompare(b.name))
-        break
-      default:
-        // newest - keep original order
-        break
-    }
-
-    // Always sort badged products to top (after primary sort)
+    // Sort products based on selected option
     result.sort((a, b) => {
-      const aBadge = hasBadge(a)
-      const bBadge = hasBadge(b)
-      if (aBadge && !bBadge) return -1
-      if (!aBadge && bBadge) return 1
-      return 0
+      switch (sortBy) {
+        case 'price-low':
+          return a.price - b.price
+        case 'price-high':
+          return b.price - a.price
+        case 'name':
+          return a.name.localeCompare(b.name)
+        case 'newest':
+        default:
+          // Sort by created_at descending (newest first)
+          const dateA = new Date(a.createdAt || a.created_at || 0)
+          const dateB = new Date(b.createdAt || b.created_at || 0)
+          return dateB - dateA
+      }
     })
 
     return result
