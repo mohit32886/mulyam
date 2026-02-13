@@ -21,7 +21,7 @@ function Layout({ children }) {
   const isHomePage = location.pathname === '/'
 
   // Fetch announcement banners and settings from Supabase
-  const { banners } = useStoreBanners()
+  const { banners } = useStoreBanners({ type: 'announcement' })
   const { settings } = useStoreSettings()
 
   // Check for order sent flag on mount

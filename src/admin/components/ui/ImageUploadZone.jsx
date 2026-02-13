@@ -11,19 +11,25 @@ export default function ImageUploadZone({ onUpload, folder, disabled = false, en
   const [uploadingFiles, setUploadingFiles] = useState([])
   const [editingFile, setEditingFile] = useState(null) // File being edited
   const fileInputRef = useRef(null)
+  const uploadingFilesRef = useRef([]) // Ref to track files for cleanup on unmount
   const inputId = useRef(`file-upload-${Math.random().toString(36).slice(2, 9)}`).current
   const { uploadFile } = useCloudinaryUpload()
 
-  // Cleanup preview URLs on unmount to prevent memory leaks
+  // Keep ref in sync with state for unmount cleanup
+  useEffect(() => {
+    uploadingFilesRef.current = uploadingFiles
+  }, [uploadingFiles])
+
+  // Cleanup preview URLs only on unmount to prevent memory leaks
   useEffect(() => {
     return () => {
-      uploadingFiles.forEach(file => {
+      uploadingFilesRef.current.forEach(file => {
         if (file.preview) {
           URL.revokeObjectURL(file.preview)
         }
       })
     }
-  }, [uploadingFiles])
+  }, [])
 
   const handleDragOver = useCallback((e) => {
     e.preventDefault()

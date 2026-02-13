@@ -33,12 +33,14 @@ const transformProduct = (p) => ({
 })
 
 // Transform banner from Supabase to frontend format
+// Handles both legacy fields (text, bg_color, link) and admin fields (title, background_color, link_url)
 const transformBanner = (b) => ({
   id: b.id,
-  text: b.text,
-  link: b.link,
+  text: b.title || b.text,
+  subtitle: b.subtitle,
+  link: b.link_url || b.link,
   type: b.type,
-  bgColor: b.bg_color,
+  bgColor: b.background_color || b.bg_color,
   textColor: b.text_color,
   isActive: b.is_active,
   position: b.position,
@@ -260,8 +262,10 @@ export function useRelatedProducts(productId, limit = 4) {
 
 /**
  * Fetch active banners for the announcement bar
+ * @param {Object} options - Filter options
+ * @param {string} options.type - Filter by banner type (e.g., 'announcement')
  */
-export function useStoreBanners() {
+export function useStoreBanners({ type } = {}) {
   const [banners, setBanners] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -270,11 +274,19 @@ export function useStoreBanners() {
     const fetchBanners = async () => {
       try {
         setLoading(true)
-        const { data, error: fetchError } = await supabase
+        let query = supabase
           .from('banners')
           .select('*')
           .eq('is_active', true)
-          .order('position', { ascending: true })
+
+        // Filter by type if provided
+        if (type) {
+          query = query.eq('type', type)
+        }
+
+        query = query.order('position', { ascending: true })
+
+        const { data, error: fetchError } = await query
 
         if (fetchError) throw fetchError
 
@@ -288,7 +300,7 @@ export function useStoreBanners() {
     }
 
     fetchBanners()
-  }, [])
+  }, [type])
 
   return { banners, loading, error }
 }
