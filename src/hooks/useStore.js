@@ -333,44 +333,46 @@ export function useStoreSettings() {
           settingsObj[row.key] = row.value
         })
 
-        // Parse homepage sections
-        let homepageSections = prev.homepageSections
-        if (settingsObj.homepage_sections) {
-          try {
-            const parsed = typeof settingsObj.homepage_sections === 'string'
-              ? JSON.parse(settingsObj.homepage_sections)
-              : settingsObj.homepage_sections
-            if (Array.isArray(parsed) && parsed.length > 0) {
-              homepageSections = parsed
-            }
-          } catch {}
-        }
+        setSettings(prev => {
+          // Parse homepage sections
+          let homepageSections = prev.homepageSections
+          if (settingsObj.homepage_sections) {
+            try {
+              const parsed = typeof settingsObj.homepage_sections === 'string'
+                ? JSON.parse(settingsObj.homepage_sections)
+                : settingsObj.homepage_sections
+              if (Array.isArray(parsed) && parsed.length > 0) {
+                homepageSections = parsed
+              }
+            } catch {}
+          }
 
-        // Parse featured product IDs
-        let featuredProductIds = prev.featuredProductIds
-        if (settingsObj.featured_products) {
-          try {
-            const parsed = typeof settingsObj.featured_products === 'string'
-              ? JSON.parse(settingsObj.featured_products)
-              : settingsObj.featured_products
-            if (Array.isArray(parsed)) {
-              featuredProductIds = parsed
-            }
-          } catch {}
-        }
+          // Parse featured product IDs
+          let featuredProductIds = prev.featuredProductIds
+          if (settingsObj.featured_products) {
+            try {
+              const parsed = typeof settingsObj.featured_products === 'string'
+                ? JSON.parse(settingsObj.featured_products)
+                : settingsObj.featured_products
+              if (Array.isArray(parsed)) {
+                featuredProductIds = parsed
+              }
+            } catch {}
+          }
 
-        setSettings(prev => ({
-          ...prev,
-          storeName: settingsObj.store_name || prev.storeName,
-          whatsapp: settingsObj.whatsapp || prev.whatsapp,
-          instagram: settingsObj.instagram || prev.instagram,
-          email: settingsObj.email || prev.email,
-          shippingCost: parseInt(settingsObj.shipping_cost) || prev.shippingCost,
-          freeShippingAbove: parseInt(settingsObj.free_shipping_above) || prev.freeShippingAbove,
-          bannerRotationSpeed: parseInt(settingsObj.banner_rotation_speed) || prev.bannerRotationSpeed,
-          homepageSections,
-          featuredProductIds,
-        }))
+          return {
+            ...prev,
+            storeName: settingsObj.store_name || prev.storeName,
+            whatsapp: settingsObj.whatsapp || prev.whatsapp,
+            instagram: settingsObj.instagram || prev.instagram,
+            email: settingsObj.email || prev.email,
+            shippingCost: parseInt(settingsObj.shipping_cost) || prev.shippingCost,
+            freeShippingAbove: parseInt(settingsObj.free_shipping_above) || prev.freeShippingAbove,
+            bannerRotationSpeed: parseInt(settingsObj.banner_rotation_speed) || prev.bannerRotationSpeed,
+            homepageSections,
+            featuredProductIds,
+          }
+        })
       } catch (err) {
         console.error('Error fetching settings:', err)
         setError(err.message)
@@ -481,8 +483,9 @@ export function useAvailableCoupons() {
 
         const { data, error: fetchError } = await supabase
           .from('coupons')
-          .select('id, code, type, value, min_order, max_discount, end_date, description')
+          .select('id, code, type, value, min_order, max_discount, start_date, end_date, description')
           .eq('is_active', true)
+          .or(`start_date.is.null,start_date.lte.${now}`)
           .or(`end_date.is.null,end_date.gte.${now}`)
           .order('value', { ascending: false })
 

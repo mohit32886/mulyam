@@ -15,16 +15,17 @@ function AnnouncementBar({
   const [isTransitioning, setIsTransitioning] = useState(false)
 
   // Convert legacy props to banners array if needed
+  // Banners from useStoreBanners use camelCase: text, bgColor, textColor, link
   const allBanners = banners.length > 0 ? banners : message ? [{
-    title: message,
-    background_color: bgColor,
-    text_color: textColor,
-    link_url: link,
+    text: message,
+    bgColor: bgColor,
+    textColor: textColor,
+    link: link,
   }] : [{
-    title: "Free shipping on orders above ₹1,499!",
-    background_color: null,
-    text_color: null,
-    link_url: null,
+    text: "Free shipping on orders above ₹1,499!",
+    bgColor: null,
+    textColor: null,
+    link: null,
   }]
 
   // Rotate banners
@@ -43,18 +44,18 @@ function AnnouncementBar({
   }, [allBanners.length, rotationInterval])
 
   const currentBanner = allBanners[currentIndex]
-  const displayMessage = currentBanner?.title || currentBanner?.subtitle || "Free shipping on orders above ₹1,499!"
+  const displayMessage = currentBanner?.text || "Free shipping on orders above ₹1,499!"
 
   const style = {
-    backgroundColor: currentBanner?.background_color || undefined,
-    color: currentBanner?.text_color || undefined,
+    backgroundColor: currentBanner?.bgColor || undefined,
+    color: currentBanner?.textColor || undefined,
   }
 
   const content = (
     <div
       className={`text-center py-2 text-sm font-body transition-opacity duration-300 ${
         isTransitioning ? 'opacity-0' : 'opacity-100'
-      } ${!currentBanner?.background_color ? 'bg-coral' : ''} ${!currentBanner?.text_color ? 'text-white' : ''}`}
+      } ${!currentBanner?.bgColor ? 'bg-coral' : ''} ${!currentBanner?.textColor ? 'text-white' : ''}`}
       style={style}
     >
       {displayMessage}
@@ -62,7 +63,7 @@ function AnnouncementBar({
   )
 
   // If there's a link, wrap in Link component
-  const linkUrl = currentBanner?.link_url
+  const linkUrl = currentBanner?.link
   if (linkUrl) {
     // Check if it's an internal or external link
     if (linkUrl.startsWith('/')) {

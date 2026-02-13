@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import { Upload, X, Image as ImageIcon, Loader2, Pencil } from 'lucide-react'
 import { useCloudinaryUpload } from '../../hooks/useCloudinaryUpload'
 import ImageEditModal from './ImageEditModal'
@@ -13,6 +13,17 @@ export default function ImageUploadZone({ onUpload, folder, disabled = false, en
   const fileInputRef = useRef(null)
   const inputId = useRef(`file-upload-${Math.random().toString(36).slice(2, 9)}`).current
   const { uploadFile } = useCloudinaryUpload()
+
+  // Cleanup preview URLs on unmount to prevent memory leaks
+  useEffect(() => {
+    return () => {
+      uploadingFiles.forEach(file => {
+        if (file.preview) {
+          URL.revokeObjectURL(file.preview)
+        }
+      })
+    }
+  }, [uploadingFiles])
 
   const handleDragOver = useCallback((e) => {
     e.preventDefault()

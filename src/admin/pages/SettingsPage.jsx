@@ -557,7 +557,7 @@ function SettingsPage() {
 
               <div className="p-3 bg-neutral-800/50 rounded-lg">
                 <p className="text-sm text-neutral-400">
-                  Manage banner messages in <a href="/admin/offers" className="text-orange-400 hover:underline">Offers →</a>
+                  Manage banner messages in <a href="/offers" className="text-orange-400 hover:underline">Offers →</a>
                 </p>
               </div>
             </div>
