@@ -25,7 +25,7 @@ import {
   useCouponMutations,
   useSettingsMutations,
   useBannerMutations
-} from '../../hooks'
+} from '../hooks'
 
 const filterOptions = [
   { value: 'all', label: 'All Activities' },

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import AnnouncementBar from './AnnouncementBar'
 import Header from './Header'
 import Footer from './Footer'
@@ -6,7 +7,7 @@ import { CartDrawer } from '../cart'
 import { SearchModal } from '../search'
 import { Toast } from '../ui'
 import { useCart } from '../../context/CartContext'
-import { useBanners } from '../../hooks'
+import { useStoreBanners, useStoreSettings } from '../../hooks'
 
 const ORDER_SENT_KEY = 'mulyam-order-sent'
 
@@ -14,9 +15,14 @@ function Layout({ children }) {
   const [searchOpen, setSearchOpen] = useState(false)
   const [showOrderToast, setShowOrderToast] = useState(false)
   const { totals, openCart } = useCart()
+  const location = useLocation()
 
-  // Fetch announcement banners from Supabase
-  const { data: banners } = useBanners({ position: 'announcement', isActive: true })
+  // Hide announcement bar on homepage
+  const isHomePage = location.pathname === '/'
+
+  // Fetch announcement banners and settings from Supabase
+  const { banners } = useStoreBanners({ type: 'announcement' })
+  const { settings } = useStoreSettings()
 
   // Check for order sent flag on mount
   useEffect(() => {
@@ -29,10 +35,12 @@ function Layout({ children }) {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <AnnouncementBar
-        banners={banners || []}
-        rotationInterval={3000}
-      />
+      {!isHomePage && (
+        <AnnouncementBar
+          banners={banners || []}
+          rotationInterval={(settings.bannerRotationSpeed || 3) * 1000}
+        />
+      )}
       <Header
         onSearchClick={() => setSearchOpen(true)}
         onCartClick={openCart}

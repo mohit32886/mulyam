@@ -23,7 +23,7 @@ function UserDropdownMenu() {
 
   const handleLogout = () => {
     logout()
-    navigate('/admin/login')
+    navigate('/login')
   }
 
   return (
@@ -50,7 +50,7 @@ function UserDropdownMenu() {
           <div className="p-1">
             <button
               onClick={() => {
-                navigate('/admin/settings')
+                navigate('/settings')
                 setIsOpen(false)
               }}
               className="w-full flex items-center gap-3 px-3 py-2 text-neutral-300 hover:bg-admin-card-hover rounded-lg transition-colors"

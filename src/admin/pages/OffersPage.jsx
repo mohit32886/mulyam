@@ -3,7 +3,7 @@ import { Megaphone, Tag, Plus, Edit2, Trash2, Power, GripVertical, Search, Loade
 import { AdminLayout } from '../components/layout'
 import { AdminCard, AdminButton, AdminBadge, useToast } from '../components/ui'
 import { CouponModal, BannerItemModal } from '../components/offers'
-import { useCoupons, useCouponMutations, useBanners, useBannerMutations, useSettings, useSettingsMutations } from '../../hooks'
+import { useCoupons, useCouponMutations, useBanners, useBannerMutations, useSettings, useSettingsMutations } from '../hooks'
 
 function OffersPage() {
   const toast = useToast()

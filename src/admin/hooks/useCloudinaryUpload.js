@@ -79,21 +79,40 @@ export function useCloudinaryUpload() {
 
         xhr.addEventListener('load', () => {
           if (xhr.status >= 200 && xhr.status < 300) {
-            const response = JSON.parse(xhr.responseText)
-            setProgress(prev => {
-              const next = { ...prev }
-              delete next[fileId]
-              return next
-            })
-            resolve({
-              url: response.secure_url,
-              publicId: response.public_id,
-              width: response.width,
-              height: response.height,
-              format: response.format,
-            })
+            try {
+              const response = JSON.parse(xhr.responseText)
+              console.log('Cloudinary upload success:', response.secure_url)
+              setProgress(prev => {
+                const next = { ...prev }
+                delete next[fileId]
+                return next
+              })
+              resolve({
+                url: response.secure_url,
+                publicId: response.public_id,
+                width: response.width,
+                height: response.height,
+                format: response.format,
+              })
+            } catch (parseError) {
+              console.error('Failed to parse Cloudinary response:', xhr.responseText)
+              const error = new Error('Invalid response from Cloudinary')
+              setErrors(prev => ({ ...prev, [fileId]: error.message }))
+              reject(error)
+            }
           } else {
-            const error = new Error(`Upload failed: ${xhr.statusText}`)
+            // Try to get more detailed error message from response
+            let errorMessage = `Upload failed: ${xhr.statusText}`
+            try {
+              const errorResponse = JSON.parse(xhr.responseText)
+              if (errorResponse.error?.message) {
+                errorMessage = errorResponse.error.message
+              }
+              console.error('Cloudinary upload error:', errorResponse)
+            } catch {
+              console.error('Cloudinary upload failed with status:', xhr.status, xhr.responseText)
+            }
+            const error = new Error(errorMessage)
             setErrors(prev => ({ ...prev, [fileId]: error.message }))
             reject(error)
           }

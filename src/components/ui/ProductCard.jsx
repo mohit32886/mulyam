@@ -29,7 +29,9 @@ function ProductCard({ product }) {
 
   const badge = getProductBadge(product)
 
-  const discount = originalPrice
+  // Only calculate discount if: originalPrice > 0 AND originalPrice > price AND price > 0
+  const hasValidDiscount = originalPrice && originalPrice > 0 && price > 0 && originalPrice > price
+  const discount = hasValidDiscount
     ? Math.round(((originalPrice - price) / originalPrice) * 100)
     : 0
 
@@ -44,7 +46,7 @@ function ProductCard({ product }) {
   return (
     <Link
       to={`/products/${id}`}
-      className="group block bg-white rounded-lg overflow-hidden"
+      className="group block bg-white rounded-lg overflow-hidden product-card-hover"
     >
       {/* Image Container */}
       <div className="relative aspect-square overflow-hidden bg-light-gray">
@@ -77,7 +79,7 @@ function ProductCard({ product }) {
               Out of Stock
             </Badge>
           )}
-          {inStock && discount > 0 && (
+          {inStock && hasValidDiscount && discount > 0 && (
             <Badge variant="discount" size="sm">
               {discount}% OFF
             </Badge>

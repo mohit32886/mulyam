@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { ArrowLeft, Search, Check, AlertCircle, Sparkles, Loader2 } from 'lucide-react'
 import { AdminLayout } from '../components/layout'
 import { AdminCard, AdminButton, AdminBadge } from '../components/ui'
-import { useProducts } from '../../hooks'
+import { useProducts } from '../hooks'
 
 function ContentStudioPage() {
   const [searchQuery, setSearchQuery] = useState('')
@@ -108,7 +108,7 @@ function ContentStudioPage() {
             </p>
           </div>
           <Link
-            to="/admin/catalogue"
+            to="/catalogue"
             className="inline-flex items-center gap-2 text-neutral-400 hover:text-white"
           >
             <ArrowLeft className="w-4 h-4" />

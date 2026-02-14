@@ -4,9 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "vite --config vite.config.storefront.js",
+    "dev:admin": "vite --config vite.config.admin.js",
+    "build": "vite build --config vite.config.storefront.js",
+    "build:admin": "vite build --config vite.config.admin.js",
+    "build:all": "npm run build && npm run build:admin",
+    "preview": "vite preview --config vite.config.storefront.js",
+    "preview:admin": "vite preview --config vite.config.admin.js"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -18,6 +22,7 @@
     "pg": "^8.17.2",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
+    "react-image-crop": "^11.0.10",
     "react-router-dom": "^7.12.0",
     "zod": "^4.3.6"
   },

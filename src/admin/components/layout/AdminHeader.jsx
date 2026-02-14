@@ -4,11 +4,11 @@ import { Search, ExternalLink, ChevronDown } from 'lucide-react'
 import { SearchModal, UserDropdownMenu } from '../ui'
 
 const navLinks = [
-  { to: '/admin/catalogue', label: 'Catalogue', hasDropdown: true },
-  { to: '/admin/images', label: 'Images' },
-  { to: '/admin/offers', label: 'Offers' },
-  { to: '/admin/time-machine', label: 'Time Machine' },
-  { to: '/admin/settings', label: 'Settings', hasDropdown: true },
+  { to: '/catalogue', label: 'Catalogue', hasDropdown: true },
+  { to: '/images', label: 'Images' },
+  { to: '/offers', label: 'Offers' },
+  { to: '/time-machine', label: 'Time Machine' },
+  { to: '/settings', label: 'Settings', hasDropdown: true },
 ]
 
 function AdminHeader() {
@@ -33,7 +33,7 @@ function AdminHeader() {
         <div className="flex items-center justify-between h-14 px-4">
           {/* Logo & Nav */}
           <div className="flex items-center gap-8">
-            <Link to="/admin" className="flex items-center">
+            <Link to="/" className="flex items-center">
               <div className="w-8 h-8 bg-gradient-to-br from-amber-200 to-amber-400 rounded flex items-center justify-center">
                 <span className="text-black font-serif font-bold text-lg">M</span>
               </div>
@@ -73,9 +73,9 @@ function AdminHeader() {
               </span>
             </button>
 
-            {/* Store Link */}
+            {/* Store Link - opens storefront in new tab */}
             <a
-              href="/"
+              href={import.meta.env.VITE_STOREFRONT_URL || 'http://localhost:5173'}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-neutral-400 hover:text-white transition-colors"

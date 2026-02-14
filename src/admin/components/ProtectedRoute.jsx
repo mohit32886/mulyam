@@ -22,7 +22,7 @@ export function ProtectedRoute({ children }) {
   // Redirect to login if not authenticated
   if (!isAuthenticated) {
     // Save the attempted URL for redirecting after login
-    return <Navigate to="/admin/login" state={{ from: location }} replace />
+    return <Navigate to="/login" state={{ from: location }} replace />
   }
 
   return children

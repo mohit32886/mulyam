@@ -12,6 +12,7 @@ import {
   Save,
   Check,
   Loader2,
+  Megaphone,
 } from 'lucide-react'
 import {
   DndContext,
@@ -31,7 +32,7 @@ import {
 import { CSS } from '@dnd-kit/utilities'
 import { AdminLayout } from '../components/layout'
 import { AdminCard, AdminButton, AdminToggle, AdminInput, useToast } from '../components/ui'
-import { useProducts, useSettings, useSettingsMutations } from '../../hooks'
+import { useProducts, useSettings, useSettingsMutations } from '../hooks'
 
 // Sortable featured product item component
 function SortableFeaturedItem({ id, index, product, onRemove }) {
@@ -95,6 +96,7 @@ const defaultSettings = {
   maintenanceMode: false,
   shippingCost: 49,
   freeShippingAbove: 1499,
+  bannerRotationSpeed: 3,
 }
 
 const defaultSections = [
@@ -152,6 +154,7 @@ function SettingsPage() {
         maintenanceMode: dbSettings.maintenance_mode === 'true' || dbSettings.maintenance_mode === true,
         shippingCost: parseInt(dbSettings.shipping_cost) || prev.shippingCost,
         freeShippingAbove: parseInt(dbSettings.free_shipping_above) || prev.freeShippingAbove,
+        bannerRotationSpeed: parseInt(dbSettings.banner_rotation_speed) || prev.bannerRotationSpeed,
       }))
 
       // Sections
@@ -236,6 +239,7 @@ function SettingsPage() {
         upsertSetting('free_shipping_above', String(settings.freeShippingAbove)),
         upsertSetting('homepage_sections', JSON.stringify(sections)),
         upsertSetting('featured_products', JSON.stringify(featuredProducts)),
+        upsertSetting('banner_rotation_speed', String(settings.bannerRotationSpeed)),
       ])
 
       setHasUnsavedChanges(false)
@@ -512,6 +516,48 @@ function SettingsPage() {
                 <p className="text-sm text-blue-400">
                   Preview: Orders below ₹{settings.freeShippingAbove} will be charged ₹{settings.shippingCost} for shipping. Orders of ₹{settings.freeShippingAbove} or above get{' '}
                   <span className="text-green-400 underline">free shipping</span>.
+                </p>
+              </div>
+            </div>
+          </AdminCard>
+
+          {/* Banner Settings */}
+          <AdminCard className="p-6">
+            <div className="flex items-center gap-3 mb-6">
+              <Megaphone className="w-5 h-5 text-neutral-400" />
+              <div>
+                <h2 className="text-lg font-semibold text-white">Announcement Banner</h2>
+                <p className="text-sm text-neutral-500">Configure the rotating announcement bar</p>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <p className="text-sm text-neutral-500 mb-2">Rotation Speed</p>
+                <div className="flex items-center gap-4">
+                  <input
+                    type="range"
+                    min="2"
+                    max="10"
+                    value={settings.bannerRotationSpeed}
+                    onChange={(e) => setSettings(prev => ({
+                      ...prev,
+                      bannerRotationSpeed: parseInt(e.target.value),
+                    }))}
+                    className="flex-1 h-2 bg-admin-border rounded-lg appearance-none cursor-pointer accent-orange-500"
+                  />
+                  <span className="text-white font-medium w-20 text-right">
+                    {settings.bannerRotationSpeed} seconds
+                  </span>
+                </div>
+                <p className="text-xs text-neutral-600 mt-2">
+                  How long each banner message displays before rotating to the next
+                </p>
+              </div>
+
+              <div className="p-3 bg-neutral-800/50 rounded-lg">
+                <p className="text-sm text-neutral-400">
+                  Manage banner messages in <a href="/offers" className="text-orange-400 hover:underline">Offers →</a>
                 </p>
               </div>
             </div>

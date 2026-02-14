@@ -11,8 +11,21 @@ import {
 import { AdminLayout } from '../components/layout'
 import { AdminCard, AdminButton, AdminBadge, AdminToggle, useToast } from '../components/ui'
 import { EditProductPanel } from '../components/catalogue'
-import { useProducts, useProductMutations } from '../../hooks'
+import { useProducts, useProductMutations } from '../hooks'
 import { transformProductFromDb, transformProductToDb } from '../../utils/caseTransform'
+
+// Helper function to check if product has all required content fields filled
+const isProductComplete = (product) => {
+  const requiredFields = [
+    product.name?.trim(),                    // Product Name
+    product.images?.length > 0,              // At least 1 image
+    product.price > 0,                       // Selling Price
+    product.sku?.trim(),                     // SKU
+    product.category?.trim(),                // Category assigned
+    product.description?.trim(),             // Product Description
+  ]
+  return requiredFields.every(Boolean)
+}
 
 function CataloguePage() {
   const toast = useToast()
@@ -42,14 +55,15 @@ function CataloguePage() {
     const live = products.filter((p) => p.is_live !== false && p.in_stock !== false).length
     const draft = products.filter((p) => p.is_live === false || p.in_stock === false).length
     const outOfStock = products.filter((p) => p.in_stock === false).length
-    return { total, live, draft, outOfStock }
+    const incomplete = products.filter((p) => !isProductComplete(p)).length
+    return { total, live, draft, outOfStock, incomplete }
   }, [products])
 
   const tabs = [
     { id: 'all', label: 'Products', count: stats.total },
     { id: 'live', label: 'Live', count: stats.live },
     { id: 'draft', label: 'Draft', count: stats.draft },
-    { id: 'issues', label: 'Issues', count: stats.total },
+    { id: 'issues', label: 'Issues', count: stats.incomplete },
   ]
 
   // Filter and sort products
@@ -88,6 +102,8 @@ function CataloguePage() {
       result = result.filter((p) => p.is_live !== false && p.in_stock !== false)
     } else if (activeTab === 'draft') {
       result = result.filter((p) => p.is_live === false || p.in_stock === false)
+    } else if (activeTab === 'issues') {
+      result = result.filter((p) => !isProductComplete(p))
     }
 
     // Sort
@@ -266,7 +282,7 @@ function CataloguePage() {
                 <Download className="w-4 h-4" />
                 Data
               </AdminButton>
-              <Link to="/admin/catalogue/new">
+              <Link to="/catalogue/new">
                 <AdminButton size="sm">
                   <Plus className="w-4 h-4" />
                   Add Product
@@ -356,6 +372,7 @@ function CataloguePage() {
                   <th className="text-left p-4 text-sm font-medium text-neutral-400">Price</th>
                   <th className="text-left p-4 text-sm font-medium text-neutral-400">Stock</th>
                   <th className="text-left p-4 text-sm font-medium text-neutral-400">In Stock</th>
+                  <th className="text-left p-4 text-sm font-medium text-neutral-400">Content</th>
                   <th className="text-left p-4 text-sm font-medium text-neutral-400">Status</th>
                   <th className="text-left p-4 text-sm font-medium text-neutral-400">Live</th>
                   <th className="w-10 p-4"></th>
@@ -413,6 +430,11 @@ function CataloguePage() {
                         size="sm"
                         disabled={mutating}
                       />
+                    </td>
+                    <td className="p-4">
+                      <AdminBadge variant={isProductComplete(product) ? 'success' : 'danger'}>
+                        {isProductComplete(product) ? 'Complete' : 'Incomplete'}
+                      </AdminBadge>
                     </td>
                     <td className="p-4">
                       <AdminBadge variant={product.is_live !== false && product.in_stock !== false ? 'success' : 'warning'}>

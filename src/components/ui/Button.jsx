@@ -26,8 +26,9 @@ const Button = forwardRef(({
       ref={ref}
       className={`
         inline-flex items-center justify-center gap-2
-        font-medium transition-colors duration-200
+        font-medium transition-all duration-200
         disabled:opacity-50 disabled:cursor-not-allowed
+        hover-lift btn-press
         ${variants[variant]}
         ${sizes[size]}
         ${className}

@@ -15,8 +15,9 @@ import {
   Loader2,
 } from 'lucide-react'
 import { AdminLayout } from '../components/layout'
-import { AdminCard, AdminButton, AdminBadge, useToast } from '../components/ui'
-import { useProducts } from '../../hooks'
+import { AdminCard, AdminButton, AdminBadge, AdminSelect, useToast } from '../components/ui'
+import ImageUploadZone from '../components/ui/ImageUploadZone'
+import { useProducts, useProductMutations } from '../hooks'
 
 const collections = ['all', 'diva', 'mini', 'paws', 'bond', 'uncategorized']
 
@@ -28,8 +29,14 @@ function ImagesPage() {
   const [selectedImages, setSelectedImages] = useState([])
   const [copiedUrl, setCopiedUrl] = useState(null)
 
+  // Upload modal state
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false)
+  const [selectedProductId, setSelectedProductId] = useState('')
+  const [uploadedUrls, setUploadedUrls] = useState([])
+
   // Fetch products from Supabase
-  const { data: products, loading, error } = useProducts()
+  const { data: products, loading, error, refetch } = useProducts()
+  const { updateProduct } = useProductMutations()
 
   // Extract all unique images from products
   const images = useMemo(() => {
@@ -56,11 +63,14 @@ function ImagesPage() {
     return Array.from(imageMap.values())
   }, [products])
 
-  // Filter images
+  // Filter images (supports name, product name, and SKU search)
   const filteredImages = useMemo(() => {
     return images.filter(img => {
-      const matchesSearch = img.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           img.productName.toLowerCase().includes(searchQuery.toLowerCase())
+      const query = searchQuery.toLowerCase()
+      const matchesSearch = !searchQuery ||
+                           img.name.toLowerCase().includes(query) ||
+                           img.productName.toLowerCase().includes(query) ||
+                           img.productId.toLowerCase().includes(query) // SKU search
       const matchesCollection = selectedCollection === 'all' || img.collection === selectedCollection
       return matchesSearch && matchesCollection
     })
@@ -107,6 +117,48 @@ function ImagesPage() {
     setSelectedImages([])
   }
 
+  // Handle image upload to a product
+  const handleImageUpload = (url) => {
+    setUploadedUrls(prev => [...prev, url])
+    toast.success('Image uploaded successfully')
+  }
+
+  // Save uploaded images to selected product
+  const handleSaveUploadedImages = async () => {
+    if (!selectedProductId || uploadedUrls.length === 0) {
+      toast.error('Please select a product and upload at least one image')
+      return
+    }
+
+    const product = products.find(p => p.id === selectedProductId)
+    if (!product) {
+      toast.error('Product not found')
+      return
+    }
+
+    const existingImages = product.images || []
+    const newImages = [...existingImages, ...uploadedUrls]
+
+    const { error } = await updateProduct(selectedProductId, { images: newImages })
+
+    if (error) {
+      toast.error('Failed to save images to product')
+    } else {
+      toast.success(`${uploadedUrls.length} image(s) added to ${product.name}`)
+      setIsUploadModalOpen(false)
+      setSelectedProductId('')
+      setUploadedUrls([])
+      refetch()
+    }
+  }
+
+  // Close upload modal
+  const handleCloseUploadModal = () => {
+    setIsUploadModalOpen(false)
+    setSelectedProductId('')
+    setUploadedUrls([])
+  }
+
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-IN', {
       day: 'numeric',
@@ -144,7 +196,7 @@ function ImagesPage() {
               Manage product images and media assets
             </p>
           </div>
-          <AdminButton>
+          <AdminButton onClick={() => setIsUploadModalOpen(true)}>
             <Upload className="w-4 h-4" />
             Upload Images
           </AdminButton>
@@ -188,7 +240,7 @@ function ImagesPage() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
               <input
                 type="text"
-                placeholder="Search images..."
+                placeholder="Search by name, product or SKU..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 bg-admin-card-hover border border-admin-border rounded-md text-white placeholder-neutral-500 text-sm"
@@ -423,6 +475,111 @@ function ImagesPage() {
           Showing {filteredImages.length} of {images.length} images
         </p>
       </div>
+
+      {/* Upload Modal */}
+      {isUploadModalOpen && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/50 z-40"
+            onClick={handleCloseUploadModal}
+          />
+
+          {/* Modal */}
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div className="bg-admin-bg border border-admin-border rounded-lg w-full max-w-lg max-h-[90vh] overflow-hidden flex flex-col">
+              {/* Modal Header */}
+              <div className="flex items-center justify-between p-4 border-b border-admin-border">
+                <h2 className="text-lg font-semibold text-white">Upload Images</h2>
+                <button
+                  onClick={handleCloseUploadModal}
+                  className="p-2 text-neutral-400 hover:text-white hover:bg-admin-card-hover rounded-lg"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Modal Body */}
+              <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                {/* Product Selection */}
+                <div>
+                  <label className="block text-sm text-neutral-400 mb-2">
+                    Select Product to add images to
+                  </label>
+                  <select
+                    value={selectedProductId}
+                    onChange={(e) => setSelectedProductId(e.target.value)}
+                    className="w-full px-3 py-2 bg-admin-card-hover border border-admin-border rounded-md text-white text-sm"
+                  >
+                    <option value="">Select a product...</option>
+                    {products.map(product => (
+                      <option key={product.id} value={product.id}>
+                        {product.name} ({product.sku || product.id})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Upload Zone */}
+                <div>
+                  <label className="block text-sm text-neutral-400 mb-2">
+                    Upload Images
+                  </label>
+                  <ImageUploadZone
+                    onUpload={handleImageUpload}
+                    folder={selectedProductId ? `mulyam/products/${selectedProductId}` : 'mulyam/products/temp'}
+                    disabled={!selectedProductId}
+                  />
+                  {!selectedProductId && (
+                    <p className="text-xs text-yellow-500 mt-2">
+                      Please select a product first
+                    </p>
+                  )}
+                </div>
+
+                {/* Uploaded Images Preview */}
+                {uploadedUrls.length > 0 && (
+                  <div>
+                    <label className="block text-sm text-neutral-400 mb-2">
+                      Uploaded Images ({uploadedUrls.length})
+                    </label>
+                    <div className="grid grid-cols-4 gap-2">
+                      {uploadedUrls.map((url, index) => (
+                        <div key={index} className="relative aspect-square rounded-lg overflow-hidden bg-admin-card-hover">
+                          <img
+                            src={url}
+                            alt={`Uploaded ${index + 1}`}
+                            className="w-full h-full object-cover"
+                          />
+                          <button
+                            onClick={() => setUploadedUrls(prev => prev.filter((_, i) => i !== index))}
+                            className="absolute top-1 right-1 p-1 bg-red-500 rounded-full text-white hover:bg-red-600"
+                          >
+                            <X className="w-3 h-3" />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Modal Footer */}
+              <div className="flex items-center justify-end gap-2 p-4 border-t border-admin-border">
+                <AdminButton variant="secondary" onClick={handleCloseUploadModal}>
+                  Cancel
+                </AdminButton>
+                <AdminButton
+                  onClick={handleSaveUploadedImages}
+                  disabled={!selectedProductId || uploadedUrls.length === 0}
+                >
+                  Save {uploadedUrls.length} Image{uploadedUrls.length !== 1 ? 's' : ''}
+                </AdminButton>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </AdminLayout>
   )
 }
