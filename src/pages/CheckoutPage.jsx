@@ -6,6 +6,7 @@ import { Button } from '../components/ui'
 import { useCart } from '../context/CartContext'
 import { sanitizeFormData, sanitizeText } from '../utils/sanitize'
 import { checkoutFormSchema, validateField } from '../utils/validation'
+import { PageSEO } from '../seo'
 
 // Collection name mapping
 const collectionNames = {
@@ -198,6 +199,12 @@ Please confirm availability and share payment details. Thank you!`
 
   return (
     <Layout>
+      <PageSEO
+        title="Checkout"
+        description="Complete your purchase at Mulyam Jewels."
+        noindex={true}
+      />
+
       <div className="max-w-6xl mx-auto px-4 py-8">
         {/* Back link */}
         <Link

@@ -1,10 +1,17 @@
 import { Layout } from '../components/layout'
 import { XCircle, Clock, CheckCircle, Truck, CreditCard, MessageCircle } from 'lucide-react'
 import { Button } from '../components/ui'
+import { PageSEO, pageMeta } from '../seo'
 
 function CancellationPage() {
   return (
     <Layout>
+      <PageSEO
+        title={pageMeta.cancellation.title}
+        description={pageMeta.cancellation.description}
+        canonical="/cancellation"
+      />
+
       {/* Hero Section */}
       <section className="py-16 md:py-24 bg-light-gray text-center">
         <div className="max-w-3xl mx-auto px-4">

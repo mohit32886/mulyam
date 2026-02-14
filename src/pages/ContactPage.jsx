@@ -1,10 +1,17 @@
 import { Layout } from '../components/layout'
 import { Button } from '../components/ui'
 import { MessageCircle, Instagram, Mail, MapPin, Clock } from 'lucide-react'
+import { PageSEO, pageMeta } from '../seo'
 
 function ContactPage() {
   return (
     <Layout>
+      <PageSEO
+        title={pageMeta.contact.title}
+        description={pageMeta.contact.description}
+        canonical="/contact"
+      />
+
       {/* Hero Section */}
       <section className="py-16 md:py-24 bg-light-gray text-center">
         <div className="max-w-3xl mx-auto px-4">

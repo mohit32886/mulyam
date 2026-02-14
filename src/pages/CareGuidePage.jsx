@@ -1,10 +1,17 @@
 import { Layout } from '../components/layout'
 import { Sparkles, Droplets, Wind, Moon, AlertTriangle, Heart, MessageCircle } from 'lucide-react'
 import { Button } from '../components/ui'
+import { PageSEO, pageMeta } from '../seo'
 
 function CareGuidePage() {
   return (
     <Layout>
+      <PageSEO
+        title={pageMeta['care-guide'].title}
+        description={pageMeta['care-guide'].description}
+        canonical="/care-guide"
+      />
+
       {/* Hero Section */}
       <section className="py-16 md:py-24 bg-light-gray text-center">
         <div className="max-w-3xl mx-auto px-4">

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Layout } from '../components/layout'
 import { Button } from '../components/ui'
 import { ChevronDown, MessageCircle } from 'lucide-react'
+import { PageSEO, FAQSchema, pageMeta } from '../seo'
 
 const faqCategories = [
   {
@@ -130,9 +131,19 @@ function FAQItem({ question, answer }) {
   )
 }
 
+// Flatten all FAQs for schema
+const allFaqs = faqCategories.flatMap(cat => cat.faqs)
+
 function FAQPage() {
   return (
     <Layout>
+      <PageSEO
+        title={pageMeta.faq.title}
+        description={pageMeta.faq.description}
+        canonical="/faq"
+      />
+      <FAQSchema faqs={allFaqs} />
+
       {/* Hero Section */}
       <section className="py-16 md:py-24 bg-light-gray text-center">
         <div className="max-w-3xl mx-auto px-4">

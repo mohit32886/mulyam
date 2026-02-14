@@ -5,6 +5,7 @@ import { Layout } from '../components/layout'
 import { Button, ProductCard } from '../components/ui'
 import { useFeaturedProducts, useStoreSettings } from '../hooks'
 import { collections } from '../data/products'
+import { PageSEO, OrganizationSchema } from '../seo'
 
 const storeCards = [
   {
@@ -80,6 +81,9 @@ function HomePage() {
 
   return (
     <Layout>
+      <PageSEO canonical="/" />
+      <OrganizationSchema />
+
       {/* Hero Section */}
       {isSectionEnabled('hero') && (
       <section className="min-h-[60vh] flex items-center justify-center text-center bg-brand-gradient">

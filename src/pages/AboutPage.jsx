@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { Layout } from '../components/layout'
 import { Button } from '../components/ui'
 import { Heart, Shield, Sparkles, Users, Droplets, Gem, CheckCircle } from 'lucide-react'
+import { PageSEO, pageMeta } from '../seo'
 
 const values = [
   {
@@ -58,6 +59,12 @@ const qualityFeatures = [
 function AboutPage() {
   return (
     <Layout>
+      <PageSEO
+        title={pageMeta.about.title}
+        description={pageMeta.about.description}
+        canonical="/about"
+      />
+
       {/* Hero Section */}
       <section className="py-16 md:py-24 text-center bg-brand-gradient">
         <div className="max-w-3xl mx-auto px-4">

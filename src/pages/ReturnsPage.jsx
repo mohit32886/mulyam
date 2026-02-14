@@ -1,10 +1,17 @@
 import { Layout } from '../components/layout'
 import { RotateCcw, Clock, CheckCircle, XCircle, CreditCard, MessageCircle, Camera } from 'lucide-react'
 import { Button } from '../components/ui'
+import { PageSEO, pageMeta } from '../seo'
 
 function ReturnsPage() {
   return (
     <Layout>
+      <PageSEO
+        title={pageMeta.returns.title}
+        description={pageMeta.returns.description}
+        canonical="/returns"
+      />
+
       {/* Hero Section */}
       <section className="py-16 md:py-24 bg-light-gray text-center">
         <div className="max-w-3xl mx-auto px-4">

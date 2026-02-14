@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Disallow admin and checkout routes
+Disallow: /admin/
+Disallow: /admin.html
+Disallow: /checkout
+
+# Allow crawling of assets
+Allow: /assets/
+Allow: /images/
+
+# Sitemap location
+Sitemap: https://mulyamjewels.com/sitemap.xml

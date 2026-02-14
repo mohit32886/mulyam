@@ -5,6 +5,7 @@ import { ProductCard, Badge } from '../components/ui'
 import { collections } from '../data/products'
 import { useCollectionProducts } from '../hooks'
 import { Droplet, Shield, Sparkles, Sun, Loader2 } from 'lucide-react'
+import { PageSEO, BreadcrumbSchema, collectionMeta } from '../seo'
 
 const featureIcons = {
   'Hypoallergenic': Shield,
@@ -105,8 +106,23 @@ function CollectionPage() {
     )
   }
 
+  // SEO metadata
+  const meta = collectionMeta[collectionId] || {}
+  const breadcrumbs = [
+    { name: 'Home', url: '/' },
+    { name: collection?.name || collectionId.toUpperCase(), url: `/collections/${collectionId === 'bond' ? 'custom' : collectionId}` }
+  ]
+
   return (
     <Layout>
+      <PageSEO
+        title={`${collection?.name || ''} - ${meta.title || 'Collection'}`}
+        description={meta.description}
+        canonical={`/collections/${collectionId === 'bond' ? 'custom' : collectionId}`}
+        image={`https://mulyamjewels.com/images/collections/${collectionId === 'bond' ? 'bond' : collectionId}.webp`}
+      />
+      <BreadcrumbSchema items={breadcrumbs} />
+
       {/* Hero Section */}
       <section className="py-16 md:py-24 text-center bg-gradient-to-b from-neutral-900 via-neutral-800 to-neutral-700">
         <div className="max-w-3xl mx-auto px-4">

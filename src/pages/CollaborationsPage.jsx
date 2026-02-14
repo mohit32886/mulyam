@@ -1,10 +1,17 @@
 import { Layout } from '../components/layout'
 import { Users, Gift, Percent, Camera, Heart, Star, MessageCircle, Instagram } from 'lucide-react'
 import { Button } from '../components/ui'
+import { PageSEO, pageMeta } from '../seo'
 
 function CollaborationsPage() {
   return (
     <Layout>
+      <PageSEO
+        title={pageMeta.collaborations.title}
+        description={pageMeta.collaborations.description}
+        canonical="/collaborations"
+      />
+
       {/* Hero Section */}
       <section className="py-16 md:py-24 bg-brand-gradient text-center">
         <div className="max-w-3xl mx-auto px-4">
