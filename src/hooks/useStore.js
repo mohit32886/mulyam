@@ -33,17 +33,19 @@ const transformProduct = (p) => ({
 })
 
 // Transform banner from Supabase to frontend format
-// Handles both legacy fields (text, bg_color, link) and admin fields (title, background_color, link_url)
+// Database columns: title, subtitle, link_url, link_text, position, background_color, text_color, image, is_active, display_order
 const transformBanner = (b) => ({
   id: b.id,
-  text: b.title || b.text,
+  text: b.title,
   subtitle: b.subtitle,
-  link: b.link_url || b.link,
-  type: b.type,
-  bgColor: b.background_color || b.bg_color,
-  textColor: b.text_color,
-  isActive: b.is_active,
+  link: b.link_url,
+  linkText: b.link_text,
   position: b.position,
+  bgColor: b.background_color,
+  textColor: b.text_color,
+  image: b.image,
+  isActive: b.is_active,
+  displayOrder: b.display_order,
 })
 
 /**
@@ -279,12 +281,12 @@ export function useStoreBanners({ type } = {}) {
           .select('*')
           .eq('is_active', true)
 
-        // Filter by type if provided
+        // Filter by position (type parameter maps to position column)
         if (type) {
-          query = query.eq('type', type)
+          query = query.eq('position', type)
         }
 
-        query = query.order('position', { ascending: true })
+        query = query.order('display_order', { ascending: true })
 
         const { data, error: fetchError } = await query
 

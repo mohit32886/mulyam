@@ -52,6 +52,8 @@ function OptimizedImage({
         `${getCloudinaryUrl(src, 'w_800,q_auto,f_auto')} 800w`,
         `${getCloudinaryUrl(src, 'w_1000,q_auto,f_auto')} 1000w`,
         `${getCloudinaryUrl(src, 'w_1200,q_auto,f_auto')} 1200w`,
+        `${getCloudinaryUrl(src, 'w_1600,q_auto,f_auto')} 1600w`,
+        `${getCloudinaryUrl(src, 'w_1920,q_auto,f_auto')} 1920w`,
       ].join(', ')
     : undefined
 
