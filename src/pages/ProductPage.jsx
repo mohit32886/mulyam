@@ -141,15 +141,15 @@ function ProductPage() {
       </nav>
 
       {/* Product Section */}
-      <section className="py-8 md:py-12">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12">
+      <section className="py-8 md:py-12 overflow-x-hidden">
+        <div className="max-w-7xl mx-auto px-4 w-full">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 overflow-hidden">
             {/* Product Images Gallery */}
-            <div className="space-y-4">
+            <div className="space-y-4 min-w-0">
               {/* Main Image */}
               <div className="relative">
                 <div
-                  className="aspect-square bg-light-gray rounded-lg overflow-hidden touch-pan-y"
+                  className="aspect-[4/5] bg-light-gray rounded-lg overflow-hidden touch-pan-y"
                   onTouchStart={handleTouchStart}
                   onTouchMove={handleTouchMove}
                   onTouchEnd={handleTouchEnd}
@@ -158,7 +158,7 @@ function ProductPage() {
                     <img
                       src={product.images[selectedImageIndex] || product.images[0]}
                       alt={`${product.name} - Image ${selectedImageIndex + 1}`}
-                      className="w-full h-full object-cover select-none pointer-events-none"
+                      className="w-full h-full object-contain select-none pointer-events-none"
                       draggable="false"
                     />
                   ) : (
@@ -248,8 +248,8 @@ function ProductPage() {
             </div>
 
             {/* Product Info */}
-            <div>
-              <h1 className="font-display font-bold text-2xl md:text-3xl text-dark">
+            <div className="min-w-0">
+              <h1 className="font-display font-bold text-2xl md:text-3xl text-dark break-words">
                 {product.name}
               </h1>
 
@@ -272,7 +272,7 @@ function ProductPage() {
               <p className="text-sm text-gray-500 mt-1">Inclusive of all taxes</p>
 
               {/* Description */}
-              <p className="mt-4 text-gray-600">{product.description}</p>
+              <p className="mt-4 text-gray-600 break-words">{product.description}</p>
 
               {/* Stock Status */}
               <div className="mt-6">
