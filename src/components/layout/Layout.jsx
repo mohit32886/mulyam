@@ -34,7 +34,7 @@ function Layout({ children }) {
   }, [])
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col overflow-x-hidden">
       {!isHomePage && (
         <AnnouncementBar
           banners={banners || []}
