@@ -3,14 +3,21 @@ import { Link, NavLink } from 'react-router-dom'
 import { Search, ShoppingBag, Menu, X, Instagram, MessageCircle } from 'lucide-react'
 
 const navLinks = [
-  { to: '/diva', label: 'Mulyam DIVA' },
-  { to: '/mini', label: 'Mulyam MINI' },
-  { to: '/paws', label: 'Mulyam PAWS' },
-  { to: '/collections/custom', label: 'Mulyam BOND' },
+  { to: '/diva', label: 'Mulyam DIVA', comingSoon: false },
+  { to: '/mini', label: 'Mulyam MINI', comingSoon: true },
+  { to: '/paws', label: 'Mulyam PAWS', comingSoon: true },
+  { to: '/collections/custom', label: 'Mulyam BOND', comingSoon: true },
 ]
 
 function Header({ onSearchClick, onCartClick, cartCount = 0 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [showComingSoon, setShowComingSoon] = useState(false)
+
+  const handleComingSoonClick = (e) => {
+    e.preventDefault()
+    setShowComingSoon(true)
+    setTimeout(() => setShowComingSoon(false), 2000)
+  }
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-gray-border">
@@ -38,17 +45,27 @@ function Header({ onSearchClick, onCartClick, cartCount = 0 }) {
           {/* Desktop Navigation */}
           <nav className="flex items-center gap-8">
             {navLinks.map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                className={({ isActive }) =>
-                  `font-body text-sm transition-colors ${
-                    isActive ? 'text-coral' : 'text-dark hover:text-coral'
-                  }`
-                }
-              >
-                {link.label}
-              </NavLink>
+              link.comingSoon ? (
+                <button
+                  key={link.to}
+                  onClick={handleComingSoonClick}
+                  className="font-body text-sm text-gray-400 cursor-pointer hover:text-gray-500 transition-colors"
+                >
+                  {link.label}
+                </button>
+              ) : (
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  className={({ isActive }) =>
+                    `font-body text-sm transition-colors ${
+                      isActive ? 'text-coral' : 'text-dark hover:text-coral'
+                    }`
+                  }
+                >
+                  {link.label}
+                </NavLink>
+              )
             ))}
           </nav>
 
@@ -190,18 +207,30 @@ function Header({ onSearchClick, onCartClick, cartCount = 0 }) {
                 </h3>
                 <div className="space-y-3 pl-1">
                   {navLinks.map((link) => (
-                    <NavLink
-                      key={link.to}
-                      to={link.to}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className={({ isActive }) =>
-                        `block text-base transition-colors ${
-                          isActive ? 'text-coral' : 'text-gray-600 hover:text-dark'
-                        }`
-                      }
-                    >
-                      {link.label}
-                    </NavLink>
+                    link.comingSoon ? (
+                      <button
+                        key={link.to}
+                        onClick={(e) => {
+                          handleComingSoonClick(e)
+                        }}
+                        className="block text-base text-gray-400 cursor-pointer hover:text-gray-500 transition-colors text-left"
+                      >
+                        {link.label}
+                      </button>
+                    ) : (
+                      <NavLink
+                        key={link.to}
+                        to={link.to}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={({ isActive }) =>
+                          `block text-base transition-colors ${
+                            isActive ? 'text-coral' : 'text-gray-600 hover:text-dark'
+                          }`
+                        }
+                      >
+                        {link.label}
+                      </NavLink>
+                    )
                   ))}
                 </div>
               </div>
@@ -258,6 +287,13 @@ function Header({ onSearchClick, onCartClick, cartCount = 0 }) {
             </nav>
           </div>
         )}
+
+      {/* Coming Soon Toast */}
+      {showComingSoon && (
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[60] bg-dark text-white px-6 py-3 rounded-lg shadow-lg animate-fade-in">
+          Coming Soon!
+        </div>
+      )}
     </header>
   )
 }

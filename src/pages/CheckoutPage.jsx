@@ -205,7 +205,7 @@ Please confirm availability and share payment details. Thank you!`
         noindex={true}
       />
 
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="max-w-6xl mx-auto px-4 py-6 md:py-8 overflow-x-hidden w-full box-border">
         {/* Back link */}
         <Link
           to="/"
@@ -220,10 +220,10 @@ Please confirm availability and share payment details. Thank you!`
           Checkout
         </h1>
 
-        <div className="grid lg:grid-cols-5 gap-8">
+        <div className="grid lg:grid-cols-5 gap-6 md:gap-8 w-full max-w-full">
           {/* Order Summary - Left side on desktop */}
-          <div className="lg:col-span-2 order-2 lg:order-1">
-            <div className="bg-gray-50 rounded-xl p-6 sticky top-24">
+          <div className="lg:col-span-2 order-2 lg:order-1 min-w-0">
+            <div className="bg-gray-50 rounded-xl p-4 md:p-6 sticky top-24 w-full max-w-full overflow-hidden">
               <h2 className="font-display font-semibold text-lg mb-4 flex items-center gap-2">
                 <Package className="w-5 h-5" />
                 Order Summary
@@ -248,14 +248,14 @@ Please confirm availability and share payment details. Thank you!`
                       )}
                     </div>
                     {/* Details */}
-                    <div className="flex-1 min-w-0">
+                    <div className="flex-1 min-w-0 overflow-hidden">
                       <p className="font-medium text-sm text-gray-900 truncate">
                         {item.name}
                       </p>
-                      <p className="text-xs text-gray-500 mt-0.5">
+                      <p className="text-xs text-gray-500 mt-0.5 truncate">
                         {collectionNames[item.collection] || item.collection}
                       </p>
-                      <p className="text-sm text-gray-600 mt-1">
+                      <p className="text-sm text-gray-600 mt-1 whitespace-nowrap">
                         {item.quantity} × ₹{item.price.toLocaleString('en-IN')} = ₹{(item.price * item.quantity).toLocaleString('en-IN')}
                       </p>
                     </div>
@@ -264,10 +264,10 @@ Please confirm availability and share payment details. Thank you!`
               </div>
 
               {/* Totals */}
-              <div className="border-t border-gray-200 pt-4 space-y-2">
-                <div className="flex justify-between text-sm">
+              <div className="border-t border-gray-200 pt-4 space-y-2 w-full">
+                <div className="flex justify-between text-sm w-full">
                   <span className="text-gray-600">Subtotal</span>
-                  <span>₹{totals.subtotal.toLocaleString('en-IN')}</span>
+                  <span className="flex-shrink-0">₹{totals.subtotal.toLocaleString('en-IN')}</span>
                 </div>
 
                 {appliedCoupon && totals.discount > 0 && (
@@ -280,19 +280,19 @@ Please confirm availability and share payment details. Thank you!`
                   </div>
                 )}
 
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between text-sm w-full">
                   <span className="text-gray-600 flex items-center gap-1">
                     <Truck className="w-3 h-3" />
                     Shipping
                   </span>
-                  <span className={shipping === 0 ? 'text-green-600 font-medium' : ''}>
+                  <span className={`flex-shrink-0 ${shipping === 0 ? 'text-green-600 font-medium' : ''}`}>
                     {shipping === 0 ? 'FREE' : `₹${shipping}`}
                   </span>
                 </div>
 
-                <div className="flex justify-between pt-3 border-t border-gray-200">
+                <div className="flex justify-between items-center pt-3 border-t border-gray-200 w-full">
                   <span className="font-semibold">Total</span>
-                  <span className="font-display font-semibold text-lg">
+                  <span className="font-display font-semibold text-base md:text-lg flex-shrink-0">
                     ₹{finalTotal.toLocaleString('en-IN')}
                   </span>
                 </div>
@@ -308,14 +308,14 @@ Please confirm availability and share payment details. Thank you!`
           </div>
 
           {/* Delivery Form - Right side on desktop */}
-          <div className="lg:col-span-3 order-1 lg:order-2">
-            <form onSubmit={handleCheckout} className="space-y-6">
-              <div className="bg-white border border-gray-200 rounded-xl p-6">
+          <div className="lg:col-span-3 order-1 lg:order-2 min-w-0">
+            <form onSubmit={handleCheckout} className="space-y-6 w-full">
+              <div className="bg-white border border-gray-200 rounded-xl p-4 md:p-6 w-full">
                 <h2 className="font-display font-semibold text-lg mb-6">
                   Delivery Details
                 </h2>
 
-                <div className="space-y-4">
+                <div className="space-y-4 w-full max-w-full">
                   {/* Name */}
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
@@ -328,7 +328,7 @@ Please confirm availability and share payment details. Thank you!`
                       onChange={(e) => handleChange('name', e.target.value)}
                       onBlur={() => handleBlur('name')}
                       placeholder="Enter your full name"
-                      className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-tan transition-colors ${
+                      className={`w-full max-w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-tan transition-colors ${
                         errors.name && touched.name
                           ? 'border-red-300 focus:ring-red-200'
                           : 'border-gray-300'
@@ -351,7 +351,7 @@ Please confirm availability and share payment details. Thank you!`
                       onChange={(e) => handleChange('phone', e.target.value.replace(/\D/g, '').slice(0, 10))}
                       onBlur={() => handleBlur('phone')}
                       placeholder="10-digit mobile number"
-                      className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-tan transition-colors ${
+                      className={`w-full max-w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-tan transition-colors ${
                         errors.phone && touched.phone
                           ? 'border-red-300 focus:ring-red-200'
                           : 'border-gray-300'
@@ -374,7 +374,7 @@ Please confirm availability and share payment details. Thank you!`
                       onBlur={() => handleBlur('address')}
                       placeholder="House/Flat No., Building, Street, Landmark"
                       rows={3}
-                      className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-tan transition-colors resize-none ${
+                      className={`w-full max-w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-tan transition-colors resize-none ${
                         errors.address && touched.address
                           ? 'border-red-300 focus:ring-red-200'
                           : 'border-gray-300'
@@ -398,7 +398,7 @@ Please confirm availability and share payment details. Thank you!`
                         onChange={(e) => handleChange('city', e.target.value)}
                         onBlur={() => handleBlur('city')}
                         placeholder="City"
-                        className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-tan transition-colors ${
+                        className={`w-full max-w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-tan transition-colors ${
                           errors.city && touched.city
                             ? 'border-red-300 focus:ring-red-200'
                             : 'border-gray-300'
@@ -420,7 +420,7 @@ Please confirm availability and share payment details. Thank you!`
                         onChange={(e) => handleChange('pincode', e.target.value.replace(/\D/g, '').slice(0, 6))}
                         onBlur={() => handleBlur('pincode')}
                         placeholder="6-digit pincode"
-                        className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-tan transition-colors ${
+                        className={`w-full max-w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-tan transition-colors ${
                           errors.pincode && touched.pincode
                             ? 'border-red-300 focus:ring-red-200'
                             : 'border-gray-300'
@@ -443,7 +443,7 @@ Please confirm availability and share payment details. Thank you!`
                       onChange={(e) => handleChange('notes', e.target.value)}
                       placeholder="Any special instructions for your order..."
                       rows={2}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-tan transition-colors resize-none"
+                      className="w-full max-w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-tan transition-colors resize-none"
                     />
                   </div>
                 </div>
@@ -460,7 +460,7 @@ Please confirm availability and share payment details. Thank you!`
                 Checkout on WhatsApp
               </Button>
 
-              <p className="text-xs text-gray-500 text-center">
+              <p className="text-xs text-gray-500 text-center px-2">
                 You'll be redirected to WhatsApp to complete your order. Our team will confirm availability and share payment details.
               </p>
             </form>

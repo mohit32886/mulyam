@@ -1,0 +1,84 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#2E7D32'}}}%%
+flowchart TB
+    subgraph APPS["MULYAM JEWELS E-COMMERCE"]
+        STOREFRONT["Storefront App<br/>Port 5173"]
+        ADMIN["Admin Portal<br/>Port 5174"]
+    end
+
+    subgraph USERS["USERS"]
+        CUSTOMER["Customer<br/>End User"]
+        ADMIN_USER["Admin<br/>Store Manager"]
+    end
+
+    subgraph STOREFRONT_PAGES["STOREFRONT PAGES"]
+        HOME["HomePage"]
+        COLLECTION["CollectionPage"]
+        PRODUCT["ProductPage"]
+        CHECKOUT["CheckoutPage"]
+        STATIC["Static Pages<br/>About, FAQ, Contact"]
+    end
+
+    subgraph ADMIN_PAGES["ADMIN PAGES"]
+        DASHBOARD["Dashboard"]
+        CATALOGUE["CataloguePage"]
+        OFFERS["OffersPage"]
+        SETTINGS["SettingsPage"]
+        IMAGES["ImagesPage"]
+        TIMEMACHINE["TimeMachinePage"]
+    end
+
+    subgraph STATE["STATE MANAGEMENT"]
+        CART_CTX["CartContext<br/>Shopping Cart"]
+        ADMIN_AUTH["AdminAuthContext<br/>Admin Auth"]
+    end
+
+    subgraph HOOKS["DATA HOOKS"]
+        USE_STORE["useStore<br/>Frontend Data"]
+        USE_PRODUCTS["useProducts<br/>Admin CRUD"]
+        USE_COUPONS["useCoupons<br/>Coupon Mgmt"]
+        USE_BANNERS["useBanners<br/>Banner Mgmt"]
+    end
+
+    subgraph EXTERNAL["EXTERNAL SERVICES"]
+        SUPABASE["Supabase<br/>PostgreSQL DB"]
+        CLOUDINARY["Cloudinary<br/>Image Storage"]
+        WHATSAPP["WhatsApp<br/>Checkout"]
+    end
+
+    %% User flows
+    CUSTOMER --> STOREFRONT
+    ADMIN_USER --> ADMIN
+
+    %% Storefront structure
+    STOREFRONT --> STOREFRONT_PAGES
+    STOREFRONT --> CART_CTX
+
+    %% Admin structure
+    ADMIN --> ADMIN_PAGES
+    ADMIN --> ADMIN_AUTH
+
+    %% Data flow
+    STOREFRONT_PAGES --> USE_STORE
+    ADMIN_PAGES --> USE_PRODUCTS
+    ADMIN_PAGES --> USE_COUPONS
+    ADMIN_PAGES --> USE_BANNERS
+
+    %% External connections
+    HOOKS --> SUPABASE
+    IMAGES --> CLOUDINARY
+    CHECKOUT --> WHATSAPP
+
+    %% Styling
+    classDef app fill:#1565C0,stroke:#0D47A1,color:#fff
+    classDef user fill:#7B1FA2,stroke:#4A148C,color:#fff
+    classDef page fill:#2E7D32,stroke:#1B5E20,color:#fff
+    classDef state fill:#F57C00,stroke:#E65100,color:#fff
+    classDef hook fill:#00897B,stroke:#004D40,color:#fff
+    classDef external fill:#C62828,stroke:#B71C1C,color:#fff
+
+    class STOREFRONT,ADMIN app
+    class CUSTOMER,ADMIN_USER user
+    class HOME,COLLECTION,PRODUCT,CHECKOUT,STATIC,DASHBOARD,CATALOGUE,OFFERS,SETTINGS,IMAGES,TIMEMACHINE page
+    class CART_CTX,ADMIN_AUTH state
+    class USE_STORE,USE_PRODUCTS,USE_COUPONS,USE_BANNERS hook
+    class SUPABASE,CLOUDINARY,WHATSAPP external

@@ -1,0 +1,333 @@
+%% FLOW 1: PRODUCT BROWSING FLOW
+%%{init: {'theme': 'base'}}%%
+flowchart TD
+    subgraph BROWSE_FLOW["1. PRODUCT BROWSING FLOW"]
+        B1["Visit Homepage"]
+        B2["View Collections<br/>DIVA, MINI, PAWS, CUSTOM"]
+        B3["Click collection card"]
+        B4["CollectionPage loads"]
+        B5["useCollectionProducts(id)"]
+        B6["Filter by category"]
+        B7["Sort by price/name"]
+        B8["Display product grid"]
+        B9["Click product card"]
+        B10["ProductPage loads"]
+        B11["View gallery, details"]
+
+        B1 --> B2
+        B2 --> B3
+        B3 --> B4
+        B4 --> B5
+        B5 --> B6
+        B6 --> B7
+        B7 --> B8
+        B8 --> B9
+        B9 --> B10
+        B10 --> B11
+    end
+
+    classDef start fill:#1565C0,stroke:#0D47A1,color:#fff
+    classDef process fill:#2E7D32,stroke:#1B5E20,color:#fff
+    classDef api fill:#7B1FA2,stroke:#4A148C,color:#fff
+
+    class B1,B2 start
+    class B3,B4,B6,B7,B8,B9,B10,B11 process
+    class B5 api
+
+---
+
+%% FLOW 2: ADD TO CART FLOW
+%%{init: {'theme': 'base'}}%%
+flowchart TD
+    subgraph CART_FLOW["2. ADD TO CART FLOW"]
+        C1["View ProductPage"]
+        C2["Select quantity"]
+        C3["Click Add to Cart"]
+        C4["CartContext.addToCart()"]
+        C5{{"Item in cart?"}}
+        C6["Update quantity"]
+        C7["Add new item"]
+        C8["Save to localStorage"]
+        C9["Open cart drawer"]
+        C10["Show updated totals"]
+        C11["Calculate free shipping"]
+
+        C1 --> C2
+        C2 --> C3
+        C3 --> C4
+        C4 --> C5
+        C5 -->|Yes| C6
+        C5 -->|No| C7
+        C6 --> C8
+        C7 --> C8
+        C8 --> C9
+        C9 --> C10
+        C10 --> C11
+    end
+
+    classDef start fill:#1565C0,stroke:#0D47A1,color:#fff
+    classDef decision fill:#F57C00,stroke:#E65100,color:#fff
+    classDef process fill:#2E7D32,stroke:#1B5E20,color:#fff
+
+    class C1,C2 start
+    class C5 decision
+    class C3,C4,C6,C7,C8,C9,C10,C11 process
+
+---
+
+%% FLOW 3: COUPON APPLICATION FLOW
+%%{init: {'theme': 'base'}}%%
+flowchart TD
+    subgraph COUPON_FLOW["3. COUPON APPLICATION FLOW"]
+        CP1["Open cart or checkout"]
+        CP2["Enter coupon code"]
+        CP3["Click Apply"]
+        CP4["CartContext.applyCoupon()"]
+        CP5["Query Supabase coupons"]
+        CP6{{"Coupon valid?"}}
+        CP7{{"Min order met?"}}
+        CP8{{"Not expired?"}}
+        CP9["Calculate discount"]
+        CP10["Store appliedCoupon"]
+        CP11["Update totals"]
+        CP12["Save to localStorage"]
+        CP_ERR["Show error message"]
+
+        CP1 --> CP2
+        CP2 --> CP3
+        CP3 --> CP4
+        CP4 --> CP5
+        CP5 --> CP6
+        CP6 -->|No| CP_ERR
+        CP6 -->|Yes| CP7
+        CP7 -->|No| CP_ERR
+        CP7 -->|Yes| CP8
+        CP8 -->|No| CP_ERR
+        CP8 -->|Yes| CP9
+        CP9 --> CP10
+        CP10 --> CP11
+        CP11 --> CP12
+    end
+
+    classDef start fill:#1565C0,stroke:#0D47A1,color:#fff
+    classDef decision fill:#F57C00,stroke:#E65100,color:#fff
+    classDef process fill:#2E7D32,stroke:#1B5E20,color:#fff
+    classDef api fill:#7B1FA2,stroke:#4A148C,color:#fff
+    classDef error fill:#C62828,stroke:#B71C1C,color:#fff
+
+    class CP1,CP2 start
+    class CP6,CP7,CP8 decision
+    class CP3,CP4,CP9,CP10,CP11,CP12 process
+    class CP5 api
+    class CP_ERR error
+
+---
+
+%% FLOW 4: WHATSAPP CHECKOUT FLOW
+%%{init: {'theme': 'base'}}%%
+flowchart TD
+    subgraph CHECKOUT_FLOW["4. WHATSAPP CHECKOUT FLOW"]
+        CH1["Review cart items"]
+        CH2["Apply coupon optional"]
+        CH3["Click WhatsApp Checkout"]
+        CH4["getWhatsAppOrderLink()"]
+        CH5["Build order message"]
+        CH6["Include products + prices"]
+        CH7["Include coupon discount"]
+        CH8["Calculate final total"]
+        CH9["URL encode message"]
+        CH10["Open wa.me link"]
+        CH11["WhatsApp opens"]
+        CH12["Send to store number"]
+
+        CH1 --> CH2
+        CH2 --> CH3
+        CH3 --> CH4
+        CH4 --> CH5
+        CH5 --> CH6
+        CH6 --> CH7
+        CH7 --> CH8
+        CH8 --> CH9
+        CH9 --> CH10
+        CH10 --> CH11
+        CH11 --> CH12
+    end
+
+    classDef start fill:#1565C0,stroke:#0D47A1,color:#fff
+    classDef process fill:#2E7D32,stroke:#1B5E20,color:#fff
+    classDef success fill:#00796B,stroke:#004D40,color:#fff
+
+    class CH1 start
+    class CH2,CH3,CH4,CH5,CH6,CH7,CH8,CH9,CH10 process
+    class CH11,CH12 success
+
+---
+
+%% FLOW 5: ADMIN LOGIN FLOW
+%%{init: {'theme': 'base'}}%%
+flowchart TD
+    subgraph ADMIN_LOGIN["5. ADMIN LOGIN FLOW"]
+        AL1["Navigate to /login"]
+        AL2["Enter email + password"]
+        AL3["Click Login"]
+        AL4["AdminAuthContext.login()"]
+        AL5{{"Credentials valid?"}}
+        AL6["Set isAuthenticated = true"]
+        AL7["Store user in context"]
+        AL8["Save to localStorage"]
+        AL9["Redirect to Dashboard"]
+        AL_ERR["Show error message"]
+
+        AL1 --> AL2
+        AL2 --> AL3
+        AL3 --> AL4
+        AL4 --> AL5
+        AL5 -->|Yes| AL6
+        AL5 -->|No| AL_ERR
+        AL6 --> AL7
+        AL7 --> AL8
+        AL8 --> AL9
+    end
+
+    classDef start fill:#1565C0,stroke:#0D47A1,color:#fff
+    classDef decision fill:#F57C00,stroke:#E65100,color:#fff
+    classDef process fill:#2E7D32,stroke:#1B5E20,color:#fff
+    classDef success fill:#00796B,stroke:#004D40,color:#fff
+    classDef error fill:#C62828,stroke:#B71C1C,color:#fff
+
+    class AL1,AL2 start
+    class AL5 decision
+    class AL3,AL4,AL6,AL7,AL8 process
+    class AL9 success
+    class AL_ERR error
+
+---
+
+%% FLOW 6: PRODUCT CRUD FLOW (ADMIN)
+%%{init: {'theme': 'base'}}%%
+flowchart TD
+    subgraph PRODUCT_CRUD["6. PRODUCT CRUD FLOW"]
+        PC1["Navigate to /catalogue"]
+        PC2["useProducts hook loads"]
+        PC3["Display product list"]
+        PC4{{"Action?"}}
+        PC5["Click Add New"]
+        PC6["Fill product form"]
+        PC7["Upload images to Cloudinary"]
+        PC8["productsApi.create()"]
+        PC9["Click Edit"]
+        PC10["Modify fields inline"]
+        PC11["productsApi.update()"]
+        PC12["Click Delete"]
+        PC13["Confirm dialog"]
+        PC14["productsApi.delete()"]
+        PC15["Log activity"]
+        PC16["Refresh list"]
+
+        PC1 --> PC2
+        PC2 --> PC3
+        PC3 --> PC4
+        PC4 -->|Add| PC5
+        PC4 -->|Edit| PC9
+        PC4 -->|Delete| PC12
+        PC5 --> PC6 --> PC7 --> PC8 --> PC15
+        PC9 --> PC10 --> PC11 --> PC15
+        PC12 --> PC13 --> PC14 --> PC15
+        PC15 --> PC16
+    end
+
+    classDef start fill:#1565C0,stroke:#0D47A1,color:#fff
+    classDef decision fill:#F57C00,stroke:#E65100,color:#fff
+    classDef process fill:#2E7D32,stroke:#1B5E20,color:#fff
+    classDef api fill:#7B1FA2,stroke:#4A148C,color:#fff
+
+    class PC1 start
+    class PC4 decision
+    class PC2,PC3,PC5,PC6,PC7,PC9,PC10,PC12,PC13,PC15,PC16 process
+    class PC8,PC11,PC14 api
+
+---
+
+%% FLOW 7: IMAGE UPLOAD FLOW
+%%{init: {'theme': 'base'}}%%
+flowchart TD
+    subgraph IMAGE_FLOW["7. IMAGE UPLOAD FLOW"]
+        IM1["Open ImagesPage or AddProduct"]
+        IM2["Click Upload"]
+        IM3["Select image file"]
+        IM4["useCloudinaryUpload()"]
+        IM5["Validate file type + size"]
+        IM6{{"Valid?"}}
+        IM7["Upload to Cloudinary"]
+        IM8["Apply folder structure"]
+        IM9["Get returned URL"]
+        IM10["Display preview"]
+        IM11["Save URL to product"]
+        IM_ERR["Show validation error"]
+
+        IM1 --> IM2
+        IM2 --> IM3
+        IM3 --> IM4
+        IM4 --> IM5
+        IM5 --> IM6
+        IM6 -->|No| IM_ERR
+        IM6 -->|Yes| IM7
+        IM7 --> IM8
+        IM8 --> IM9
+        IM9 --> IM10
+        IM10 --> IM11
+    end
+
+    classDef start fill:#1565C0,stroke:#0D47A1,color:#fff
+    classDef decision fill:#F57C00,stroke:#E65100,color:#fff
+    classDef process fill:#2E7D32,stroke:#1B5E20,color:#fff
+    classDef api fill:#7B1FA2,stroke:#4A148C,color:#fff
+    classDef error fill:#C62828,stroke:#B71C1C,color:#fff
+
+    class IM1,IM2 start
+    class IM6 decision
+    class IM3,IM4,IM5,IM8,IM9,IM10,IM11 process
+    class IM7 api
+    class IM_ERR error
+
+---
+
+%% FLOW 8: ACTIVITY LOGGING FLOW
+%%{init: {'theme': 'base'}}%%
+flowchart TD
+    subgraph ACTIVITY_FLOW["8. ACTIVITY LOGGING FLOW"]
+        AC1["Admin performs action<br/>Create/Update/Delete"]
+        AC2["Hook captures change"]
+        AC3["logActivity() called"]
+        AC4["Build activity record"]
+        AC5["Include previous data"]
+        AC6["Include new data"]
+        AC7["Set canRevert flag"]
+        AC8["activityApi.log()"]
+        AC9["Insert to activity_log"]
+        AC10["TimeMachinePage displays"]
+        AC11{{"Revert needed?"}}
+        AC12["Restore previous data"]
+
+        AC1 --> AC2
+        AC2 --> AC3
+        AC3 --> AC4
+        AC4 --> AC5
+        AC5 --> AC6
+        AC6 --> AC7
+        AC7 --> AC8
+        AC8 --> AC9
+        AC9 --> AC10
+        AC10 --> AC11
+        AC11 -->|Yes| AC12
+    end
+
+    classDef start fill:#1565C0,stroke:#0D47A1,color:#fff
+    classDef decision fill:#F57C00,stroke:#E65100,color:#fff
+    classDef process fill:#2E7D32,stroke:#1B5E20,color:#fff
+    classDef api fill:#7B1FA2,stroke:#4A148C,color:#fff
+
+    class AC1 start
+    class AC11 decision
+    class AC2,AC3,AC4,AC5,AC6,AC7,AC10,AC12 process
+    class AC8,AC9 api

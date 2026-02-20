@@ -1,11 +1,12 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Instagram, MessageCircle } from 'lucide-react'
 
 const shopLinks = [
-  { to: '/diva', label: 'DIVA' },
-  { to: '/mini', label: 'MINI' },
-  { to: '/paws', label: 'PAWS' },
-  { to: '/collections/custom', label: 'BOND' },
+  { to: '/diva', label: 'DIVA', comingSoon: false },
+  { to: '/mini', label: 'MINI', comingSoon: true },
+  { to: '/paws', label: 'PAWS', comingSoon: true },
+  { to: '/collections/custom', label: 'BOND', comingSoon: true },
 ]
 
 const helpLinks = [
@@ -24,6 +25,14 @@ const companyLinks = [
 ]
 
 function Footer() {
+  const [showComingSoon, setShowComingSoon] = useState(false)
+
+  const handleComingSoonClick = (e) => {
+    e.preventDefault()
+    setShowComingSoon(true)
+    setTimeout(() => setShowComingSoon(false), 2000)
+  }
+
   return (
     <footer className="bg-dark text-white">
       {/* Main Footer */}
@@ -71,12 +80,21 @@ function Footer() {
             <ul className="space-y-3">
               {shopLinks.map((link) => (
                 <li key={link.to}>
-                  <Link
-                    to={link.to}
-                    className="text-sm text-white/80 hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </Link>
+                  {link.comingSoon ? (
+                    <button
+                      onClick={handleComingSoonClick}
+                      className="text-sm text-white/50 cursor-pointer hover:text-white/70 transition-colors"
+                    >
+                      {link.label}
+                    </button>
+                  ) : (
+                    <Link
+                      to={link.to}
+                      className="text-sm text-white/80 hover:text-white transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -163,6 +181,13 @@ function Footer() {
           </div>
         </div>
       </div>
+
+      {/* Coming Soon Toast */}
+      {showComingSoon && (
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[60] bg-white text-dark px-6 py-3 rounded-lg shadow-lg animate-fade-in">
+          Coming Soon!
+        </div>
+      )}
     </footer>
   )
 }
