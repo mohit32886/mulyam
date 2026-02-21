@@ -1,13 +1,16 @@
 import { Layout } from '../components/layout'
 import { Ruler, HelpCircle } from 'lucide-react'
-import { useSEO } from '../hooks/useSEO'
+import { PageSEO, pageMeta } from '../seo'
 
 function SizeGuidePage() {
-  const seo = useSEO({ title: 'Size Guide', url: '/size-guide' })
-
   return (
     <Layout>
-      {seo}
+      <PageSEO
+        title={pageMeta['size-guide'].title}
+        description={pageMeta['size-guide'].description}
+        canonical="/size-guide"
+      />
+
       {/* Hero Section */}
       <section className="py-16 md:py-24 bg-light-gray text-center">
         <div className="max-w-3xl mx-auto px-4">

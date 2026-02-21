@@ -6,7 +6,7 @@ import { Button } from '../components/ui'
 import { useCart } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
 import { useCheckout } from '../hooks/medusa/useCheckout'
-import { useSEO } from '../hooks/useSEO'
+import { PageSEO } from '../seo'
 import {
   CheckoutStepIndicator,
   ContactInfoStep,
@@ -26,7 +26,6 @@ const STEP_CONFIRMATION = 4
 
 function CheckoutPage() {
   const navigate = useNavigate()
-  const seo = useSEO({ title: 'Checkout', noindex: true })
   const { cart, items, totals, appliedCoupon, clearCart, refreshCart } = useCart()
   const { customer, isAuthenticated } = useAuth()
   const {
@@ -96,7 +95,11 @@ function CheckoutPage() {
   if (items.length === 0 && currentStep !== STEP_CONFIRMATION) {
     return (
       <Layout>
-        {seo}
+        <PageSEO
+          title="Checkout"
+          description="Complete your purchase at Mulyam Jewels."
+          noindex={true}
+        />
         <div className="max-w-4xl mx-auto px-4 py-16">
           <div className="text-center">
             <ShoppingBag className="w-20 h-20 text-gray-300 mx-auto mb-6" />
@@ -121,7 +124,11 @@ function CheckoutPage() {
   if (currentStep === STEP_CONFIRMATION) {
     return (
       <Layout>
-        {seo}
+        <PageSEO
+          title="Checkout"
+          description="Complete your purchase at Mulyam Jewels."
+          noindex={true}
+        />
         <div className="max-w-4xl mx-auto px-4 py-12">
           <OrderConfirmation order={completedOrder || order} />
         </div>
@@ -131,8 +138,13 @@ function CheckoutPage() {
 
   return (
     <Layout>
-      {seo}
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <PageSEO
+        title="Checkout"
+        description="Complete your purchase at Mulyam Jewels."
+        noindex={true}
+      />
+
+      <div className="max-w-6xl mx-auto px-4 py-6 md:py-8 overflow-x-hidden w-full box-border">
         {/* Back link */}
         <Link
           to="/"

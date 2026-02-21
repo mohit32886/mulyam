@@ -1,11 +1,12 @@
 import { useState, useMemo } from 'react'
 import { useParams, useLocation } from 'react-router-dom'
 import { Layout } from '../components/layout'
-import { ProductCard, Badge } from '../components/ui'
+import { ProductCard, Badge, HeroBanner } from '../components/ui'
 import { collections } from '../data/products'
 import { useCollectionProducts } from '../hooks'
-import { useSEO } from '../hooks/useSEO'
 import { Droplet, Shield, Sparkles, Sun, Loader2 } from 'lucide-react'
+import { PageSEO, BreadcrumbSchema, collectionMeta } from '../seo'
+import { HERO_IMAGES } from '../constants/bannerImages'
 
 const featureIcons = {
   'Hypoallergenic': Shield,
@@ -46,12 +47,6 @@ function CollectionPage() {
 
   // Get collection metadata
   const collection = collections[collectionId]
-
-  const seo = useSEO({
-    title: collection?.title,
-    description: collection?.description,
-    url: `/${collectionId}`,
-  })
 
   // Fetch products from Medusa
   const { products: allProducts, loading, error } = useCollectionProducts(collectionId)
@@ -112,34 +107,57 @@ function CollectionPage() {
     )
   }
 
+  // SEO metadata
+  const meta = collectionMeta[collectionId] || {}
+  const breadcrumbs = [
+    { name: 'Home', url: '/' },
+    { name: collection?.name || collectionId.toUpperCase(), url: `/collections/${collectionId === 'bond' ? 'custom' : collectionId}` }
+  ]
+
   return (
     <Layout>
-      {seo}
+      <PageSEO
+        title={`${collection?.name || ''} - ${meta.title || 'Collection'}`}
+        description={meta.description}
+        canonical={`/collections/${collectionId === 'bond' ? 'custom' : collectionId}`}
+        image={`https://mulyamjewels.com/images/collections/${collectionId === 'bond' ? 'bond' : collectionId}.webp`}
+      />
+      <BreadcrumbSchema items={breadcrumbs} />
+
       {/* Hero Section */}
-      <section className="py-16 md:py-24 text-center bg-gradient-to-b from-neutral-900 via-neutral-800 to-neutral-700">
-        <div className="max-w-3xl mx-auto px-4">
-          <span className="text-xs uppercase tracking-[0.3em] text-tan mb-6 block">
-            The Collection
-          </span>
-          <h1 className="font-display font-light text-5xl md:text-6xl text-white tracking-wide">
-            {collection.name}
-          </h1>
-          <p className="mt-6 text-white/70 max-w-xl mx-auto text-lg">
-            {collection.description}
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center items-center gap-6">
-            {collection.features.map((feature, index) => (
-              <span key={feature} className="flex items-center gap-2 text-white/60 text-sm">
-                <span className="w-2 h-2 rounded-full bg-coral"></span>
-                {feature}
-              </span>
-            ))}
+      {collectionId === 'diva' ? (
+        <HeroBanner
+          desktopImage={HERO_IMAGES.diva.desktop}
+          mobileImage={HERO_IMAGES.diva.mobile}
+          alt="Mulyam DIVA Collection - Elegant jewelry for the modern woman"
+          fullWidth={true}
+        />
+      ) : (
+        <section className="py-16 md:py-24 text-center bg-gradient-to-b from-neutral-900 via-neutral-800 to-neutral-700">
+          <div className="max-w-3xl mx-auto px-4">
+            <span className="text-xs uppercase tracking-[0.3em] text-tan mb-6 block">
+              The Collection
+            </span>
+            <h1 className="font-display font-light text-5xl md:text-6xl text-white tracking-wide">
+              {collection.name}
+            </h1>
+            <p className="mt-6 text-white/70 max-w-xl mx-auto text-lg">
+              {collection.description}
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center items-center gap-6">
+              {collection.features.map((feature, index) => (
+                <span key={feature} className="flex items-center gap-2 text-white/60 text-sm">
+                  <span className="w-2 h-2 rounded-full bg-coral"></span>
+                  {feature}
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Products Section */}
-      <section className="py-12 md:py-16">
+      <section id="products" className="py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-4">
           {/* Filter Bar */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">

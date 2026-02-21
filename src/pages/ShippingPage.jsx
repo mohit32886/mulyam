@@ -1,14 +1,17 @@
 import { Layout } from '../components/layout'
 import { Package, Truck, MapPin, Clock, AlertCircle, MessageCircle } from 'lucide-react'
 import { Button } from '../components/ui'
-import { useSEO } from '../hooks/useSEO'
+import { PageSEO, pageMeta } from '../seo'
 
 function ShippingPage() {
-  const seo = useSEO({ title: 'Shipping Policy', url: '/shipping-policy' })
-
   return (
     <Layout>
-      {seo}
+      <PageSEO
+        title={pageMeta.shipping.title}
+        description={pageMeta.shipping.description}
+        canonical="/shipping"
+      />
+
       {/* Hero Section */}
       <section className="py-16 md:py-24 bg-light-gray text-center">
         <div className="max-w-3xl mx-auto px-4">

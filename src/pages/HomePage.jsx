@@ -2,10 +2,11 @@ import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Loader2 } from 'lucide-react'
 import { Layout } from '../components/layout'
-import { Button, ProductCard } from '../components/ui'
+import { ProductCard, HeroBanner } from '../components/ui'
 import { useFeaturedProducts, useStoreSettings } from '../hooks'
-import { useSEO } from '../hooks/useSEO'
 import { collections } from '../data/products'
+import { PageSEO, OrganizationSchema } from '../seo'
+import { HERO_IMAGES } from '../constants/bannerImages'
 
 const storeCards = [
   {
@@ -49,7 +50,6 @@ const storeCards = [
 function HomePage() {
   const { products: featuredProducts, loading } = useFeaturedProducts(8)
   const { settings } = useStoreSettings()
-  const seo = useSEO({ url: '/' })
 
   // Animation state for Featured Products section
   const [featuredVisible, setFeaturedVisible] = useState(false)
@@ -82,32 +82,17 @@ function HomePage() {
 
   return (
     <Layout>
-      {seo}
+      <PageSEO canonical="/" />
+      <OrganizationSchema />
+
       {/* Hero Section */}
       {isSectionEnabled('hero') && (
-      <section className="min-h-[60vh] flex items-center justify-center text-center bg-brand-gradient">
-        <div className="max-w-3xl mx-auto px-4 py-16">
-          <span className="text-sm uppercase tracking-wider text-white/80">
-            Curated for You
-          </span>
-          <h1 className="font-display font-bold text-4xl md:text-6xl mt-4 text-white">
-            Unleash Your Inner{' '}
-            <span className="text-coral">DIVA</span>
-          </h1>
-          <p className="mt-4 text-white/90 max-w-xl mx-auto">
-            Discover elegant, statement jewelry crafted for the modern woman.
-            From everyday essentials to show-stopping pieces.
-          </p>
-          <Link to="/diva">
-            <Button variant="primary" size="lg" className="mt-8">
-              Shop Mulyam DIVA
-            </Button>
-          </Link>
-          <p className="mt-6 text-white/70 text-sm">
-            Trusted by happy customers across India
-          </p>
-        </div>
-      </section>
+      <HeroBanner
+        desktopImage={HERO_IMAGES.homepage.desktop}
+        mobileImage={HERO_IMAGES.homepage.mobile}
+        alt="Mulyam Jewels - Elegant jewelry for the modern woman"
+        fullWidth={true}
+      />
       )}
 
       {/* Shop by Store */}

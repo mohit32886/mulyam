@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mulyam Jewels Architecture Diagrams</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --bg-card: #0f3460;
+            --text-primary: #eee;
+            --text-secondary: #a0a0a0;
+            --accent: #e94560;
+            --accent-secondary: #00d4ff;
+            --border: #333;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        h1 span { color: var(--accent-secondary); }
+        .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            background: var(--bg-card);
+            border-radius: 6px;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        .nav a:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+        }
+        .section {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border);
+        }
+        h2 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+        h3 {
+            color: var(--accent-secondary);
+            margin: 1.5rem 0 1rem;
+        }
+        .diagram-container {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        .diagram-container.large { min-height: 400px; }
+        .mermaid { text-align: center; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            background: var(--accent);
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover { background: rgba(233, 69, 96, 0.1); }
+        .info-box {
+            background: linear-gradient(135deg, rgba(233, 69, 96, 0.1), rgba(0, 212, 255, 0.1));
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
+        .card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+        }
+        .card h4 {
+            color: var(--accent-secondary);
+            margin-bottom: 0.5rem;
+        }
+        code {
+            background: var(--bg-primary);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+            color: var(--accent-secondary);
+        }
+        .tag {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin: 0.2rem;
+        }
+        .tag.blue { background: #1565C0; }
+        .tag.green { background: #2E7D32; }
+        .tag.orange { background: #F57C00; }
+        .tag.teal { background: #00796B; }
+        .tag.purple { background: #7B1FA2; }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mulyam Jewels <span>Architecture</span></h1>
+    <p class="subtitle">E-Commerce Platform - Storefront (5173) + Admin Portal (5174)</p>
+
+    <nav class="nav">
+        <a href="#overview">Overview</a>
+        <a href="#detailed">Detailed</a>
+        <a href="#routing">Routing</a>
+        <a href="#database">Database</a>
+        <a href="#cart">Cart Flow</a>
+        <a href="#checkout">Checkout Flow</a>
+        <a href="#admin-crud">Admin CRUD</a>
+        <a href="#images">Image Upload</a>
+        <a href="#files">Key Files</a>
+        <a href="#config">Configuration</a>
+    </nav>
+
+    <!-- Section 1: Overview -->
+    <section id="overview" class="section">
+        <h2>1. Platform Overview</h2>
+        <div class="info-box">
+            <strong>Mulyam Jewels</strong> is a full-featured e-commerce platform for jewelry with dual applications:
+            a customer-facing storefront and an admin portal. Uses Supabase for database, Cloudinary for images,
+            and WhatsApp for checkout.
+        </div>
+        <div class="diagram-container large">
+            <pre class="mermaid">
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#2E7D32'}}}%%
+flowchart TB
+    subgraph APPS["MULYAM JEWELS E-COMMERCE"]
+        STOREFRONT["Storefront App<br/>Port 5173"]
+        ADMIN["Admin Portal<br/>Port 5174"]
+    end
+
+    subgraph USERS["USERS"]
+        CUSTOMER["Customer"]
+        ADMIN_USER["Admin"]
+    end
+
+    subgraph STOREFRONT_PAGES["STOREFRONT"]
+        HOME["HomePage"]
+        COLLECTION["CollectionPage"]
+        PRODUCT["ProductPage"]
+        CHECKOUT["CheckoutPage"]
+    end
+
+    subgraph ADMIN_PAGES["ADMIN"]
+        DASHBOARD["Dashboard"]
+        CATALOGUE["Catalogue"]
+        OFFERS["Offers"]
+        SETTINGS["Settings"]
+    end
+
+    subgraph EXTERNAL["EXTERNAL"]
+        SUPABASE["Supabase DB"]
+        CLOUDINARY["Cloudinary"]
+        WHATSAPP["WhatsApp"]
+    end
+
+    CUSTOMER --> STOREFRONT
+    ADMIN_USER --> ADMIN
+    STOREFRONT --> STOREFRONT_PAGES
+    ADMIN --> ADMIN_PAGES
+    STOREFRONT_PAGES --> SUPABASE
+    ADMIN_PAGES --> SUPABASE
+    ADMIN_PAGES --> CLOUDINARY
+    CHECKOUT --> WHATSAPP
+
+    classDef app fill:#1565C0,stroke:#0D47A1,color:#fff
+    classDef user fill:#7B1FA2,stroke:#4A148C,color:#fff
+    classDef page fill:#2E7D32,stroke:#1B5E20,color:#fff
+    classDef external fill:#C62828,stroke:#B71C1C,color:#fff
+
+    class STOREFRONT,ADMIN app
+    class CUSTOMER,ADMIN_USER user
+    class HOME,COLLECTION,PRODUCT,CHECKOUT,DASHBOARD,CATALOGUE,OFFERS,SETTINGS page
+    class SUPABASE,CLOUDINARY,WHATSAPP external
+            </pre>
+        </div>
+
+        <h3>Key Features</h3>
+        <div class="grid">
+            <div class="card">
+                <h4>Storefront</h4>
+                <p>Customer-facing shop with collections, products, cart, and WhatsApp checkout</p>
+                <span class="tag blue">React 19</span>
+                <span class="tag green">Tailwind</span>
+            </div>
+            <div class="card">
+                <h4>Admin Portal</h4>
+                <p>Product management, offers, banners, settings, activity logging</p>
+                <span class="tag orange">Protected Routes</span>
+            </div>
+            <div class="card">
+                <h4>Collections</h4>
+                <p>DIVA (Women), MINI (Kids), PAWS (Pets), CUSTOM (Bond)</p>
+                <span class="tag purple">100+ Products</span>
+            </div>
+            <div class="card">
+                <h4>Checkout</h4>
+                <p>WhatsApp-based ordering with coupon support and free shipping threshold</p>
+                <span class="tag teal">No Payment Gateway</span>
+            </div>
+        </div>
+
+        <h3>Tech Stack</h3>
+        <table>
+            <tr><th>Category</th><th>Technology</th><th>Version</th></tr>
+            <tr><td>Framework</td><td>React</td><td>19.2.3</td></tr>
+            <tr><td>Build Tool</td><td>Vite</td><td>6.4.1</td></tr>
+            <tr><td>Routing</td><td>React Router DOM</td><td>7.12.0</td></tr>
+            <tr><td>Database</td><td>Supabase (PostgreSQL)</td><td>2.91.1</td></tr>
+            <tr><td>Image Storage</td><td>Cloudinary</td><td>2.9.0</td></tr>
+            <tr><td>CSS Framework</td><td>Tailwind CSS</td><td>4.1.18</td></tr>
+            <tr><td>Icons</td><td>Lucide React</td><td>0.562.0</td></tr>
+            <tr><td>Validation</td><td>Zod</td><td>4.3.6</td></tr>
+            <tr><td>SEO</td><td>React Helmet Async</td><td>2.0.5</td></tr>
+            <tr><td>Drag & Drop</td><td>@dnd-kit</td><td>6.3.1</td></tr>
+        </table>
+    </section>
+
+    <!-- Section 2: Detailed Architecture -->
+    <section id="detailed" class="section">
+        <h2>2. Detailed Architecture</h2>
+
+        <h3>Dual Build System</h3>
+        <div class="info-box">
+            Mulyam uses separate Vite configurations for storefront and admin, allowing independent builds and deployments.
+        </div>
+        <table>
+            <tr><th>Config</th><th>Entry</th><th>Output</th><th>Port</th></tr>
+            <tr><td>vite.config.storefront.js</td><td>index.html</td><td>dist/storefront</td><td>5173</td></tr>
+            <tr><td>vite.config.admin.js</td><td>admin.html</td><td>dist/admin</td><td>5174</td></tr>
+        </table>
+
+        <h3>NPM Scripts</h3>
+        <table>
+            <tr><th>Script</th><th>Description</th></tr>
+            <tr><td><code>npm run dev</code></td><td>Start storefront dev server (5173)</td></tr>
+            <tr><td><code>npm run dev:admin</code></td><td>Start admin dev server (5174)</td></tr>
+            <tr><td><code>npm run build</code></td><td>Build storefront + generate sitemap</td></tr>
+            <tr><td><code>npm run build:admin</code></td><td>Build admin portal</td></tr>
+            <tr><td><code>npm run build:all</code></td><td>Build both applications</td></tr>
+        </table>
+
+        <h3>State Management</h3>
+        <div class="grid">
+            <div class="card">
+                <h4>CartContext (Storefront)</h4>
+                <code>src/context/CartContext.jsx</code><br/><br/>
+                <strong>State:</strong> items, isOpen, appliedCoupon, couponDiscount<br/>
+                <strong>Actions:</strong> addToCart, removeFromCart, applyCoupon, getWhatsAppOrderLink<br/>
+                <strong>Storage:</strong> localStorage (mulyam-cart, mulyam-coupon)
+            </div>
+            <div class="card">
+                <h4>AdminAuthContext (Admin)</h4>
+                <code>src/admin/context/AdminAuthContext.jsx</code><br/><br/>
+                <strong>State:</strong> isAuthenticated, user<br/>
+                <strong>Actions:</strong> login, logout<br/>
+                <strong>Storage:</strong> localStorage
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Routing -->
+    <section id="routing" class="section">
+        <h2>3. Routing Structure</h2>
+
+        <h3>Storefront Routes</h3>
+        <table>
+            <tr><th>Path</th><th>Component</th><th>Description</th></tr>
+            <tr><td>/</td><td>HomePage</td><td>Landing page with hero, collections, bestsellers</td></tr>
+            <tr><td>/collections/diva</td><td>CollectionPage</td><td>Women's jewelry collection</td></tr>
+            <tr><td>/collections/mini</td><td>CollectionPage</td><td>Kids' jewelry collection</td></tr>
+            <tr><td>/collections/paws</td><td>CollectionPage</td><td>Pet jewelry collection</td></tr>
+            <tr><td>/collections/custom</td><td>CollectionPage</td><td>Custom/Bond jewelry</td></tr>
+            <tr><td>/products/:id</td><td>ProductPage</td><td>Product detail with gallery</td></tr>
+            <tr><td>/checkout</td><td>CheckoutPage</td><td>Cart review and WhatsApp order</td></tr>
+            <tr><td>/about</td><td>AboutPage</td><td>Brand story and values</td></tr>
+            <tr><td>/faq</td><td>FAQPage</td><td>Frequently asked questions</td></tr>
+            <tr><td>/contact</td><td>ContactPage</td><td>Contact information</td></tr>
+            <tr><td>/shipping</td><td>ShippingPage</td><td>Delivery policies</td></tr>
+            <tr><td>/returns</td><td>ReturnsPage</td><td>Return policy</td></tr>
+            <tr><td>/size-guide</td><td>SizeGuidePage</td><td>Sizing information</td></tr>
+        </table>
+
+        <h3>Admin Routes</h3>
+        <table>
+            <tr><th>Path</th><th>Component</th><th>Protected</th></tr>
+            <tr><td>/login</td><td>AdminLoginPage</td><td>No</td></tr>
+            <tr><td>/</td><td>AdminDashboard</td><td>Yes</td></tr>
+            <tr><td>/catalogue</td><td>CataloguePage</td><td>Yes</td></tr>
+            <tr><td>/catalogue/new</td><td>AddProductPage</td><td>Yes</td></tr>
+            <tr><td>/catalogue/content-studio</td><td>ContentStudioPage</td><td>Yes</td></tr>
+            <tr><td>/offers</td><td>OffersPage</td><td>Yes</td></tr>
+            <tr><td>/settings</td><td>SettingsPage</td><td>Yes</td></tr>
+            <tr><td>/images</td><td>ImagesPage</td><td>Yes</td></tr>
+            <tr><td>/time-machine</td><td>TimeMachinePage</td><td>Yes</td></tr>
+        </table>
+    </section>
+
+    <!-- Section 4: Database -->
+    <section id="database" class="section">
+        <h2>4. Supabase Database Schema</h2>
+
+        <h3>Products Table</h3>
+        <table>
+            <tr><th>Column</th><th>Type</th><th>Description</th></tr>
+            <tr><td>id</td><td>text PK</td><td>Product ID (mlm-db-0001)</td></tr>
+            <tr><td>name</td><td>text</td><td>Product name</td></tr>
+            <tr><td>price</td><td>numeric</td><td>Current price</td></tr>
+            <tr><td>original_price</td><td>numeric</td><td>Original price (for discount)</td></tr>
+            <tr><td>collection</td><td>text</td><td>diva, mini, paws, custom</td></tr>
+            <tr><td>category</td><td>text</td><td>bracelets, earrings, necklaces, etc.</td></tr>
+            <tr><td>sku</td><td>text UNIQUE</td><td>Stock keeping unit</td></tr>
+            <tr><td>images</td><td>text[]</td><td>Array of Cloudinary URLs</td></tr>
+            <tr><td>in_stock</td><td>boolean</td><td>Availability flag</td></tr>
+            <tr><td>is_live</td><td>boolean</td><td>Published status</td></tr>
+            <tr><td>is_bestseller</td><td>boolean</td><td>Featured as bestseller</td></tr>
+        </table>
+
+        <h3>Coupons Table</h3>
+        <table>
+            <tr><th>Column</th><th>Type</th><th>Description</th></tr>
+            <tr><td>id</td><td>uuid PK</td><td>Coupon ID</td></tr>
+            <tr><td>code</td><td>text UNIQUE</td><td>Coupon code (uppercase)</td></tr>
+            <tr><td>type</td><td>text</td><td>percentage, fixed, freeShipping</td></tr>
+            <tr><td>value</td><td>numeric</td><td>Discount value</td></tr>
+            <tr><td>max_discount</td><td>numeric</td><td>Maximum discount cap</td></tr>
+            <tr><td>min_order</td><td>numeric</td><td>Minimum order amount</td></tr>
+            <tr><td>usage_limit</td><td>integer</td><td>Max uses allowed</td></tr>
+            <tr><td>used_count</td><td>integer</td><td>Current usage count</td></tr>
+            <tr><td>start_date</td><td>timestamp</td><td>Valid from</td></tr>
+            <tr><td>end_date</td><td>timestamp</td><td>Valid until</td></tr>
+            <tr><td>is_active</td><td>boolean</td><td>Active status</td></tr>
+        </table>
+
+        <h3>Other Tables</h3>
+        <div class="grid">
+            <div class="card">
+                <h4>banners</h4>
+                <p>Hero banners, announcement bars, CTA sections with position, colors, and display order</p>
+            </div>
+            <div class="card">
+                <h4>settings</h4>
+                <p>Key-value store for store configuration (name, WhatsApp, shipping, etc.)</p>
+            </div>
+            <div class="card">
+                <h4>activity_log</h4>
+                <p>Audit trail for admin actions with previous/new data for revert capability</p>
+            </div>
+        </div>
+
+        <h3>Supabase API Layer</h3>
+        <table>
+            <tr><th>API</th><th>Methods</th></tr>
+            <tr><td>productsApi</td><td>getAll, getById, getByCollection, create, update, delete, bulkInsert</td></tr>
+            <tr><td>couponsApi</td><td>getAll, getByCode, create, update, delete, incrementUsage</td></tr>
+            <tr><td>bannersApi</td><td>getAll, getByPosition, create, update, delete</td></tr>
+            <tr><td>settingsApi</td><td>get, set, getAll</td></tr>
+            <tr><td>activityApi</td><td>getAll, log</td></tr>
+        </table>
+    </section>
+
+    <!-- Section 5: Cart Flow -->
+    <section id="cart" class="section">
+        <h2>5. Shopping Cart Flow</h2>
+        <div class="diagram-container large">
+            <pre class="mermaid">
+%%{init: {'theme': 'base'}}%%
+flowchart TD
+    C1["View ProductPage"]
+    C2["Select quantity"]
+    C3["Click Add to Cart"]
+    C4["CartContext.addToCart()"]
+    C5{{"Item exists?"}}
+    C6["Update quantity"]
+    C7["Add new item"]
+    C8["Save to localStorage"]
+    C9["Open cart drawer"]
+    C10["Show totals"]
+    C11["Free shipping check<br/>threshold: Rs 1499"]
+
+    C1 --> C2 --> C3 --> C4 --> C5
+    C5 -->|Yes| C6
+    C5 -->|No| C7
+    C6 --> C8
+    C7 --> C8
+    C8 --> C9 --> C10 --> C11
+
+    classDef start fill:#1565C0,stroke:#0D47A1,color:#fff
+    classDef decision fill:#F57C00,stroke:#E65100,color:#fff
+    classDef process fill:#2E7D32,stroke:#1B5E20,color:#fff
+
+    class C1,C2 start
+    class C5 decision
+    class C3,C4,C6,C7,C8,C9,C10,C11 process
+            </pre>
+        </div>
+
+        <h3>Cart Features</h3>
+        <div class="grid">
+            <div class="card">
+                <h4>Persistence</h4>
+                <p>Cart items stored in localStorage under 'mulyam-cart' key. Survives page refresh and browser close.</p>
+            </div>
+            <div class="card">
+                <h4>Coupon Support</h4>
+                <p>Apply percentage, fixed amount, or free shipping coupons. Validates against Supabase.</p>
+            </div>
+            <div class="card">
+                <h4>Free Shipping</h4>
+                <p>Automatic free shipping on orders over Rs 1,499. Progress indicator shows remaining amount.</p>
+            </div>
+            <div class="card">
+                <h4>Computed Totals</h4>
+                <p>Real-time calculation of subtotal, discount, and final total with item count.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: Checkout Flow -->
+    <section id="checkout" class="section">
+        <h2>6. WhatsApp Checkout Flow</h2>
+        <div class="diagram-container large">
+            <pre class="mermaid">
+%%{init: {'theme': 'base'}}%%
+flowchart TD
+    CH1["Review cart"]
+    CH2["Apply coupon"]
+    CH3["Click WhatsApp Checkout"]
+    CH4["getWhatsAppOrderLink()"]
+    CH5["Build order message"]
+    CH6["Include all items"]
+    CH7["Add coupon discount"]
+    CH8["Calculate total"]
+    CH9["URL encode"]
+    CH10["Open wa.me link"]
+    CH11["WhatsApp opens"]
+    CH12["Send to store"]
+
+    CH1 --> CH2 --> CH3 --> CH4 --> CH5 --> CH6 --> CH7 --> CH8 --> CH9 --> CH10 --> CH11 --> CH12
+
+    classDef start fill:#1565C0,stroke:#0D47A1,color:#fff
+    classDef process fill:#2E7D32,stroke:#1B5E20,color:#fff
+    classDef success fill:#00796B,stroke:#004D40,color:#fff
+
+    class CH1 start
+    class CH2,CH3,CH4,CH5,CH6,CH7,CH8,CH9,CH10 process
+    class CH11,CH12 success
+            </pre>
+        </div>
+
+        <div class="info-box">
+            <strong>WhatsApp Order Format:</strong><br/>
+            <code>Hi! I'd like to place an order:</code><br/>
+            <code>- Product Name (SKU) x Qty = Price</code><br/>
+            <code>Subtotal: Rs X,XXX</code><br/>
+            <code>Coupon (CODE): -Rs XXX</code><br/>
+            <code>Total: Rs X,XXX</code>
+        </div>
+    </section>
+
+    <!-- Section 7: Admin CRUD -->
+    <section id="admin-crud" class="section">
+        <h2>7. Admin Product CRUD Flow</h2>
+        <div class="diagram-container large">
+            <pre class="mermaid">
+%%{init: {'theme': 'base'}}%%
+flowchart TD
+    PC1["Navigate to /catalogue"]
+    PC2["useProducts loads"]
+    PC3["Display product list"]
+    PC4{{"Action?"}}
+    PC5["Add New"]
+    PC6["Fill form"]
+    PC7["Upload to Cloudinary"]
+    PC8["productsApi.create()"]
+    PC9["Edit"]
+    PC10["Modify inline"]
+    PC11["productsApi.update()"]
+    PC12["Delete"]
+    PC13["Confirm"]
+    PC14["productsApi.delete()"]
+    PC15["Log activity"]
+    PC16["Refresh list"]
+
+    PC1 --> PC2 --> PC3 --> PC4
+    PC4 -->|Add| PC5 --> PC6 --> PC7 --> PC8 --> PC15
+    PC4 -->|Edit| PC9 --> PC10 --> PC11 --> PC15
+    PC4 -->|Delete| PC12 --> PC13 --> PC14 --> PC15
+    PC15 --> PC16
+
+    classDef start fill:#1565C0,stroke:#0D47A1,color:#fff
+    classDef decision fill:#F57C00,stroke:#E65100,color:#fff
+    classDef process fill:#2E7D32,stroke:#1B5E20,color:#fff
+    classDef api fill:#7B1FA2,stroke:#4A148C,color:#fff
+
+    class PC1 start
+    class PC4 decision
+    class PC2,PC3,PC5,PC6,PC7,PC9,PC10,PC12,PC13,PC15,PC16 process
+    class PC8,PC11,PC14 api
+            </pre>
+        </div>
+
+        <h3>Admin Hooks</h3>
+        <table>
+            <tr><th>Hook</th><th>Purpose</th></tr>
+            <tr><td>useProducts</td><td>Product CRUD operations with Supabase</td></tr>
+            <tr><td>useCoupons</td><td>Coupon management and validation</td></tr>
+            <tr><td>useBanners</td><td>Banner CRUD with position ordering</td></tr>
+            <tr><td>useSettings</td><td>Store settings get/set</td></tr>
+            <tr><td>useActivityLog</td><td>Audit logging and retrieval</td></tr>
+            <tr><td>useCloudinaryUpload</td><td>Image upload to Cloudinary</td></tr>
+            <tr><td>useImageEditor</td><td>Crop and resize images</td></tr>
+        </table>
+    </section>
+
+    <!-- Section 8: Image Upload -->
+    <section id="images" class="section">
+        <h2>8. Cloudinary Image Upload</h2>
+        <div class="diagram-container">
+            <pre class="mermaid">
+%%{init: {'theme': 'base'}}%%
+flowchart TD
+    IM1["Select file"]
+    IM2["Validate type + size"]
+    IM3{{"Valid?"}}
+    IM4["Upload to Cloudinary"]
+    IM5["Apply folder structure"]
+    IM6["Get URL"]
+    IM7["Display preview"]
+    IM8["Save to product"]
+    IM_ERR["Show error"]
+
+    IM1 --> IM2 --> IM3
+    IM3 -->|Yes| IM4 --> IM5 --> IM6 --> IM7 --> IM8
+    IM3 -->|No| IM_ERR
+
+    classDef start fill:#1565C0,stroke:#0D47A1,color:#fff
+    classDef decision fill:#F57C00,stroke:#E65100,color:#fff
+    classDef process fill:#2E7D32,stroke:#1B5E20,color:#fff
+    classDef error fill:#C62828,stroke:#B71C1C,color:#fff
+
+    class IM1 start
+    class IM3 decision
+    class IM2,IM4,IM5,IM6,IM7,IM8 process
+    class IM_ERR error
+            </pre>
+        </div>
+
+        <div class="info-box">
+            <strong>Cloudinary URL Format:</strong><br/>
+            <code>https://res.cloudinary.com/daieejy7c/image/upload/v[timestamp]/mulyam/[collection]/[category]/[sku]_[index].webp</code>
+        </div>
+    </section>
+
+    <!-- Section 9: Key Files -->
+    <section id="files" class="section">
+        <h2>9. Key Files Reference</h2>
+        <div class="grid">
+            <div class="card">
+                <h4>Build Configuration</h4>
+                <code>vite.config.storefront.js</code><br/>
+                <code>vite.config.admin.js</code><br/>
+                <code>index.html</code><br/>
+                <code>admin.html</code>
+            </div>
+            <div class="card">
+                <h4>Storefront Entry</h4>
+                <code>src/storefront/main.jsx</code><br/>
+                <code>src/storefront/App.jsx</code><br/>
+                <code>src/context/CartContext.jsx</code>
+            </div>
+            <div class="card">
+                <h4>Admin Entry</h4>
+                <code>src/admin/main.jsx</code><br/>
+                <code>src/admin/App.jsx</code><br/>
+                <code>src/admin/context/AdminAuthContext.jsx</code>
+            </div>
+            <div class="card">
+                <h4>Supabase Layer</h4>
+                <code>src/lib/supabase.js</code><br/>
+                - productsApi, couponsApi<br/>
+                - bannersApi, settingsApi<br/>
+                - activityApi, logActivity()
+            </div>
+            <div class="card">
+                <h4>Data Hooks</h4>
+                <code>src/hooks/useStore.js</code><br/>
+                <code>src/admin/hooks/useProducts.js</code><br/>
+                <code>src/admin/hooks/useCoupons.js</code><br/>
+                <code>src/admin/hooks/useCloudinaryUpload.js</code>
+            </div>
+            <div class="card">
+                <h4>SEO</h4>
+                <code>src/seo/config.js</code><br/>
+                <code>src/seo/PageSEO.jsx</code><br/>
+                <code>src/seo/ProductSEO.jsx</code><br/>
+                <code>scripts/generateSitemap.js</code>
+            </div>
+            <div class="card">
+                <h4>Constants</h4>
+                <code>src/constants/brand.js</code><br/>
+                <code>src/constants/bannerImages.js</code><br/>
+                <code>src/data/products.js</code>
+            </div>
+            <div class="card">
+                <h4>Database</h4>
+                <code>supabase/migrations/001_initial_schema.sql</code><br/>
+                <code>scripts/seed-products.mjs</code><br/>
+                <code>scripts/sync-from-csv.mjs</code>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 10: Configuration -->
+    <section id="config" class="section">
+        <h2>10. Configuration</h2>
+
+        <h3>Environment Variables</h3>
+        <table>
+            <tr><th>Variable</th><th>Description</th></tr>
+            <tr><td>VITE_SUPABASE_URL</td><td>Supabase project URL</td></tr>
+            <tr><td>VITE_SUPABASE_ANON_KEY</td><td>Supabase anonymous key</td></tr>
+            <tr><td>VITE_CLOUDINARY_CLOUD_NAME</td><td>Cloudinary cloud name</td></tr>
+            <tr><td>VITE_CLOUDINARY_UPLOAD_PRESET</td><td>Cloudinary upload preset</td></tr>
+        </table>
+
+        <h3>Brand Configuration</h3>
+        <div class="info-box">
+            <strong>src/constants/brand.js</strong><br/>
+            - Brand name, tagline<br/>
+            - WhatsApp number (919523882449)<br/>
+            - Instagram handle<br/>
+            - Email address<br/>
+            - Store information
+        </div>
+
+        <h3>Color Palette</h3>
+        <table>
+            <tr><th>CSS Variable</th><th>Color</th><th>Usage</th></tr>
+            <tr><td>--color-cream</td><td>#F1EEE9</td><td>Backgrounds</td></tr>
+            <tr><td>--color-beige</td><td>#E7E1D7</td><td>Cards</td></tr>
+            <tr><td>--color-taupe</td><td>#BBA993</td><td>Borders</td></tr>
+            <tr><td>--color-caramel</td><td>#B19071</td><td>Primary CTAs</td></tr>
+            <tr><td>--color-dark</td><td>#050304</td><td>Text</td></tr>
+        </table>
+
+        <h3>Deployment</h3>
+        <div class="grid">
+            <div class="card">
+                <h4>Storefront</h4>
+                <p>Vercel or Netlify deployment. Output: dist/storefront with sitemap.xml</p>
+            </div>
+            <div class="card">
+                <h4>Admin Portal</h4>
+                <p>Cloudflare Pages. Uses _redirects file for SPA routing. Output: dist/admin</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Mulyam Jewels Architecture Diagrams | E-Commerce Platform | Storefront (5173) + Admin (5174)</p>
+    </footer>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'base',
+            securityLevel: 'loose',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>

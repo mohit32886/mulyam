@@ -1,14 +1,17 @@
 import { Layout } from '../components/layout'
 import { Button } from '../components/ui'
 import { MessageCircle, Instagram, Mail, MapPin, Clock } from 'lucide-react'
-import { useSEO } from '../hooks/useSEO'
+import { PageSEO, pageMeta } from '../seo'
 
 function ContactPage() {
-  const seo = useSEO({ title: 'Contact Us', url: '/contact' })
-
   return (
     <Layout>
-      {seo}
+      <PageSEO
+        title={pageMeta.contact.title}
+        description={pageMeta.contact.description}
+        canonical="/contact"
+      />
+
       {/* Hero Section */}
       <section className="py-16 md:py-24 bg-light-gray text-center">
         <div className="max-w-3xl mx-auto px-4">

@@ -1,14 +1,17 @@
 import { Layout } from '../components/layout'
 import { Sparkles, Droplets, Wind, Moon, AlertTriangle, Heart, MessageCircle } from 'lucide-react'
 import { Button } from '../components/ui'
-import { useSEO } from '../hooks/useSEO'
+import { PageSEO, pageMeta } from '../seo'
 
 function CareGuidePage() {
-  const seo = useSEO({ title: 'Jewelry Care Guide', url: '/care-guide' })
-
   return (
     <Layout>
-      {seo}
+      <PageSEO
+        title={pageMeta['care-guide'].title}
+        description={pageMeta['care-guide'].description}
+        canonical="/care-guide"
+      />
+
       {/* Hero Section */}
       <section className="py-16 md:py-24 bg-light-gray text-center">
         <div className="max-w-3xl mx-auto px-4">

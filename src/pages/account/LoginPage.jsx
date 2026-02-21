@@ -5,14 +5,13 @@ import Layout from '../../components/layout/Layout'
 import { Button } from '../../components/ui'
 import { useAuth } from '../../context/AuthContext'
 import { loginSchema, validateField } from '../../utils/validation'
-import { useSEO } from '../../hooks/useSEO'
+import { PageSEO } from '../../seo'
 
 function LoginPage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const redirectTo = searchParams.get('redirect') || '/account'
   const { login, isAuthenticated } = useAuth()
-  const seo = useSEO({ title: 'Sign In', url: '/login', noindex: true })
 
   const [form, setForm] = useState({ email: '', password: '' })
   const [errors, setErrors] = useState({})
@@ -74,7 +73,7 @@ function LoginPage() {
 
   return (
     <Layout>
-      {seo}
+      <PageSEO title="Sign In" noindex={true} />
       <div className="max-w-md mx-auto px-4 py-12">
         <div className="text-center mb-8">
           <h1 className="font-display text-2xl font-semibold mb-2">Welcome Back</h1>

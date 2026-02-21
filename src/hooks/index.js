@@ -11,5 +11,3 @@ export {
   useValidateCouponCode,
   useProductSearch,
 } from './useStore'
-
-export { useSEO } from './useSEO'

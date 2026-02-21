@@ -4,15 +4,14 @@ import Layout from '../../components/layout/Layout'
 import { Button } from '../../components/ui'
 import { ProtectedRoute, AccountNav, OrderCard } from '../../components/account'
 import { useOrders } from '../../hooks/medusa/useOrders'
-import { useSEO } from '../../hooks/useSEO'
+import { PageSEO } from '../../seo'
 
 function OrdersPage() {
   const { orders, loading, error } = useOrders()
-  const seo = useSEO({ title: 'My Orders', noindex: true })
 
   return (
     <Layout>
-      {seo}
+      <PageSEO title="My Orders" noindex={true} />
       <ProtectedRoute>
         <div className="max-w-4xl mx-auto px-4 py-8">
           <h1 className="font-display text-2xl font-semibold mb-6">My Account</h1>

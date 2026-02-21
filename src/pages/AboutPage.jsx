@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { Layout } from '../components/layout'
 import { Button } from '../components/ui'
 import { Heart, Shield, Sparkles, Users, Droplets, Gem, CheckCircle } from 'lucide-react'
-import { useSEO } from '../hooks/useSEO'
+import { PageSEO, pageMeta } from '../seo'
 
 const values = [
   {
@@ -57,11 +57,14 @@ const qualityFeatures = [
 ]
 
 function AboutPage() {
-  const seo = useSEO({ title: 'About Us', url: '/about' })
-
   return (
     <Layout>
-      {seo}
+      <PageSEO
+        title={pageMeta.about.title}
+        description={pageMeta.about.description}
+        canonical="/about"
+      />
+
       {/* Hero Section */}
       <section className="py-16 md:py-24 text-center bg-brand-gradient">
         <div className="max-w-3xl mx-auto px-4">
@@ -81,32 +84,35 @@ function AboutPage() {
 
       {/* Our Story Section */}
       <section className="py-16 md:py-24">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="aspect-square bg-tan/20 rounded-lg flex items-center justify-center">
-              <span className="text-8xl">✨</span>
-            </div>
-            <div>
-              <h2 className="font-display font-semibold text-2xl md:text-3xl">
-                The Beginning
-              </h2>
-              <p className="mt-4 text-gray-600 leading-relaxed">
-                What started as a passion for creating jewelry that combines
-                elegance with everyday wearability has grown into a brand loved
-                by customers across India.
-              </p>
-              <p className="mt-4 text-gray-600 leading-relaxed">
-                We noticed a gap in the market - beautiful jewelry that was
-                either too expensive or too delicate for daily wear. We set out
-                to change that by creating demi-fine pieces that look luxurious
-                but can handle your busy lifestyle.
-              </p>
-              <p className="mt-4 text-gray-600 leading-relaxed">
-                Today, Mulyam Jewels offers collections for women, kids, and
-                even pets - because every member of your family deserves to
-                sparkle.
-              </p>
-            </div>
+        <div className="max-w-3xl mx-auto px-4">
+          <h2 className="font-display font-semibold text-2xl md:text-3xl text-center">
+            The Beginning
+          </h2>
+          <div className="mt-8 space-y-6 text-gray-600 leading-relaxed">
+            <p>
+              Mulyam started with a feeling.
+            </p>
+            <p>
+              I've always loved what jewellery does to a person. It's small, but it shifts something. You stand differently. You speak differently. You feel a little more like yourself.
+            </p>
+            <p>
+              That's where Diva comes in. For days that are normal but still important. For moments when you need that extra inch of confidence. For showing up as you.
+            </p>
+            <p>
+              And then there are the real VIPs. The ones who greet you like you're the best part of their day. The ones who depend on you. The ones you protect without even thinking.
+            </p>
+            <p>
+              Mulyam exists in that space. Confidence for you. Care for what you love.
+            </p>
+            <p>
+              Jewellery should feel good. It should feel safe. And sometimes it should just feel like you.
+            </p>
+            <p>
+              We're just getting started. And if you're here this early, thank you. Truly.
+            </p>
+            <p className="font-medium text-dark">
+              Welcome to Mulyam.
+            </p>
           </div>
         </div>
       </section>

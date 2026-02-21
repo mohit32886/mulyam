@@ -11,8 +11,8 @@ import '../index.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ErrorBoundary>
-      <HelmetProvider>
+    <HelmetProvider>
+      <ErrorBoundary>
         <BrowserRouter>
           <ScrollToTop />
           <AuthProvider>
@@ -21,7 +21,7 @@ createRoot(document.getElementById('root')).render(
             </CartProvider>
           </AuthProvider>
         </BrowserRouter>
-      </HelmetProvider>
-    </ErrorBoundary>
+      </ErrorBoundary>
+    </HelmetProvider>
   </StrictMode>,
 )

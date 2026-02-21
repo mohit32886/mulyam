@@ -4,8 +4,8 @@ import { Layout } from '../components/layout'
 import { Button, Badge, PriceDisplay, ProductCard, PlaceholderImage } from '../components/ui'
 import { collections } from '../data/products'
 import { useProduct, useRelatedProducts } from '../hooks/useStore'
-import { useSEO } from '../hooks/useSEO'
 import { useCart } from '../context/CartContext'
+import { ProductSEO, BreadcrumbSchema } from '../seo'
 import {
   ChevronRight,
   ChevronLeft,
@@ -84,15 +84,6 @@ function ProductPage() {
   const { product, loading, error } = useProduct(productId)
   const { products: relatedProducts } = useRelatedProducts(productId, 4)
 
-  const seo = useSEO({
-    title: product?.name,
-    description: product?.description ? product.description.slice(0, 160) : undefined,
-    image: product?.images?.[0] || product?.thumbnail,
-    url: `/product/${productId}`,
-    type: 'product',
-    product: product || undefined,
-  })
-
   // Reset selected image when product changes
   useEffect(() => {
     setSelectedImageIndex(0)
@@ -126,9 +117,19 @@ function ProductPage() {
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0
 
+  // SEO breadcrumbs
+  const breadcrumbs = [
+    { name: 'Home', url: '/' },
+    { name: collection?.name || product.collection?.toUpperCase(), url: `/collections/${product.collection === 'bond' ? 'custom' : product.collection}` },
+    { name: product.category, url: `/collections/${product.collection === 'bond' ? 'custom' : product.collection}?category=${product.category}` },
+    { name: product.name, url: `/products/${product.id}` }
+  ]
+
   return (
     <Layout>
-      {seo}
+      <ProductSEO product={product} collection={collection} />
+      <BreadcrumbSchema items={breadcrumbs} />
+
       {/* Breadcrumbs */}
       <nav className="bg-light-gray py-3">
         <div className="max-w-7xl mx-auto px-4">

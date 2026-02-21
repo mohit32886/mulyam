@@ -1,14 +1,17 @@
 import { Layout } from '../components/layout'
 import { Shield, Database, Share2, Lock, UserCheck, Cookie, RefreshCw, MessageCircle } from 'lucide-react'
 import { Button } from '../components/ui'
-import { useSEO } from '../hooks/useSEO'
+import { PageSEO, pageMeta } from '../seo'
 
 function PrivacyPage() {
-  const seo = useSEO({ title: 'Privacy Policy', url: '/privacy-policy' })
-
   return (
     <Layout>
-      {seo}
+      <PageSEO
+        title={pageMeta.privacy.title}
+        description={pageMeta.privacy.description}
+        canonical="/privacy"
+      />
+
       {/* Hero Section */}
       <section className="py-16 md:py-24 bg-light-gray text-center">
         <div className="max-w-3xl mx-auto px-4">

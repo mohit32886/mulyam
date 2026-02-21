@@ -1,14 +1,17 @@
 import { Layout } from '../components/layout'
 import { Shield, CheckCircle, XCircle, Clock, Wrench, MessageCircle } from 'lucide-react'
 import { Button } from '../components/ui'
-import { useSEO } from '../hooks/useSEO'
+import { PageSEO, pageMeta } from '../seo'
 
 function WarrantyPage() {
-  const seo = useSEO({ title: 'Warranty', url: '/warranty' })
-
   return (
     <Layout>
-      {seo}
+      <PageSEO
+        title={pageMeta.warranty.title}
+        description={pageMeta.warranty.description}
+        canonical="/warranty"
+      />
+
       {/* Hero Section */}
       <section className="py-16 md:py-24 bg-light-gray text-center">
         <div className="max-w-3xl mx-auto px-4">

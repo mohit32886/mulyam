@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
 import AnnouncementBar from './AnnouncementBar'
 import Header from './Header'
 import Footer from './Footer'
@@ -15,10 +14,6 @@ function Layout({ children }) {
   const [searchOpen, setSearchOpen] = useState(false)
   const [showOrderToast, setShowOrderToast] = useState(false)
   const { totals, openCart } = useCart()
-  const location = useLocation()
-
-  // Hide announcement bar on homepage
-  const isHomePage = location.pathname === '/'
 
   // Fetch announcement banners and settings from Supabase
   const { banners } = useStoreBanners({ type: 'announcement' })
@@ -34,20 +29,18 @@ function Layout({ children }) {
   }, [])
 
   return (
-    <div className="min-h-screen flex flex-col overflow-x-hidden">
-      {!isHomePage && (
-        <AnnouncementBar
-          banners={banners || []}
-          rotationInterval={(settings.bannerRotationSpeed || 3) * 1000}
-        />
-      )}
+    <div className="min-h-screen flex flex-col overflow-x-hidden w-full max-w-full">
+      <AnnouncementBar
+        banners={banners || []}
+        rotationInterval={(settings.bannerRotationSpeed || 3) * 1000}
+      />
       <Header
         onSearchClick={() => setSearchOpen(true)}
         onCartClick={openCart}
         cartCount={totals.itemCount}
       />
 
-      <main className="flex-1">
+      <main className="flex-1 w-full max-w-full overflow-x-hidden">
         {children}
       </main>
 

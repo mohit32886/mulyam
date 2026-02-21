@@ -1,0 +1,108 @@
+%%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#2E7D32'}}}%%
+flowchart TB
+    subgraph BUILD["DUAL BUILD SYSTEM"]
+        VITE_STORE["vite.config.storefront.js<br/>Port 5173"]
+        VITE_ADMIN["vite.config.admin.js<br/>Port 5174"]
+        INDEX["index.html<br/>Storefront Entry"]
+        ADMIN_HTML["admin.html<br/>Admin Entry"]
+    end
+
+    subgraph STOREFRONT_APP["STOREFRONT APPLICATION"]
+        SF_MAIN["storefront/main.jsx"]
+        SF_APP["storefront/App.jsx"]
+        SF_MAIN --> HELMET["HelmetProvider"]
+        HELMET --> CART_P["CartProvider"]
+        CART_P --> ROUTER_S["BrowserRouter"]
+        ROUTER_S --> SF_APP
+    end
+
+    subgraph ADMIN_APP["ADMIN APPLICATION"]
+        AD_MAIN["admin/main.jsx"]
+        AD_APP["admin/App.jsx"]
+        AD_MAIN --> AUTH_P["AdminAuthProvider"]
+        AUTH_P --> ROUTER_A["BrowserRouter"]
+        ROUTER_A --> AD_APP
+    end
+
+    subgraph STOREFRONT_ROUTES["STOREFRONT ROUTES"]
+        R_HOME["/ - HomePage"]
+        R_COLL["/collections/:id"]
+        R_PROD["/products/:id"]
+        R_CHECK["/checkout"]
+        R_ABOUT["/about, /faq, /contact"]
+        R_POLICY["/shipping, /returns, /terms"]
+    end
+
+    subgraph ADMIN_ROUTES["ADMIN ROUTES"]
+        R_LOGIN["/login - AdminLoginPage"]
+        R_DASH["/ - AdminDashboard"]
+        R_CAT["/catalogue"]
+        R_CAT_NEW["/catalogue/new"]
+        R_OFFERS["/offers"]
+        R_SET["/settings"]
+        R_IMG["/images"]
+        R_TIME["/time-machine"]
+    end
+
+    subgraph CONTEXTS["CONTEXT STATE"]
+        subgraph CART_CTX["CartContext"]
+            C1["items: Array"]
+            C2["isOpen: boolean"]
+            C3["appliedCoupon: Object"]
+            C4["couponDiscount: number"]
+            C5["addToCart(product, qty)"]
+            C6["removeFromCart(id)"]
+            C7["applyCoupon(code)"]
+            C8["getWhatsAppOrderLink()"]
+        end
+        subgraph AUTH_CTX["AdminAuthContext"]
+            A1["isAuthenticated: boolean"]
+            A2["user: Object"]
+            A3["login(email, password)"]
+            A4["logout()"]
+        end
+    end
+
+    subgraph SUPABASE_API["SUPABASE API LAYER"]
+        PRODUCTS_API["productsApi<br/>CRUD Operations"]
+        COUPONS_API["couponsApi<br/>Coupon Management"]
+        BANNERS_API["bannersApi<br/>Banner CRUD"]
+        SETTINGS_API["settingsApi<br/>Store Settings"]
+        ACTIVITY_API["activityApi<br/>Audit Logging"]
+    end
+
+    subgraph DATABASE["SUPABASE TABLES"]
+        TB_PRODUCTS["products<br/>100+ items"]
+        TB_COUPONS["coupons<br/>Discount codes"]
+        TB_BANNERS["banners<br/>Hero, CTA, Announce"]
+        TB_SETTINGS["settings<br/>Store config"]
+        TB_ACTIVITY["activity_log<br/>Audit trail"]
+    end
+
+    %% Build connections
+    VITE_STORE --> INDEX
+    VITE_ADMIN --> ADMIN_HTML
+    INDEX --> SF_MAIN
+    ADMIN_HTML --> AD_MAIN
+
+    %% Route connections
+    SF_APP --> STOREFRONT_ROUTES
+    AD_APP --> ADMIN_ROUTES
+
+    %% API connections
+    SUPABASE_API --> DATABASE
+
+    %% Styling
+    classDef build fill:#5D4037,stroke:#3E2723,color:#fff
+    classDef app fill:#1565C0,stroke:#0D47A1,color:#fff
+    classDef route fill:#7B1FA2,stroke:#4A148C,color:#fff
+    classDef context fill:#F57C00,stroke:#E65100,color:#fff
+    classDef api fill:#00796B,stroke:#004D40,color:#fff
+    classDef db fill:#C62828,stroke:#B71C1C,color:#fff
+
+    class VITE_STORE,VITE_ADMIN,INDEX,ADMIN_HTML build
+    class SF_MAIN,SF_APP,AD_MAIN,AD_APP,HELMET,CART_P,AUTH_P,ROUTER_S,ROUTER_A app
+    class R_HOME,R_COLL,R_PROD,R_CHECK,R_ABOUT,R_POLICY,R_LOGIN,R_DASH,R_CAT,R_CAT_NEW,R_OFFERS,R_SET,R_IMG,R_TIME route
+    class C1,C2,C3,C4,C5,C6,C7,C8,A1,A2,A3,A4 context
+    class PRODUCTS_API,COUPONS_API,BANNERS_API,SETTINGS_API,ACTIVITY_API api
+    class TB_PRODUCTS,TB_COUPONS,TB_BANNERS,TB_SETTINGS,TB_ACTIVITY db
