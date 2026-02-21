@@ -1,5 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import { supabase, logActivity } from '../../lib/supabase'
+import { createLogger } from '../../lib/logger'
+
+const log = createLogger('admin:coupons')
 
 /**
  * Hook to fetch all coupons
@@ -30,7 +33,7 @@ export function useCoupons(options = {}) {
       if (fetchError) throw fetchError
       setData(coupons || [])
     } catch (err) {
-      console.error('Error fetching coupons:', err)
+      log.error('Error fetching coupons:', err)
       setError(err.message)
     } finally {
       setLoading(false)
@@ -107,7 +110,7 @@ export function useValidateCoupon() {
         finalTotal: Math.max(0, orderTotal - discount)
       }
     } catch (err) {
-      console.error('Error validating coupon:', err)
+      log.error('Error validating coupon:', err)
       setError(err.message)
       return { valid: false, error: err.message }
     } finally {
@@ -151,7 +154,7 @@ export function useCouponMutations() {
 
       return { data, error: null }
     } catch (err) {
-      console.error('Error creating coupon:', err)
+      log.error('Error creating coupon:', err)
       setError(err.message)
       return { data: null, error: err.message }
     } finally {
@@ -187,7 +190,7 @@ export function useCouponMutations() {
 
       return { data, error: null }
     } catch (err) {
-      console.error('Error updating coupon:', err)
+      log.error('Error updating coupon:', err)
       setError(err.message)
       return { data: null, error: err.message }
     } finally {
@@ -219,7 +222,7 @@ export function useCouponMutations() {
 
       return { error: null }
     } catch (err) {
-      console.error('Error deleting coupon:', err)
+      log.error('Error deleting coupon:', err)
       setError(err.message)
       return { error: err.message }
     } finally {

@@ -1,5 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import { supabase, logActivity } from '../../lib/supabase'
+import { createLogger } from '../../lib/logger'
+
+const log = createLogger('admin:settings')
 
 /**
  * Hook to fetch all settings
@@ -28,7 +31,7 @@ export function useSettings() {
 
       setData(settingsObj)
     } catch (err) {
-      console.error('Error fetching settings:', err)
+      log.error('Error fetching settings:', err)
       setError(err.message)
     } finally {
       setLoading(false)
@@ -73,7 +76,7 @@ export function useSetting(key) {
 
         setData(setting?.value || null)
       } catch (err) {
-        console.error('Error fetching setting:', err)
+        log.error('Error fetching setting:', err)
         setError(err.message)
       } finally {
         setLoading(false)
@@ -121,7 +124,7 @@ export function useSettingsMutations() {
 
       return { data, error: null }
     } catch (err) {
-      console.error('Error setting value:', err)
+      log.error('Error setting value:', err)
       setError(err.message)
       return { data: null, error: err.message }
     } finally {
@@ -155,7 +158,7 @@ export function useSettingsMutations() {
 
       return { data: results, error: null }
     } catch (err) {
-      console.error('Error setting multiple values:', err)
+      log.error('Error setting multiple values:', err)
       setError(err.message)
       return { data: null, error: err.message }
     } finally {
@@ -177,7 +180,7 @@ export function useSettingsMutations() {
 
       return { error: null }
     } catch (err) {
-      console.error('Error deleting setting:', err)
+      log.error('Error deleting setting:', err)
       setError(err.message)
       return { error: err.message }
     } finally {

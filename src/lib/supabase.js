@@ -1,5 +1,8 @@
 // Supabase client configuration
 import { createClient } from '@supabase/supabase-js'
+import { createLogger } from './logger'
+
+const log = createLogger('supabase')
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY
@@ -307,6 +310,6 @@ export async function logActivity(actionType, entityType, entityId, label, detai
       user_name: options.userName || 'Admin'
     })
   } catch (error) {
-    console.error('Failed to log activity:', error)
+    log.error('Failed to log activity:', error)
   }
 }

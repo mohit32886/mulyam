@@ -4,6 +4,9 @@ import Badge from './Badge'
 import PriceDisplay from './PriceDisplay'
 import PlaceholderImage from './PlaceholderImage'
 import { useCart } from '../../context/CartContext'
+import { createLogger } from '../../lib/logger'
+
+const log = createLogger('product-card')
 
 // Get the highest priority badge for a product
 const getProductBadge = (product) => {
@@ -42,7 +45,7 @@ function ProductCard({ product }) {
       try {
         await addToCart(product)
       } catch (err) {
-        console.error('Failed to add to cart:', err)
+        log.error('Failed to add to cart:', err)
       }
     }
   }

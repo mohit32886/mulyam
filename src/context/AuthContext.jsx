@@ -1,5 +1,8 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'
 import medusa from '../lib/medusa-client'
+import { createLogger } from '../lib/logger'
+
+const log = createLogger('auth')
 
 const AuthContext = createContext(null)
 
@@ -69,7 +72,7 @@ export function AuthProvider({ children }) {
     try {
       await medusa.auth.logout()
     } catch (err) {
-      console.error('Logout error:', err)
+      log.error('Logout error:', err)
     } finally {
       setCustomer(null)
       setError(null)

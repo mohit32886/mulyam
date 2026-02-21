@@ -1,6 +1,9 @@
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '../../lib/supabase'
 import { Package, Tag, Image, Settings, User } from 'lucide-react'
+import { createLogger } from '../../lib/logger'
+
+const log = createLogger('admin:activity')
 
 /**
  * Hook to fetch activity log
@@ -43,7 +46,7 @@ export function useActivityLog(options = {}) {
       if (fetchError) throw fetchError
       setData(activities || [])
     } catch (err) {
-      console.error('Error fetching activities:', err)
+      log.error('Error fetching activities:', err)
       setError(err.message)
     } finally {
       setLoading(false)
@@ -109,7 +112,7 @@ export function useActivityStats() {
           couponChanges: couponChanges || 0
         })
       } catch (err) {
-        console.error('Error fetching activity stats:', err)
+        log.error('Error fetching activity stats:', err)
         setError(err.message)
       } finally {
         setLoading(false)

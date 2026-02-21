@@ -1,5 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import medusa from '../../lib/medusa-client'
+import { createLogger } from '../../lib/logger'
+
+const log = createLogger('orders')
 
 export function useOrders() {
   const [orders, setOrders] = useState([])
@@ -41,7 +44,7 @@ export function useOrder(orderId) {
         const { order } = await medusa.store.order.retrieve(orderId)
         setOrder(order)
       } catch (err) {
-        console.error('Failed to fetch order:', err)
+        log.error('Failed to fetch order:', err)
       } finally {
         setLoading(false)
       }

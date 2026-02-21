@@ -1,11 +1,13 @@
 import * as crypto from "crypto"
 import type { MedusaRequest, MedusaResponse } from "@medusajs/framework"
+import { ContainerRegistrationKeys } from "@medusajs/framework/utils"
 import type { RazorpayWebhookEvent } from "../../../modules/razorpay/types"
 
 export async function POST(
   req: MedusaRequest,
   res: MedusaResponse
 ): Promise<void> {
+  const logger = req.scope.resolve(ContainerRegistrationKeys.LOGGER)
   const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET
 
   if (!webhookSecret) {
@@ -38,7 +40,7 @@ export async function POST(
     case "payment.captured": {
       const payment = event.payload.payment?.entity
       if (payment) {
-        console.log(
+        logger.info(
           `Razorpay webhook: payment.captured - ${payment.id}, amount: ${payment.amount}, order: ${payment.order_id}`
         )
       }
@@ -48,7 +50,7 @@ export async function POST(
     case "payment.failed": {
       const payment = event.payload.payment?.entity
       if (payment) {
-        console.log(
+        logger.warn(
           `Razorpay webhook: payment.failed - ${payment.id}, order: ${payment.order_id}`
         )
       }
@@ -58,7 +60,7 @@ export async function POST(
     case "refund.created": {
       const refund = event.payload.refund?.entity
       if (refund) {
-        console.log(
+        logger.info(
           `Razorpay webhook: refund.created - ${refund.id}, amount: ${refund.amount}, payment: ${refund.payment_id}`
         )
       }
@@ -66,7 +68,7 @@ export async function POST(
     }
 
     default:
-      console.log(`Razorpay webhook: unhandled event - ${event.event}`)
+      logger.warn(`Razorpay webhook: unhandled event - ${event.event}`)
   }
 
   res.status(200).json({ received: true })

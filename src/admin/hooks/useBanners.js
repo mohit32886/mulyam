@@ -1,5 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import { supabase, logActivity } from '../../lib/supabase'
+import { createLogger } from '../../lib/logger'
+
+const log = createLogger('admin:banners')
 
 /**
  * Hook to fetch all banners
@@ -33,7 +36,7 @@ export function useBanners(options = {}) {
       if (fetchError) throw fetchError
       setData(banners || [])
     } catch (err) {
-      console.error('Error fetching banners:', err)
+      log.error('Error fetching banners:', err)
       setError(err.message)
     } finally {
       setLoading(false)
@@ -78,7 +81,7 @@ export function useBannerMutations() {
 
       return { data, error: null }
     } catch (err) {
-      console.error('Error creating banner:', err)
+      log.error('Error creating banner:', err)
       setError(err.message)
       return { data: null, error: err.message }
     } finally {
@@ -114,7 +117,7 @@ export function useBannerMutations() {
 
       return { data, error: null }
     } catch (err) {
-      console.error('Error updating banner:', err)
+      log.error('Error updating banner:', err)
       setError(err.message)
       return { data: null, error: err.message }
     } finally {
@@ -146,7 +149,7 @@ export function useBannerMutations() {
 
       return { error: null }
     } catch (err) {
-      console.error('Error deleting banner:', err)
+      log.error('Error deleting banner:', err)
       setError(err.message)
       return { error: err.message }
     } finally {
@@ -173,7 +176,7 @@ export function useBannerMutations() {
 
       return { error: null }
     } catch (err) {
-      console.error('Error reordering banners:', err)
+      log.error('Error reordering banners:', err)
       setError(err.message)
       return { error: err.message }
     } finally {

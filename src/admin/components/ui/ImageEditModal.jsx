@@ -4,6 +4,9 @@ import 'react-image-crop/dist/ReactCrop.css'
 import { X, RotateCw, RotateCcw, FlipHorizontal, FlipVertical, Loader2, Check } from 'lucide-react'
 import { AdminButton } from './index'
 import { useImageEditor } from '../../hooks/useImageEditor'
+import { createLogger } from '../../../lib/logger'
+
+const log = createLogger('admin:image-edit')
 
 /**
  * Modal for editing images before upload
@@ -76,7 +79,7 @@ export default function ImageEditModal({ isOpen, imageUrl, onClose, onSave }) {
 
       onSave(blob)
     } catch (error) {
-      console.error('Failed to process image:', error)
+      log.error('Failed to process image:', error)
     } finally {
       setIsSaving(false)
     }

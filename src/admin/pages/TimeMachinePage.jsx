@@ -26,6 +26,9 @@ import {
   useSettingsMutations,
   useBannerMutations
 } from '../hooks'
+import { createLogger } from '../../lib/logger'
+
+const log = createLogger('admin:time-machine')
 
 const filterOptions = [
   { value: 'all', label: 'All Activities' },
@@ -159,7 +162,7 @@ function TimeMachinePage() {
       // Refresh the activity log
       refetch()
     } catch (err) {
-      console.error('Error reverting activity:', err)
+      log.error('Error reverting activity:', err)
       toast.error(`Failed to revert: ${err.message}`)
     } finally {
       setReverting(null)

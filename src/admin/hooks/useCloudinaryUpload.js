@@ -1,11 +1,14 @@
 import { useState, useCallback } from 'react'
+import { createLogger } from '../../lib/logger'
+
+const log = createLogger('admin:cloudinary')
 
 // Cloudinary configuration from environment variables
 const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
 const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'mulyam_admin'
 
 if (!CLOUD_NAME) {
-  console.warn(
+  log.warn(
     'Missing VITE_CLOUDINARY_CLOUD_NAME environment variable. Image uploads will fail.'
   )
 }
@@ -81,7 +84,7 @@ export function useCloudinaryUpload() {
           if (xhr.status >= 200 && xhr.status < 300) {
             try {
               const response = JSON.parse(xhr.responseText)
-              console.log('Cloudinary upload success:', response.secure_url)
+              log.info('Cloudinary upload success:', response.secure_url)
               setProgress(prev => {
                 const next = { ...prev }
                 delete next[fileId]
@@ -95,7 +98,7 @@ export function useCloudinaryUpload() {
                 format: response.format,
               })
             } catch (parseError) {
-              console.error('Failed to parse Cloudinary response:', xhr.responseText)
+              log.error('Failed to parse Cloudinary response:', xhr.responseText)
               const error = new Error('Invalid response from Cloudinary')
               setErrors(prev => ({ ...prev, [fileId]: error.message }))
               reject(error)
@@ -108,9 +111,9 @@ export function useCloudinaryUpload() {
               if (errorResponse.error?.message) {
                 errorMessage = errorResponse.error.message
               }
-              console.error('Cloudinary upload error:', errorResponse)
+              log.error('Cloudinary upload error:', errorResponse)
             } catch {
-              console.error('Cloudinary upload failed with status:', xhr.status, xhr.responseText)
+              log.error('Cloudinary upload failed with status:', xhr.status, xhr.responseText)
             }
             const error = new Error(errorMessage)
             setErrors(prev => ({ ...prev, [fileId]: error.message }))

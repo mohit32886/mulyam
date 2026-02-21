@@ -8,6 +8,9 @@
 import { useState, useEffect, useMemo } from 'react'
 import { supabase } from '../lib/supabase'
 import medusa from '../lib/medusa-client'
+import { createLogger } from '../lib/logger'
+
+const log = createLogger('store')
 
 // Pricing context – passed to every product.list() call
 const REGION_ID = 'reg_01KHYC1EE382WKBKE27QDHNJFY'
@@ -84,7 +87,7 @@ export function useStoreProducts() {
         })
         setProducts((data || []).map(transformMedusaProduct))
       } catch (err) {
-        console.error('Error fetching products:', err)
+        log.error('Error fetching products:', err)
         setError(err.message)
       } finally {
         setLoading(false)
@@ -123,7 +126,7 @@ export function useBestsellers(limit = 8) {
 
         setProducts(bestsellers)
       } catch (err) {
-        console.error('Error fetching bestsellers:', err)
+        log.error('Error fetching bestsellers:', err)
         setError(err.message)
       } finally {
         setLoading(false)
@@ -177,7 +180,7 @@ export function useCollectionProducts(collectionHandle) {
 
         setProducts((data || []).map(transformMedusaProduct))
       } catch (err) {
-        console.error('Error fetching collection products:', err)
+        log.error('Error fetching collection products:', err)
         setError(err.message)
       } finally {
         setLoading(false)
@@ -216,7 +219,7 @@ export function useProduct(productHandle) {
 
         setProduct(products?.[0] ? transformMedusaProduct(products[0]) : null)
       } catch (err) {
-        console.error('Error fetching product:', err)
+        log.error('Error fetching product:', err)
         setError(err.message)
         setProduct(null)
       } finally {
@@ -277,7 +280,7 @@ export function useRelatedProducts(productHandle, limit = 4) {
 
         setProducts(related)
       } catch (err) {
-        console.error('Error fetching related products:', err)
+        log.error('Error fetching related products:', err)
         setError(err.message)
       } finally {
         setLoading(false)
@@ -317,7 +320,7 @@ export function useProductSearch(query) {
 
         setResults((data || []).map(transformMedusaProduct))
       } catch (err) {
-        console.error('Error searching products:', err)
+        log.error('Error searching products:', err)
         setError(err.message)
       } finally {
         setLoading(false)
@@ -401,7 +404,7 @@ export function useFeaturedProducts(limit = 8) {
           }
         }
       } catch (err) {
-        console.error('Error fetching featured products:', err)
+        log.error('Error fetching featured products:', err)
         setError(err.message)
       } finally {
         setLoading(false)
@@ -460,7 +463,7 @@ export function useStoreBanners({ type } = {}) {
 
         setBanners((data || []).map(transformBanner))
       } catch (err) {
-        console.error('Error fetching banners:', err)
+        log.error('Error fetching banners:', err)
         setError(err.message)
       } finally {
         setLoading(false)
@@ -555,7 +558,7 @@ export function useStoreSettings() {
           }
         })
       } catch (err) {
-        console.error('Error fetching settings:', err)
+        log.error('Error fetching settings:', err)
         setError(err.message)
       } finally {
         setLoading(false)
@@ -684,7 +687,7 @@ export function useAvailableCoupons() {
 
         setCoupons(formattedCoupons)
       } catch (err) {
-        console.error('Error fetching available coupons:', err)
+        log.error('Error fetching available coupons:', err)
         setError(err.message)
       } finally {
         setLoading(false)

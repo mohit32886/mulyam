@@ -1,5 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import { supabase, logActivity } from '../../lib/supabase'
+import { createLogger } from '../../lib/logger'
+
+const log = createLogger('admin:products')
 
 /**
  * Hook to fetch all products
@@ -36,7 +39,7 @@ export function useProducts(options = {}) {
       if (fetchError) throw fetchError
       setData(products || [])
     } catch (err) {
-      console.error('Error fetching products:', err)
+      log.error('Error fetching products:', err)
       setError(err.message)
     } finally {
       setLoading(false)
@@ -78,7 +81,7 @@ export function useProduct(id) {
         if (fetchError) throw fetchError
         setData(product)
       } catch (err) {
-        console.error('Error fetching product:', err)
+        log.error('Error fetching product:', err)
         setError(err.message)
       } finally {
         setLoading(false)
@@ -131,7 +134,7 @@ export function useProductMutations() {
 
       return { data, error: null }
     } catch (err) {
-      console.error('Error creating product:', err)
+      log.error('Error creating product:', err)
       setError(err.message)
       return { data: null, error: err.message }
     } finally {
@@ -169,7 +172,7 @@ export function useProductMutations() {
 
       return { data, error: null }
     } catch (err) {
-      console.error('Error updating product:', err)
+      log.error('Error updating product:', err)
       setError(err.message)
       return { data: null, error: err.message }
     } finally {
@@ -203,7 +206,7 @@ export function useProductMutations() {
 
       return { error: null }
     } catch (err) {
-      console.error('Error deleting product:', err)
+      log.error('Error deleting product:', err)
       setError(err.message)
       return { error: err.message }
     } finally {

@@ -3,6 +3,9 @@ import { X, Upload, Image as ImageIcon, Trash2, Loader2 } from 'lucide-react'
 import { AdminButton, AdminInput, AdminSelect, AdminToggle } from '../ui'
 import { DEFAULTS, COLORS } from '../../../constants/brand'
 import { useCloudinaryUpload } from '../../hooks/useCloudinaryUpload'
+import { createLogger } from '../../../lib/logger'
+
+const log = createLogger('admin:banner-modal')
 
 function BannerItemModal({ isOpen, onClose, onSave, banner = null }) {
   const [formData, setFormData] = useState({
@@ -66,7 +69,7 @@ function BannerItemModal({ isOpen, onClose, onSave, banner = null }) {
       })
       handleChange('image', result.url)
     } catch (error) {
-      console.error('Failed to upload banner image:', error)
+      log.error('Failed to upload banner image:', error)
     } finally {
       setIsUploading(false)
       setUploadProgress(0)

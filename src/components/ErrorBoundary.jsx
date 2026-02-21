@@ -1,5 +1,8 @@
 import { Component } from 'react'
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react'
+import { createLogger } from '../lib/logger'
+
+const log = createLogger('error-boundary')
 
 /**
  * Error Boundary component that catches JavaScript errors anywhere in the child
@@ -18,7 +21,7 @@ class ErrorBoundary extends Component {
 
   componentDidCatch(error, errorInfo) {
     // Log error to console in development
-    console.error('ErrorBoundary caught an error:', error, errorInfo)
+    log.error('ErrorBoundary caught an error:', error, errorInfo)
 
     // Store error info in state for display
     this.setState({ errorInfo })

@@ -1,6 +1,9 @@
 import { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react'
 import medusa from '../lib/medusa-client'
 import { useValidateCouponCode } from '../hooks'
+import { createLogger } from '../lib/logger'
+
+const log = createLogger('cart')
 
 const CartContext = createContext(null)
 
@@ -94,7 +97,7 @@ export function CartProvider({ children }) {
     } else if (productOrVariantId?.variants?.[0]?.id) {
       variantId = productOrVariantId.variants[0].id
     } else {
-      console.error('addToCart: could not determine variant ID', productOrVariantId)
+      log.error('addToCart: could not determine variant ID', productOrVariantId)
       return
     }
 
