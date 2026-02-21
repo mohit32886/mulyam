@@ -5,10 +5,12 @@ import Layout from '../../components/layout/Layout'
 import { Button } from '../../components/ui'
 import { useAuth } from '../../context/AuthContext'
 import { registerSchema, validateField } from '../../utils/validation'
+import { useSEO } from '../../hooks/useSEO'
 
 function RegisterPage() {
   const navigate = useNavigate()
   const { register, isAuthenticated } = useAuth()
+  const seo = useSEO({ title: 'Create Account', url: '/register', noindex: true })
 
   const [form, setForm] = useState({
     first_name: '',
@@ -82,6 +84,7 @@ function RegisterPage() {
 
   return (
     <Layout>
+      {seo}
       <div className="max-w-md mx-auto px-4 py-12">
         <div className="text-center mb-8">
           <h1 className="font-display text-2xl font-semibold mb-2">Create Account</h1>

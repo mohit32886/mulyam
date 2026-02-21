@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Layout } from '../components/layout'
 import { Button } from '../components/ui'
 import { ChevronDown, MessageCircle } from 'lucide-react'
+import { useSEO } from '../hooks/useSEO'
 
 const faqCategories = [
   {
@@ -131,8 +132,11 @@ function FAQItem({ question, answer }) {
 }
 
 function FAQPage() {
+  const seo = useSEO({ title: 'Frequently Asked Questions', url: '/faq' })
+
   return (
     <Layout>
+      {seo}
       {/* Hero Section */}
       <section className="py-16 md:py-24 bg-light-gray text-center">
         <div className="max-w-3xl mx-auto px-4">

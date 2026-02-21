@@ -1,10 +1,14 @@
 import { Layout } from '../components/layout'
 import { FileText, ShoppingBag, CreditCard, Truck, RotateCcw, Shield, Scale, MessageCircle } from 'lucide-react'
 import { Button } from '../components/ui'
+import { useSEO } from '../hooks/useSEO'
 
 function TermsPage() {
+  const seo = useSEO({ title: 'Terms & Conditions', url: '/terms-conditions' })
+
   return (
     <Layout>
+      {seo}
       {/* Hero Section */}
       <section className="py-16 md:py-24 bg-light-gray text-center">
         <div className="max-w-3xl mx-auto px-4">

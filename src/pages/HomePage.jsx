@@ -4,6 +4,7 @@ import { Loader2 } from 'lucide-react'
 import { Layout } from '../components/layout'
 import { Button, ProductCard } from '../components/ui'
 import { useFeaturedProducts, useStoreSettings } from '../hooks'
+import { useSEO } from '../hooks/useSEO'
 import { collections } from '../data/products'
 
 const storeCards = [
@@ -48,6 +49,7 @@ const storeCards = [
 function HomePage() {
   const { products: featuredProducts, loading } = useFeaturedProducts(8)
   const { settings } = useStoreSettings()
+  const seo = useSEO({ url: '/' })
 
   // Animation state for Featured Products section
   const [featuredVisible, setFeaturedVisible] = useState(false)
@@ -80,6 +82,7 @@ function HomePage() {
 
   return (
     <Layout>
+      {seo}
       {/* Hero Section */}
       {isSectionEnabled('hero') && (
       <section className="min-h-[60vh] flex items-center justify-center text-center bg-brand-gradient">

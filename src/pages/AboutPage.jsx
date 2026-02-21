@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { Layout } from '../components/layout'
 import { Button } from '../components/ui'
 import { Heart, Shield, Sparkles, Users, Droplets, Gem, CheckCircle } from 'lucide-react'
+import { useSEO } from '../hooks/useSEO'
 
 const values = [
   {
@@ -56,8 +57,11 @@ const qualityFeatures = [
 ]
 
 function AboutPage() {
+  const seo = useSEO({ title: 'About Us', url: '/about' })
+
   return (
     <Layout>
+      {seo}
       {/* Hero Section */}
       <section className="py-16 md:py-24 text-center bg-brand-gradient">
         <div className="max-w-3xl mx-auto px-4">

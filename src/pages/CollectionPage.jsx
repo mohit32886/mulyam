@@ -4,6 +4,7 @@ import { Layout } from '../components/layout'
 import { ProductCard, Badge } from '../components/ui'
 import { collections } from '../data/products'
 import { useCollectionProducts } from '../hooks'
+import { useSEO } from '../hooks/useSEO'
 import { Droplet, Shield, Sparkles, Sun, Loader2 } from 'lucide-react'
 
 const featureIcons = {
@@ -45,6 +46,12 @@ function CollectionPage() {
 
   // Get collection metadata
   const collection = collections[collectionId]
+
+  const seo = useSEO({
+    title: collection?.title,
+    description: collection?.description,
+    url: `/${collectionId}`,
+  })
 
   // Fetch products from Medusa
   const { products: allProducts, loading, error } = useCollectionProducts(collectionId)
@@ -107,6 +114,7 @@ function CollectionPage() {
 
   return (
     <Layout>
+      {seo}
       {/* Hero Section */}
       <section className="py-16 md:py-24 text-center bg-gradient-to-b from-neutral-900 via-neutral-800 to-neutral-700">
         <div className="max-w-3xl mx-auto px-4">

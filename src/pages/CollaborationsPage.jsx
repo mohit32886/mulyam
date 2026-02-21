@@ -1,10 +1,14 @@
 import { Layout } from '../components/layout'
 import { Users, Gift, Percent, Camera, Heart, Star, MessageCircle, Instagram } from 'lucide-react'
 import { Button } from '../components/ui'
+import { useSEO } from '../hooks/useSEO'
 
 function CollaborationsPage() {
+  const seo = useSEO({ title: 'Collaborations', url: '/collaborations' })
+
   return (
     <Layout>
+      {seo}
       {/* Hero Section */}
       <section className="py-16 md:py-24 bg-brand-gradient text-center">
         <div className="max-w-3xl mx-auto px-4">

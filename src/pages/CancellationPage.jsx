@@ -1,10 +1,14 @@
 import { Layout } from '../components/layout'
 import { XCircle, Clock, CheckCircle, Truck, CreditCard, MessageCircle } from 'lucide-react'
 import { Button } from '../components/ui'
+import { useSEO } from '../hooks/useSEO'
 
 function CancellationPage() {
+  const seo = useSEO({ title: 'Cancellation Policy', url: '/cancellation-policy' })
+
   return (
     <Layout>
+      {seo}
       {/* Hero Section */}
       <section className="py-16 md:py-24 bg-light-gray text-center">
         <div className="max-w-3xl mx-auto px-4">

@@ -2,8 +2,6 @@ import { Link } from 'react-router-dom'
 import {
   Package,
   CheckCircle,
-  FileText,
-  AlertCircle,
   ShoppingBag,
   Plus,
   Sparkles,
@@ -16,46 +14,25 @@ import {
 } from 'lucide-react'
 import { AdminLayout } from '../components/layout'
 import { AdminCard } from '../components/ui'
-import { useProducts } from '../hooks'
+import { useMedusaProductStats } from '../hooks'
 
 function AdminDashboard() {
-  // Fetch products from Supabase
-  const { data: products, loading, error } = useProducts()
-
-  // Calculate stats from products
-  const totalProducts = products.length
-  const liveProducts = products.filter((p) => p.is_live).length
-  const draftProducts = products.filter((p) => !p.is_live).length
-  const outOfStock = products.filter((p) => p.stock === 0 || !p.in_stock).length || 0
+  const { stats: productStats, loading, error } = useMedusaProductStats()
 
   const stats = [
     {
       label: 'Total Products',
-      value: totalProducts,
+      value: productStats.total,
       icon: Package,
       color: 'text-blue-400',
       bgColor: 'bg-blue-500/10',
     },
     {
-      label: 'Live',
-      value: liveProducts,
+      label: 'Published',
+      value: productStats.published,
       icon: CheckCircle,
       color: 'text-green-400',
       bgColor: 'bg-green-500/10',
-    },
-    {
-      label: 'Draft',
-      value: draftProducts,
-      icon: FileText,
-      color: 'text-yellow-400',
-      bgColor: 'bg-yellow-500/10',
-    },
-    {
-      label: 'Out of Stock',
-      value: outOfStock,
-      icon: AlertCircle,
-      color: 'text-red-400',
-      bgColor: 'bg-red-500/10',
     },
   ]
 
@@ -108,7 +85,7 @@ function AdminDashboard() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 gap-4 mb-8">
           {stats.map((stat) => (
             <AdminCard key={stat.label} className="p-4">
               <div className="flex items-center gap-3">
