@@ -63,7 +63,7 @@ function RegisterPage() {
 
     if (!result.success) {
       const newErrors = {}
-      for (const err of result.error.errors) {
+      for (const err of result.error.issues) {
         const field = err.path[0]
         if (!newErrors[field]) newErrors[field] = err.message
       }

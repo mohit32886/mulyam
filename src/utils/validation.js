@@ -293,7 +293,7 @@ export function validate(schema, data) {
 
   // Format errors as { fieldName: errorMessage }
   const errors = {}
-  for (const error of result.error.errors) {
+  for (const error of result.error.issues) {
     const path = error.path.join('.')
     if (!errors[path]) {
       errors[path] = error.message
@@ -323,7 +323,7 @@ export function validateField(schema, field, value) {
     return { success: true }
   }
 
-  return { success: false, error: result.error.errors[0]?.message }
+  return { success: false, error: result.error.issues[0]?.message }
 }
 
 export default {
