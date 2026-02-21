@@ -94,6 +94,67 @@ export const checkoutAddressSchema = z.object({
 })
 
 // ============================================
+// AUTH & PROFILE VALIDATION
+// ============================================
+export const loginSchema = z.object({
+  email: z
+    .string()
+    .min(1, 'Email is required')
+    .email('Please enter a valid email address'),
+
+  password: z
+    .string()
+    .min(1, 'Password is required'),
+})
+
+export const registerSchema = z.object({
+  first_name: z
+    .string()
+    .min(1, 'First name is required')
+    .max(50, 'First name is too long')
+    .regex(/^[\p{L}\p{M}\s.'-]+$/u, 'First name contains invalid characters'),
+
+  last_name: z
+    .string()
+    .min(1, 'Last name is required')
+    .max(50, 'Last name is too long')
+    .regex(/^[\p{L}\p{M}\s.'-]+$/u, 'Last name contains invalid characters'),
+
+  email: z
+    .string()
+    .min(1, 'Email is required')
+    .email('Please enter a valid email address'),
+
+  password: z
+    .string()
+    .min(8, 'Password must be at least 8 characters'),
+
+  phone: z
+    .string()
+    .regex(/^[6-9]\d{9}$/, 'Please enter a valid 10-digit Indian mobile number'),
+})
+
+export const profileUpdateSchema = z.object({
+  first_name: z
+    .string()
+    .min(1, 'First name is required')
+    .max(50, 'First name is too long')
+    .regex(/^[\p{L}\p{M}\s.'-]+$/u, 'First name contains invalid characters'),
+
+  last_name: z
+    .string()
+    .min(1, 'Last name is required')
+    .max(50, 'Last name is too long')
+    .regex(/^[\p{L}\p{M}\s.'-]+$/u, 'Last name contains invalid characters'),
+
+  phone: z
+    .string()
+    .regex(/^[6-9]\d{9}$/, 'Please enter a valid 10-digit Indian mobile number')
+    .optional()
+    .or(z.literal('')),
+})
+
+// ============================================
 // PRODUCT VALIDATION
 // ============================================
 export const productSchema = z.object({
@@ -269,6 +330,9 @@ export default {
   checkoutFormSchema,
   checkoutContactSchema,
   checkoutAddressSchema,
+  loginSchema,
+  registerSchema,
+  profileUpdateSchema,
   productSchema,
   couponSchema,
   validate,

@@ -48,15 +48,22 @@ module.exports = defineConfig({
       },
     },
 
-    // TODO: Resend notification provider
-    // Will be added once Resend is configured
-    // {
-    //   resolve: "@medusajs/medusa/notification-resend",
-    //   options: {
-    //     channels: ["email"],
-    //     api_key: process.env.RESEND_API_KEY,
-    //     from: process.env.RESEND_FROM,
-    //   },
-    // },
+    // Notification module with Resend provider
+    {
+      resolve: "@medusajs/medusa/notification",
+      options: {
+        providers: [
+          {
+            resolve: "./src/modules/resend",
+            id: "notification-resend",
+            options: {
+              channels: ["email"],
+              api_key: process.env.RESEND_API_KEY,
+              from: process.env.RESEND_FROM || "Mulyam Jewels <noreply@mulyamjewels.com>",
+            },
+          },
+        ],
+      },
+    },
   ],
 })

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { Search, ShoppingBag, Menu, X, Instagram, MessageCircle } from 'lucide-react'
+import { Search, ShoppingBag, Menu, X, Instagram, MessageCircle, User } from 'lucide-react'
+import { useAuth } from '../../context/AuthContext'
 
 const navLinks = [
   { to: '/diva', label: 'Mulyam DIVA' },
@@ -11,6 +12,8 @@ const navLinks = [
 
 function Header({ onSearchClick, onCartClick, cartCount = 0 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { isAuthenticated } = useAuth()
+  const accountLink = isAuthenticated ? '/account' : '/account/login'
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-gray-border">
@@ -72,6 +75,13 @@ function Header({ onSearchClick, onCartClick, cartCount = 0 }) {
             >
               <Instagram className="w-5 h-5 text-dark" />
             </a>
+            <Link
+              to={accountLink}
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              aria-label="My Account"
+            >
+              <User className="w-5 h-5 text-dark" />
+            </Link>
             <button
               onClick={onCartClick}
               className="relative p-2 hover:bg-gray-100 rounded-full transition-colors"
@@ -134,6 +144,13 @@ function Header({ onSearchClick, onCartClick, cartCount = 0 }) {
             >
               <Instagram className="w-5 h-5 text-dark" />
             </a>
+            <Link
+              to={accountLink}
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              aria-label="My Account"
+            >
+              <User className="w-5 h-5 text-dark" />
+            </Link>
             <button
               onClick={onCartClick}
               className="relative p-2 hover:bg-gray-100 rounded-full transition-colors"
@@ -230,6 +247,33 @@ function Header({ onSearchClick, onCartClick, cartCount = 0 }) {
                     <MessageCircle className="w-5 h-5" />
                     <span>Whatsapp</span>
                   </a>
+                </div>
+              </div>
+
+              {/* My Account */}
+              <div className="mb-8">
+                <h3 className="font-display font-semibold text-lg text-dark mb-4">
+                  My Account
+                </h3>
+                <div className="space-y-3 pl-1">
+                  <Link
+                    to={accountLink}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-3 text-gray-600 hover:text-dark transition-colors"
+                  >
+                    <User className="w-5 h-5" />
+                    <span>{isAuthenticated ? 'My Profile' : 'Sign In'}</span>
+                  </Link>
+                  {isAuthenticated && (
+                    <Link
+                      to="/account/orders"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center gap-3 text-gray-600 hover:text-dark transition-colors"
+                    >
+                      <ShoppingBag className="w-5 h-5" />
+                      <span>My Orders</span>
+                    </Link>
+                  )}
                 </div>
               </div>
 

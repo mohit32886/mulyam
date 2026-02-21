@@ -17,6 +17,11 @@ import WarrantyPage from '../pages/WarrantyPage'
 import CareGuidePage from '../pages/CareGuidePage'
 import CancellationPage from '../pages/CancellationPage'
 import CollaborationsPage from '../pages/CollaborationsPage'
+import LoginPage from '../pages/account/LoginPage'
+import RegisterPage from '../pages/account/RegisterPage'
+import AccountPage from '../pages/account/AccountPage'
+import OrdersPage from '../pages/account/OrdersPage'
+import OrderDetailPage from '../pages/account/OrderDetailPage'
 
 function App() {
   return (
@@ -53,6 +58,13 @@ function App() {
       <Route path="/care-guide" element={<CareGuidePage />} />
       <Route path="/cancellation" element={<CancellationPage />} />
       <Route path="/collaborations" element={<CollaborationsPage />} />
+
+      {/* Account */}
+      <Route path="/account/login" element={<LoginPage />} />
+      <Route path="/account/register" element={<RegisterPage />} />
+      <Route path="/account" element={<AccountPage />} />
+      <Route path="/account/orders" element={<OrdersPage />} />
+      <Route path="/account/orders/:orderId" element={<OrderDetailPage />} />
 
       {/* Checkout */}
       <Route path="/checkout" element={<CheckoutPage />} />

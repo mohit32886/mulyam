@@ -1,6 +1,6 @@
 # Mulyam Jewels - Progress Tracker
 
-> Last Updated: 2026-01-23
+> Last Updated: 2026-02-21
 
 ---
 
@@ -260,12 +260,89 @@
 
 ---
 
+---
+
+## Medusa.js v2 Migration
+
+### Phase M1: Backend Setup
+- [x] Docker Compose (PostgreSQL 15, Redis 7)
+- [x] Medusa v2 project initialized at `mulyam-medusa/`
+- [x] Database migrations and seed
+- [x] **Verify**: `npx medusa develop` starts on port 9000
+
+### Phase M2: Data Migration
+- [x] 53 products migrated from Supabase to Medusa
+- [x] 4 collections (DIVA, MINI, PAWS, BOND)
+- [x] Inventory levels linked to stock locations
+- [x] **Verify**: Products visible via Store API
+
+### Phase M3: Frontend Wired to Medusa
+- [x] Medusa JS SDK client (`src/lib/medusa-client.js`)
+- [x] Product hooks (`src/hooks/medusa/useProducts.js`)
+- [x] Cart context rewritten for Medusa Cart API
+- [x] Pricing with `calculated_price` + region
+- [x] **Verify**: Products load, cart add/remove works
+
+### Phase M4: Checkout Flow + Razorpay
+- [x] Multi-step checkout (contact, shipping, payment)
+- [x] Razorpay payment provider module (`mulyam-medusa/src/modules/razorpay/`)
+- [x] Custom `/store/razorpay` route for session updates
+- [x] Fulfillment chain (stock location, service zone, shipping options)
+- [x] Order confirmation page
+- [x] **Verify**: E2E checkout with Razorpay test mode creates orders
+
+### Phase M5: Customer Auth Pages + My Orders
+- [x] Validation schemas (login, register, profile update)
+- [x] ProtectedRoute component (auth guard with redirect)
+- [x] AccountNav component (sidebar/tabs navigation)
+- [x] Login page (`/account/login`)
+  - [x] Email + password form
+  - [x] Redirect support via `?redirect=` param
+  - [x] Link to register
+- [x] Register page (`/account/register`)
+  - [x] Name, email, phone (+91), password form
+  - [x] Auto-login after registration
+- [x] Account page (`/account`)
+  - [x] ProfileSection with inline edit (name, phone)
+  - [x] Save via `medusa.store.customer.update()`
+- [x] Orders page (`/account/orders`)
+  - [x] OrderCard components with status badges
+  - [x] Empty state
+- [x] Order detail page (`/account/orders/:orderId`)
+  - [x] Items, shipping address, payment summary
+- [x] Header updated with User icon + account links (desktop & mobile)
+- [x] Routes added to App.jsx
+- [x] **Verify**: Frontend builds clean, all routes accessible
+
+### Phase M6: Email Notifications (Resend)
+- [x] Resend notification module (`mulyam-medusa/src/modules/resend/`)
+  - [x] `AbstractNotificationProviderService` implementation
+  - [x] `ModuleProvider(Modules.NOTIFICATION, ...)` export
+  - [x] Registered in `medusa-config.ts`
+- [x] Order confirmation subscriber (`order-placed.ts`)
+  - [x] Subscribes to `order.placed` event
+  - [x] Branded HTML email with items, totals, address
+- [x] Shipping notification subscriber (`shipment-created.ts`)
+  - [x] Subscribes to `order.fulfillment_created` event
+  - [x] Includes tracking number/URL if available
+- [x] **Verify**: Order placement sends confirmation email via Resend (tested with Order #9)
+
+### Phase M7: Production Deployment
+- [ ] Environment configuration
+- [ ] Database migration for production
+- [ ] DNS + SSL setup
+- [ ] Deploy Medusa backend
+- [ ] Deploy React frontend
+
+---
+
 ## Notes & Decisions
-- Using mock data for products (no backend)
-- Cart is client-side only (localStorage for persistence)
-- No actual payment/checkout flow
-- WhatsApp links open in new tab
-- Using placeholder images until real product images are downloaded
+- Products now served from Medusa v2 (migrated from Supabase)
+- Cart uses Medusa Cart API with server-side state
+- Razorpay handles payments in test mode
+- Resend sends transactional emails (free tier: `onboarding@resend.dev` sender)
+- Banners/Settings/Coupons still on Supabase
+- `NODE_TLS_REJECT_UNAUTHORIZED=0` required for dev (corporate proxy TLS issues)
 
 ---
 
@@ -290,3 +367,6 @@
 | 2026-01-23 | Cart functionality implemented | Phase 6 |
 | 2026-01-23 | Static pages created | Phase 7 |
 | 2026-01-23 | Search functionality implemented | Phase 8 |
+| 2026-02-20 | Medusa v2 backend + checkout + Razorpay | Phase M1-M4 |
+| 2026-02-21 | Customer auth pages + My Orders | Phase M5 |
+| 2026-02-21 | Email notifications via Resend | Phase M6 |
