@@ -5,7 +5,7 @@ import { z } from 'zod'
  */
 
 // ============================================
-// CHECKOUT FORM VALIDATION
+// CHECKOUT FORM VALIDATION (legacy WhatsApp flow)
 // ============================================
 export const checkoutFormSchema = z.object({
   name: z
@@ -32,6 +32,65 @@ export const checkoutFormSchema = z.object({
   pincode: z.string().regex(/^\d{6}$/, 'Please enter a valid 6-digit pincode'),
 
   notes: z.string().max(500, 'Notes must be less than 500 characters').optional(),
+})
+
+// ============================================
+// CHECKOUT CONTACT STEP
+// ============================================
+export const checkoutContactSchema = z.object({
+  email: z
+    .string()
+    .min(1, 'Email is required')
+    .email('Please enter a valid email address'),
+
+  phone: z
+    .string()
+    .regex(/^[6-9]\d{9}$/, 'Please enter a valid 10-digit Indian mobile number'),
+})
+
+// ============================================
+// CHECKOUT ADDRESS STEP
+// ============================================
+export const checkoutAddressSchema = z.object({
+  first_name: z
+    .string()
+    .min(1, 'First name is required')
+    .max(50, 'First name is too long')
+    .regex(/^[\p{L}\p{M}\s.'-]+$/u, 'First name contains invalid characters'),
+
+  last_name: z
+    .string()
+    .min(1, 'Last name is required')
+    .max(50, 'Last name is too long')
+    .regex(/^[\p{L}\p{M}\s.'-]+$/u, 'Last name contains invalid characters'),
+
+  address_1: z
+    .string()
+    .min(5, 'Please enter your full address')
+    .max(300, 'Address is too long'),
+
+  address_2: z
+    .string()
+    .max(300, 'Address line 2 is too long')
+    .optional()
+    .or(z.literal('')),
+
+  city: z
+    .string()
+    .min(2, 'Please enter a valid city name')
+    .max(100, 'City name is too long'),
+
+  province: z
+    .string()
+    .min(1, 'Please select a state'),
+
+  postal_code: z
+    .string()
+    .regex(/^\d{6}$/, 'Please enter a valid 6-digit pincode'),
+
+  phone: z
+    .string()
+    .regex(/^[6-9]\d{9}$/, 'Please enter a valid 10-digit mobile number'),
 })
 
 // ============================================
@@ -208,6 +267,8 @@ export function validateField(schema, field, value) {
 
 export default {
   checkoutFormSchema,
+  checkoutContactSchema,
+  checkoutAddressSchema,
   productSchema,
   couponSchema,
   validate,

@@ -4,13 +4,15 @@ import { useCart } from '../../context/CartContext'
 function CartItem({ item }) {
   const { updateQuantity, removeFromCart } = useCart()
 
+  const imageUrl = item.thumbnail || item.images?.[0]
+
   return (
     <div className="flex gap-4 py-4 border-b border-gray-100">
       {/* Product Image */}
       <div className="w-20 h-20 bg-tan/10 rounded flex-shrink-0 flex items-center justify-center">
-        {item.images?.[0] ? (
+        {imageUrl ? (
           <img
-            src={item.images[0]}
+            src={imageUrl}
             alt={item.name}
             className="w-full h-full object-cover rounded"
           />
@@ -22,7 +24,9 @@ function CartItem({ item }) {
       {/* Product Info */}
       <div className="flex-1 min-w-0">
         <h4 className="font-medium text-sm text-dark line-clamp-2">{item.name}</h4>
-        <p className="text-xs text-gray-500 mt-0.5">{item.material}</p>
+        {item.material && (
+          <p className="text-xs text-gray-500 mt-0.5">{item.material}</p>
+        )}
         <p className="font-semibold text-sm mt-1">
           Rs {item.price.toLocaleString('en-IN')}
         </p>

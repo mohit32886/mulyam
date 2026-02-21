@@ -35,11 +35,15 @@ function ProductCard({ product }) {
     ? Math.round(((originalPrice - price) / originalPrice) * 100)
     : 0
 
-  const handleAddToCart = (e) => {
+  const handleAddToCart = async (e) => {
     e.preventDefault()
     e.stopPropagation()
-    if (inStock) {
-      addToCart(product)
+    if (inStock && product.variantId) {
+      try {
+        await addToCart(product)
+      } catch (err) {
+        console.error('Failed to add to cart:', err)
+      }
     }
   }
 

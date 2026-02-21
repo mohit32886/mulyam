@@ -1,53 +1,71 @@
 /**
  * Frontend Store Hooks
  *
- * These hooks fetch data from Supabase and transform it to the format
- * expected by the customer-facing frontend (camelCase).
+ * Product data hooks fetch from Medusa.js backend.
+ * Banners, settings, and coupons still use Supabase (admin-managed).
  */
 
 import { useState, useEffect, useMemo } from 'react'
 import { supabase } from '../lib/supabase'
+import medusa from '../lib/medusa-client'
 
-// Transform Supabase product (snake_case) to frontend format (camelCase)
-const transformProduct = (p) => ({
-  id: p.id,
-  name: p.name,
-  price: p.price,
-  originalPrice: p.original_price,
-  collection: p.collection,
-  category: p.category,
-  material: p.material,
-  plating: p.plating,
-  color: p.color,
-  sku: p.sku,
-  description: p.description,
-  images: p.images || [],
-  inStock: p.in_stock,
-  isBestseller: p.is_bestseller,
-  isNewArrival: p.is_new_arrival,
-  isTrending: p.is_trending,
-  isSellingFast: p.is_selling_fast,
-  stock: p.stock,
-  isLive: p.is_live,
-  createdAt: p.created_at,
-})
+// Pricing context – passed to every product.list() call
+const REGION_ID = 'reg_01KHYC1EE382WKBKE27QDHNJFY'
+const PRICING_FIELDS = '+variants.calculated_price'
 
-// Transform banner from Supabase to frontend format
-// Handles both legacy fields (text, bg_color, link) and admin fields (title, background_color, link_url)
-const transformBanner = (b) => ({
-  id: b.id,
-  text: b.title || b.text,
-  subtitle: b.subtitle,
-  link: b.link_url || b.link,
-  type: b.type,
-  bgColor: b.background_color || b.bg_color,
-  textColor: b.text_color,
-  isActive: b.is_active,
-  position: b.position,
-})
+// ---------------------------------------------------------------------------
+// Medusa product → frontend format transformer
+// ---------------------------------------------------------------------------
+
+const transformMedusaProduct = (p) => {
+  const variant = p.variants?.[0]
+  // Medusa v2: price comes from calculated_price (requires region_id + fields)
+  const calcPrice = variant?.calculated_price
+  const price = calcPrice ? calcPrice.calculated_amount / 100 : 0
+
+  // Extract option values from variant
+  const getOptionValue = (title) => {
+    if (!variant?.options) return null
+    const opt = variant.options.find((o) => o.option?.title === title)
+    return opt?.value || null
+  }
+
+  return {
+    id: p.handle || p.id,
+    medusaId: p.id,
+    name: p.title,
+    price,
+    originalPrice: p.metadata?.original_price || null,
+    collection: p.collection?.handle || null,
+    category: p.categories?.[0]?.name || p.metadata?.category || null,
+    material: p.metadata?.material || null,
+    plating: p.metadata?.plating || null,
+    color: getOptionValue('Color'),
+    size: getOptionValue('Size'),
+    sku: variant?.sku || null,
+    description: p.description || '',
+    images: (p.images || []).map((img) => img.url),
+    thumbnail: p.thumbnail,
+    inStock: true, // Medusa validates stock at cart time
+    isBestseller: p.metadata?.is_bestseller || false,
+    isNewArrival: false,
+    isTrending: false,
+    isSellingFast: false,
+    stock: 0,
+    isLive: true,
+    createdAt: p.created_at,
+    // Medusa-specific fields for cart integration
+    variantId: variant?.id,
+    variants: p.variants,
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Product Hooks (Medusa)
+// ---------------------------------------------------------------------------
 
 /**
- * Fetch all live products from Supabase
+ * Fetch all published products from Medusa
  */
 export function useStoreProducts() {
   const [products, setProducts] = useState([])
@@ -58,15 +76,13 @@ export function useStoreProducts() {
     const fetchProducts = async () => {
       try {
         setLoading(true)
-        const { data, error: fetchError } = await supabase
-          .from('products')
-          .select('*')
-          .eq('is_live', true)
-          .order('created_at', { ascending: false })
-
-        if (fetchError) throw fetchError
-
-        setProducts((data || []).map(transformProduct))
+        const { products: data } = await medusa.store.product.list({
+          limit: 100,
+          order: '-created_at',
+          region_id: REGION_ID,
+          fields: PRICING_FIELDS,
+        })
+        setProducts((data || []).map(transformMedusaProduct))
       } catch (err) {
         console.error('Error fetching products:', err)
         setError(err.message)
@@ -93,16 +109,19 @@ export function useBestsellers(limit = 8) {
     const fetchBestsellers = async () => {
       try {
         setLoading(true)
-        const { data, error: fetchError } = await supabase
-          .from('products')
-          .select('*')
-          .eq('is_live', true)
-          .eq('is_bestseller', true)
-          .limit(limit)
+        // Fetch all products and filter by metadata.is_bestseller
+        const { products: data } = await medusa.store.product.list({
+          limit: 100,
+          region_id: REGION_ID,
+          fields: PRICING_FIELDS,
+        })
 
-        if (fetchError) throw fetchError
+        const bestsellers = (data || [])
+          .filter((p) => p.metadata?.is_bestseller)
+          .slice(0, limit)
+          .map(transformMedusaProduct)
 
-        setProducts((data || []).map(transformProduct))
+        setProducts(bestsellers)
       } catch (err) {
         console.error('Error fetching bestsellers:', err)
         setError(err.message)
@@ -118,15 +137,15 @@ export function useBestsellers(limit = 8) {
 }
 
 /**
- * Fetch products by collection
+ * Fetch products by collection handle
  */
-export function useCollectionProducts(collectionId) {
+export function useCollectionProducts(collectionHandle) {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    if (!collectionId) {
+    if (!collectionHandle) {
       setProducts([])
       setLoading(false)
       return
@@ -135,16 +154,28 @@ export function useCollectionProducts(collectionId) {
     const fetchProducts = async () => {
       try {
         setLoading(true)
-        const { data, error: fetchError } = await supabase
-          .from('products')
-          .select('*')
-          .eq('is_live', true)
-          .eq('collection', collectionId)
-          .order('created_at', { ascending: false })
 
-        if (fetchError) throw fetchError
+        // First resolve collection handle to ID
+        const { collections } = await medusa.store.collection.list({
+          handle: [collectionHandle],
+        })
+        const collection = collections?.[0]
 
-        setProducts((data || []).map(transformProduct))
+        if (!collection) {
+          setProducts([])
+          return
+        }
+
+        // Then fetch products by collection ID
+        const { products: data } = await medusa.store.product.list({
+          collection_id: [collection.id],
+          limit: 100,
+          order: '-created_at',
+          region_id: REGION_ID,
+          fields: PRICING_FIELDS,
+        })
+
+        setProducts((data || []).map(transformMedusaProduct))
       } catch (err) {
         console.error('Error fetching collection products:', err)
         setError(err.message)
@@ -154,21 +185,21 @@ export function useCollectionProducts(collectionId) {
     }
 
     fetchProducts()
-  }, [collectionId])
+  }, [collectionHandle])
 
   return { products, loading, error }
 }
 
 /**
- * Fetch a single product by ID
+ * Fetch a single product by handle
  */
-export function useProduct(productId) {
+export function useProduct(productHandle) {
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    if (!productId) {
+    if (!productHandle) {
       setProduct(null)
       setLoading(false)
       return
@@ -177,15 +208,13 @@ export function useProduct(productId) {
     const fetchProduct = async () => {
       try {
         setLoading(true)
-        const { data, error: fetchError } = await supabase
-          .from('products')
-          .select('*')
-          .eq('id', productId)
-          .single()
+        const { products } = await medusa.store.product.list({
+          handle: productHandle,
+          region_id: REGION_ID,
+          fields: PRICING_FIELDS,
+        })
 
-        if (fetchError) throw fetchError
-
-        setProduct(data ? transformProduct(data) : null)
+        setProduct(products?.[0] ? transformMedusaProduct(products[0]) : null)
       } catch (err) {
         console.error('Error fetching product:', err)
         setError(err.message)
@@ -196,7 +225,7 @@ export function useProduct(productId) {
     }
 
     fetchProduct()
-  }, [productId])
+  }, [productHandle])
 
   return { product, loading, error }
 }
@@ -204,13 +233,13 @@ export function useProduct(productId) {
 /**
  * Fetch related products (same collection, excluding current product)
  */
-export function useRelatedProducts(productId, limit = 4) {
+export function useRelatedProducts(productHandle, limit = 4) {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    if (!productId) {
+    if (!productHandle) {
       setProducts([])
       setLoading(false)
       return
@@ -221,31 +250,32 @@ export function useRelatedProducts(productId, limit = 4) {
         setLoading(true)
 
         // First get the current product to find its collection
-        const { data: currentProduct, error: productError } = await supabase
-          .from('products')
-          .select('collection')
-          .eq('id', productId)
-          .single()
+        const { products: currentProducts } = await medusa.store.product.list({
+          handle: productHandle,
+          region_id: REGION_ID,
+          fields: PRICING_FIELDS,
+        })
+        const current = currentProducts?.[0]
 
-        if (productError) throw productError
-
-        if (!currentProduct) {
+        if (!current?.collection_id) {
           setProducts([])
           return
         }
 
-        // Then fetch related products from the same collection
-        const { data, error: fetchError } = await supabase
-          .from('products')
-          .select('*')
-          .eq('is_live', true)
-          .eq('collection', currentProduct.collection)
-          .neq('id', productId)
-          .limit(limit)
+        // Fetch products from the same collection
+        const { products: data } = await medusa.store.product.list({
+          collection_id: [current.collection_id],
+          limit: limit + 1, // Fetch one extra to account for excluding current
+          region_id: REGION_ID,
+          fields: PRICING_FIELDS,
+        })
 
-        if (fetchError) throw fetchError
+        const related = (data || [])
+          .filter((p) => p.id !== current.id)
+          .slice(0, limit)
+          .map(transformMedusaProduct)
 
-        setProducts((data || []).map(transformProduct))
+        setProducts(related)
       } catch (err) {
         console.error('Error fetching related products:', err)
         setError(err.message)
@@ -255,15 +285,154 @@ export function useRelatedProducts(productId, limit = 4) {
     }
 
     fetchRelated()
-  }, [productId, limit])
+  }, [productHandle, limit])
 
   return { products, loading, error }
 }
 
 /**
+ * Search products by query
+ */
+export function useProductSearch(query) {
+  const [results, setResults] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    if (!query || query.length < 2) {
+      setResults([])
+      setLoading(false)
+      return
+    }
+
+    const searchProducts = async () => {
+      try {
+        setLoading(true)
+        const { products: data } = await medusa.store.product.list({
+          q: query,
+          limit: 10,
+          region_id: REGION_ID,
+          fields: PRICING_FIELDS,
+        })
+
+        setResults((data || []).map(transformMedusaProduct))
+      } catch (err) {
+        console.error('Error searching products:', err)
+        setError(err.message)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    // Debounce search
+    const timeoutId = setTimeout(searchProducts, 300)
+    return () => clearTimeout(timeoutId)
+  }, [query])
+
+  return { results, loading, error }
+}
+
+/**
+ * Fetch featured products (bestsellers or curated list)
+ */
+export function useFeaturedProducts(limit = 8) {
+  const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    const fetchFeaturedProducts = async () => {
+      try {
+        setLoading(true)
+
+        // Try to get featured product handles from Supabase settings
+        let featuredIds = []
+        try {
+          const { data: settingsData } = await supabase
+            .from('settings')
+            .select('value')
+            .eq('key', 'featured_products')
+            .single()
+
+          if (settingsData?.value) {
+            featuredIds =
+              typeof settingsData.value === 'string'
+                ? JSON.parse(settingsData.value)
+                : settingsData.value
+          }
+        } catch {
+          // Settings not available, fall through to bestsellers
+        }
+
+        if (featuredIds?.length > 0) {
+          // Fetch specific products by handle
+          const allFeatured = []
+          for (const id of featuredIds.slice(0, limit)) {
+            try {
+              const { products: found } = await medusa.store.product.list({
+                handle: id,
+                region_id: REGION_ID,
+                fields: PRICING_FIELDS,
+              })
+              if (found?.[0]) allFeatured.push(found[0])
+            } catch {
+              // Skip products that don't exist
+            }
+          }
+          setProducts(allFeatured.map(transformMedusaProduct))
+        } else {
+          // Fall back to bestsellers from Medusa
+          const { products: data } = await medusa.store.product.list({
+            limit: 100,
+            region_id: REGION_ID,
+            fields: PRICING_FIELDS,
+          })
+
+          const bestsellers = (data || [])
+            .filter((p) => p.metadata?.is_bestseller)
+            .slice(0, limit)
+            .map(transformMedusaProduct)
+
+          // If no bestsellers, just show newest products
+          if (bestsellers.length === 0) {
+            setProducts((data || []).slice(0, limit).map(transformMedusaProduct))
+          } else {
+            setProducts(bestsellers)
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching featured products:', err)
+        setError(err.message)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchFeaturedProducts()
+  }, [limit])
+
+  return { products, loading, error }
+}
+
+// ---------------------------------------------------------------------------
+// Banner & Settings Hooks (still Supabase)
+// ---------------------------------------------------------------------------
+
+// Transform banner from Supabase to frontend format
+const transformBanner = (b) => ({
+  id: b.id,
+  text: b.title || b.text,
+  subtitle: b.subtitle,
+  link: b.link_url || b.link,
+  type: b.type,
+  bgColor: b.background_color || b.bg_color,
+  textColor: b.text_color,
+  isActive: b.is_active,
+  position: b.position,
+})
+
+/**
  * Fetch active banners for the announcement bar
- * @param {Object} options - Filter options
- * @param {string} options.type - Filter by banner type (e.g., 'announcement')
  */
 export function useStoreBanners({ type } = {}) {
   const [banners, setBanners] = useState([])
@@ -279,7 +448,6 @@ export function useStoreBanners({ type } = {}) {
           .select('*')
           .eq('is_active', true)
 
-        // Filter by type if provided
         if (type) {
           query = query.eq('type', type)
         }
@@ -306,7 +474,7 @@ export function useStoreBanners({ type } = {}) {
 }
 
 /**
- * Fetch store settings (shipping, contact info, etc.)
+ * Fetch store settings
  */
 export function useStoreSettings() {
   const [settings, setSettings] = useState({
@@ -339,33 +507,32 @@ export function useStoreSettings() {
 
         if (fetchError) throw fetchError
 
-        // Convert array of {key, value} to object
         const settingsObj = {}
-        ;(data || []).forEach(row => {
+        ;(data || []).forEach((row) => {
           settingsObj[row.key] = row.value
         })
 
-        setSettings(prev => {
-          // Parse homepage sections
+        setSettings((prev) => {
           let homepageSections = prev.homepageSections
           if (settingsObj.homepage_sections) {
             try {
-              const parsed = typeof settingsObj.homepage_sections === 'string'
-                ? JSON.parse(settingsObj.homepage_sections)
-                : settingsObj.homepage_sections
+              const parsed =
+                typeof settingsObj.homepage_sections === 'string'
+                  ? JSON.parse(settingsObj.homepage_sections)
+                  : settingsObj.homepage_sections
               if (Array.isArray(parsed) && parsed.length > 0) {
                 homepageSections = parsed
               }
             } catch {}
           }
 
-          // Parse featured product IDs
           let featuredProductIds = prev.featuredProductIds
           if (settingsObj.featured_products) {
             try {
-              const parsed = typeof settingsObj.featured_products === 'string'
-                ? JSON.parse(settingsObj.featured_products)
-                : settingsObj.featured_products
+              const parsed =
+                typeof settingsObj.featured_products === 'string'
+                  ? JSON.parse(settingsObj.featured_products)
+                  : settingsObj.featured_products
               if (Array.isArray(parsed)) {
                 featuredProductIds = parsed
               }
@@ -379,8 +546,10 @@ export function useStoreSettings() {
             instagram: settingsObj.instagram || prev.instagram,
             email: settingsObj.email || prev.email,
             shippingCost: parseInt(settingsObj.shipping_cost) || prev.shippingCost,
-            freeShippingAbove: parseInt(settingsObj.free_shipping_above) || prev.freeShippingAbove,
-            bannerRotationSpeed: parseInt(settingsObj.banner_rotation_speed) || prev.bannerRotationSpeed,
+            freeShippingAbove:
+              parseInt(settingsObj.free_shipping_above) || prev.freeShippingAbove,
+            bannerRotationSpeed:
+              parseInt(settingsObj.banner_rotation_speed) || prev.bannerRotationSpeed,
             homepageSections,
             featuredProductIds,
           }
@@ -398,6 +567,10 @@ export function useStoreSettings() {
 
   return { settings, loading, error }
 }
+
+// ---------------------------------------------------------------------------
+// Coupon Hooks (still Supabase)
+// ---------------------------------------------------------------------------
 
 /**
  * Validate and apply a coupon code
@@ -425,26 +598,21 @@ export function useValidateCouponCode() {
         throw fetchError
       }
 
-      // Check if coupon is valid
       const now = new Date()
 
       if (data.start_date && new Date(data.start_date) > now) {
         throw new Error('Coupon is not yet active')
       }
-
       if (data.end_date && new Date(data.end_date) < now) {
         throw new Error('Coupon has expired')
       }
-
       if (data.min_order && cartTotal < data.min_order) {
         throw new Error(`Minimum order value is ₹${data.min_order}`)
       }
-
       if (data.usage_limit && data.used_count >= data.usage_limit) {
         throw new Error('Coupon usage limit reached')
       }
 
-      // Calculate discount
       let discount = 0
       if (data.type === 'percentage') {
         discount = Math.round(cartTotal * (data.value / 100))
@@ -454,7 +622,6 @@ export function useValidateCouponCode() {
       } else if (data.type === 'fixed') {
         discount = data.value
       }
-      // For freeShipping type, discount stays 0 (handled separately)
 
       return {
         valid: true,
@@ -480,7 +647,6 @@ export function useValidateCouponCode() {
 
 /**
  * Fetch available coupons for display in cart
- * Only returns active, non-expired coupons that are visible to users
  */
 export function useAvailableCoupons() {
   const [coupons, setCoupons] = useState([])
@@ -495,7 +661,9 @@ export function useAvailableCoupons() {
 
         const { data, error: fetchError } = await supabase
           .from('coupons')
-          .select('id, code, type, value, min_order, max_discount, start_date, end_date, description')
+          .select(
+            'id, code, type, value, min_order, max_discount, start_date, end_date, description'
+          )
           .eq('is_active', true)
           .or(`start_date.is.null,start_date.lte.${now}`)
           .or(`end_date.is.null,end_date.gte.${now}`)
@@ -503,8 +671,7 @@ export function useAvailableCoupons() {
 
         if (fetchError) throw fetchError
 
-        // Format coupons for display
-        const formattedCoupons = (data || []).map(coupon => ({
+        const formattedCoupons = (data || []).map((coupon) => ({
           id: coupon.id,
           code: coupon.code,
           type: coupon.type,
@@ -547,123 +714,4 @@ function formatCouponDescription(coupon) {
     desc += ` on orders above ₹${coupon.min_order}`
   }
   return desc
-}
-
-/**
- * Search products by query
- */
-export function useProductSearch(query) {
-  const [results, setResults] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
-
-  useEffect(() => {
-    if (!query || query.length < 2) {
-      setResults([])
-      setLoading(false)
-      return
-    }
-
-    const searchProducts = async () => {
-      try {
-        setLoading(true)
-        const { data, error: fetchError } = await supabase
-          .from('products')
-          .select('*')
-          .eq('is_live', true)
-          .or(`name.ilike.%${query}%,description.ilike.%${query}%,sku.ilike.%${query}%`)
-          .limit(10)
-
-        if (fetchError) throw fetchError
-
-        setResults((data || []).map(transformProduct))
-      } catch (err) {
-        console.error('Error searching products:', err)
-        setError(err.message)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    // Debounce search
-    const timeoutId = setTimeout(searchProducts, 300)
-    return () => clearTimeout(timeoutId)
-  }, [query])
-
-  return { results, loading, error }
-}
-
-/**
- * Fetch featured products (configured in admin settings)
- */
-export function useFeaturedProducts(limit = 8) {
-  const [products, setProducts] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-
-  useEffect(() => {
-    const fetchFeaturedProducts = async () => {
-      try {
-        setLoading(true)
-
-        // First, get the featured product IDs from settings
-        const { data: settingsData, error: settingsError } = await supabase
-          .from('settings')
-          .select('value')
-          .eq('key', 'featured_products')
-          .single()
-
-        if (settingsError && settingsError.code !== 'PGRST116') throw settingsError
-
-        let featuredIds = []
-        if (settingsData?.value) {
-          try {
-            featuredIds = typeof settingsData.value === 'string'
-              ? JSON.parse(settingsData.value)
-              : settingsData.value
-          } catch {}
-        }
-
-        // If no featured products configured, fall back to bestsellers
-        if (!featuredIds || featuredIds.length === 0) {
-          const { data: bestsellersData, error: bestsellersError } = await supabase
-            .from('products')
-            .select('*')
-            .eq('is_live', true)
-            .eq('is_bestseller', true)
-            .limit(limit)
-
-          if (bestsellersError) throw bestsellersError
-          setProducts((bestsellersData || []).map(transformProduct))
-          return
-        }
-
-        // Fetch products by IDs
-        const { data: productsData, error: productsError } = await supabase
-          .from('products')
-          .select('*')
-          .in('id', featuredIds.slice(0, limit))
-          .eq('is_live', true)
-
-        if (productsError) throw productsError
-
-        // Sort products in the order they were featured
-        const sortedProducts = featuredIds
-          .map(id => productsData?.find(p => p.id === id))
-          .filter(Boolean)
-          .map(transformProduct)
-
-        setProducts(sortedProducts)
-      } catch (err) {
-        console.error('Error fetching featured products:', err)
-        setError(err.message)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchFeaturedProducts()
-  }, [limit])
-
-  return { products, loading, error }
 }

@@ -79,7 +79,7 @@ function ProductPage() {
     }, 800)
   }
 
-  // Fetch product and related products from Supabase
+  // Fetch product and related products from Medusa
   const { product, loading, error } = useProduct(productId)
   const { products: relatedProducts } = useRelatedProducts(productId, 4)
 
@@ -308,7 +308,7 @@ function ProductPage() {
                   size="lg"
                   className="flex-1"
                   disabled={!product.inStock}
-                  onClick={() => addToCart(product)}
+                  onClick={() => addToCart(product).catch(() => {})}
                 >
                   Add to Cart
                 </Button>
@@ -473,7 +473,7 @@ function ProductPage() {
             variant="primary"
             size="md"
             disabled={!product.inStock}
-            onClick={() => addToCart(product)}
+            onClick={() => addToCart(product).catch(() => {})}
             className="flex-shrink-0"
           >
             Add to Cart

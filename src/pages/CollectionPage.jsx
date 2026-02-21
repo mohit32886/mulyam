@@ -46,12 +46,12 @@ function CollectionPage() {
   // Get collection metadata
   const collection = collections[collectionId]
 
-  // Fetch products from Supabase
+  // Fetch products from Medusa
   const { products: allProducts, loading, error } = useCollectionProducts(collectionId)
 
-  // Get unique categories
+  // Get unique categories (filter out nulls from Medusa products without category)
   const categories = useMemo(() => {
-    const cats = [...new Set(allProducts.map((p) => p.category))]
+    const cats = [...new Set(allProducts.map((p) => p.category).filter(Boolean))]
     return ['all', ...cats]
   }, [allProducts])
 
